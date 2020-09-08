@@ -31,7 +31,7 @@
 /* Import CSS BOF
 ========================================================== */
 .btn {
-  background: #e91e63;
+  background: #1e2ce9;
   color: #ffffff;
   padding: 12px 22px;
   -webkit-transition: all 0.4s ease-in-out 0s;
@@ -43,7 +43,7 @@
   -moz-box-shadow: none;
   box-shadow: none; }
   .btn:hover, .btn:focus, .btn:active, .btn.active {
-    background: #C2185B;
+    background: #1e2ce9;
     color: #ffffff;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -71,7 +71,7 @@
   -moz-box-shadow: none;
   box-shadow: none; }
   .form-control:focus {
-    border-color: #e91e63;
+    border-color: #1e2ce9;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;

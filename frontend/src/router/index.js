@@ -1,13 +1,24 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "LandingPage",
+    component: () => import("../views/LandingPage")
+  },
+  {
+    path: "/login",
     name: "Login",
     component: () => import("../views/Login")
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register")
   },
   {
     path: "/home",
@@ -21,16 +32,6 @@ const routes = [
     component: () => import("../views/About.vue"),
     meta: { requiresAuth: true, requiresAdminAuth: true, requiresUserAuth: false } 
   },
-  {
-    path: "/component1",
-    name: "Component1",
-    component: () => import("../views/Component1.vue")
-  },
-  {
-    path: "/component2",
-    name: "Component2",
-    component: () => import("../views/Component2.vue")
-  }
 ];
 
 const router = new VueRouter({
@@ -43,7 +44,7 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   if(to.meta.requiresAuth){
     if(token === undefined || token === null){
-      next({name: 'Component2'})
+      next({name: '/'})
     }else{
       next()
     }
