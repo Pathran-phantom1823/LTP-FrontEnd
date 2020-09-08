@@ -1,8 +1,9 @@
 
 let Navbar = [
-    {name: "Dashboard", icon: "user"},
-    {name: "Setting", icon: "user"},
-    {name: "Account", icon: "user"}
+    {name: "Home", route: "/"},
+    {name: "Booking", route: "/booking"},
+    {name: "Job Board", route: "/board"},
+    {name: "Communication", route: "/communication"},
 ]
 
 export default Navbar

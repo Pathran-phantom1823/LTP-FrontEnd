@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <button><router-link to="/component1">Component1</router-link></button>
-    <button v-if="isLoggedIn" @click="logout">Logout</button>
-    <button v-if="!isLoggedIn"><router-link to="/component2" >Component2</router-link></button>
-    <div id="nav" v-if="isLoggedIn">
+    <Navbar/>
+    <!-- <button><router-link to="/component1">Component1</router-link></button> -->
+    <!-- <button v-if="isLoggedIn" @click="logout">Logout</button>
+    <button v-if="!isLoggedIn"><router-link to="/component2" >Component2</router-link></button> -->
+    <!-- <div id="nav" v-if="isLoggedIn">
       <router-link to="/home">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <keep-alive>
       <router-view :key="$route.fullPath" />
     </keep-alive>
+
+    <Footer/>
   </div>
 </template>
 <script>
+import Footer from "./components/Footer/Footer"
+import Navbar from "./components/Navbar/NavBar"
 export default {
+  components:{
+    Navbar,
+    Footer
+  },
   computed: {
     isLoggedIn(){
       return this.$store.state.isLoggedIn
