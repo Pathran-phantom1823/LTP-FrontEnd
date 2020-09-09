@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar/>
+    <!-- <Navbar/> -->
     <!-- <button><router-link to="/component1">Component1</router-link></button> -->
     <!-- <button v-if="isLoggedIn" @click="logout">Logout</button>
     <button v-if="!isLoggedIn"><router-link to="/component2" >Component2</router-link></button> -->
@@ -17,10 +17,10 @@
 </template>
 <script>
 import Footer from "./components/Footer/Footer"
-import Navbar from "./components/Navbar/NavBar"
+// import Navbar from "./components/Navbar/NavBar"
 export default {
   components:{
-    Navbar,
+    // Navbar,
     Footer
   },
   computed: {
