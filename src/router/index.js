@@ -11,6 +11,11 @@ const routes = [
     component: () => import("../views/LandingPage")
   },
   {
+    path: "services/quotation",
+    name: "Quotation",
+    component: () => import("../views/Content/Services")
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("../views/Login")
