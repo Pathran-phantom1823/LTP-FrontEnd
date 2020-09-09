@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="webp-app-banner yit-scroll-nav" style="background-image: linear-gradient(to right top, #116df8, #0062f8, #0057f7, #004af5, #093cf2);" >
+  <div id="home" class="webp-app-banner yit-scroll-nav" style="background-color: #0085BE" >
       <div class="container">
         <div class="row">
           <div class="col-xl-6 col-md-6 col-lg-7">
