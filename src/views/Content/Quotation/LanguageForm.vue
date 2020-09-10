@@ -1,6 +1,6 @@
 <template>
   <div style="padding:10px">
-    <h3>Select Laguages</h3>
+    <h3>Select languages</h3>
     <hr />
     <form>
       <label for="languages">Translate From:</label>
