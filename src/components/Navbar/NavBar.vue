@@ -49,7 +49,7 @@ export default {
         this.$router.push("register")
       },
       toQuotation(){
-        this.$router.push("services/quotation")
+        this.$router.push("quotation")
       } 
     }
 };
