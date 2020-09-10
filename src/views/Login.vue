@@ -47,7 +47,6 @@ export default {
     components: {},
     data() {
         return {
-            route: router,
             show: false
         };
     }
