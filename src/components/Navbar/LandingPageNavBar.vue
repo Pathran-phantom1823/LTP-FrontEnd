@@ -46,6 +46,7 @@
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    @click="$router.push('/quotation')"
                   >Services</a>
                 </li>
                 <li class="nav-item">
