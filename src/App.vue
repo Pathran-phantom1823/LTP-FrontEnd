@@ -12,7 +12,7 @@
       <router-view :key="$route.fullPath" />
     </keep-alive>
 
-    <Footer/>
+    <Footer v-if="!routeForLogIn"/>
   </div>
 </template>
 <script>
@@ -23,9 +23,15 @@ export default {
     // Navbar,
     Footer
   },
+  mounted(){
+    console.log(this.$route.path);
+  },
   computed: {
     isLoggedIn(){
       return this.$store.state.isLoggedIn
+    },
+    routeForLogIn(){
+      return (this.$route.path === "/login" || this.$route.path === "/register") ? true : false
     }
   },
   methods: {

@@ -39,7 +39,7 @@
       <div class="tab-pane fade show active" id="seven" role="tabpanel" aria-labelledby="seven-tab">
         <input type="file" class="form-control" />
         <button
-          class="btn btn-primary-outline mt-10"
+          class="btn btn-primary-outline mt-20 mb-10"
         >Done</button>
       </div>
       <div class="tab-pane fade" id="eight" role="tabpanel" aria-labelledby="eight-tab">
@@ -72,6 +72,8 @@ button{
     background-color: white;
     border-radius: 10px;
     box-shadow: 2px 2px 3px #999;
+    float: right;
+
 }
 button:hover{
     width: 100px;

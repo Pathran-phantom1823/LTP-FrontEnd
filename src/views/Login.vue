@@ -41,9 +41,7 @@
     </div>
 </div>
 </template>
-
 <script>
-import router from "../router";
 export default {
     name: "Login",
     components: {},
@@ -55,7 +53,6 @@ export default {
     }
 };
 </script>
-
 <style>
 .form-control {
     border-color: #418dff;

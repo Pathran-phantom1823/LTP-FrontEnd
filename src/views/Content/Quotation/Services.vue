@@ -22,8 +22,8 @@
               <LanguageForm/>
             </div>
           </div>
-          <button class="btn btn-primary back" style="width:100px;float:left" v-show="current_step !== 1" @click="onClickBack">Back</button>
-          <button class="btn btn-primary next" style="width:100px;float:right" @click="onClickNext">Next</button>
+          <button class="btn btn-primary back" style="width:100px;float:left" v-show="current_step !== 1" @click="onClickBack"><i class="fa fa-backward"></i> Back</button>
+          <button class="btn btn-primary next" style="width:100px;float:right" @click="onClickNext">Next <i class="fa fa-forward"></i></button>
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-xl-4">

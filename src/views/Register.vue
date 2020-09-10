@@ -70,7 +70,6 @@ export default {
     }
 }
 </script>
-
 <style>
 .form-control {
     border-color: #418dff;
