@@ -72,6 +72,7 @@ export default {
 }
 .body{
   background: rgb(240, 240, 240);
+  font-family: Poppins, Helvetica, "sans-serif";
 }
 </style>
 
