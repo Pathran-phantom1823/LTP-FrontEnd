@@ -47,6 +47,18 @@
             outlined
             dense
           ></v-autocomplete>
+          <v-autocomplete
+            ref="freeTime"
+            class="placeholder"
+            v-model="freetime"
+            :items="days"
+            label="Days"
+            placeholder="Free Time"
+            color="blue lighten-1"
+            required
+            outlined
+            dense
+          ></v-autocomplete>
         </div>
       </div>
     </div>
@@ -82,12 +94,11 @@
           <div class="card FeedTitle mb-3">
             <b>My Feed</b>
           </div>
-          <div class="card FeedCard" v-for="(data, index) in feedData" :key="index" @click="viewMore(true)">
+          <div class="card FeedCard" v-for="(data, index) in feedData" :key="index" @mouseenter="showViewMore" @mouseleave="hideViewMore">
             <div class="card-header dataHeader">
               <div class="data_title">{{data.title}}</div>
               <div class="saveJobIcon">
-                <!-- <i class="mdi mdi-heart"></i> -->
-                <i class="mdi mdi-heart-outline"></i>
+                <i class="mdi mdi-heart-outline" @click="saveJob" title="save job"></i>
               </div>
             </div>
             <div class="card-body dataBody">
@@ -100,11 +111,14 @@
                 </div>
               </div>
               <p class="card-text locationbid mt-2">
-                Bids: 0
+                Bids: <b>0</b>
               </p>
               <p class="locationbid mb-2">
                 Location:
                 <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                <v-icon class="ViewMoreIcon" @click="viewMore(true)" title="view more">
+                  mdi-chevron-double-right
+                </v-icon>
               </p>
             </div>
           </div>
@@ -238,7 +252,9 @@ export default {
       searchLabel: "Search Jobs",
       page: 1,
       searchOption: "jobs",
-      searchOptions: ["jobs", "translators"]
+      searchOptions: ["jobs", "translators"],
+      freetime: '',
+      days: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     };
   },
   components: {},
@@ -252,6 +268,19 @@ export default {
   },
   computed: {},
   methods: {
+    saveJob (e) {
+      if(e.target.className === 'mdi mdi-heart-outline'){
+        e.target.className = 'mdi mdi-heart'
+      }else{
+        e.target.className = 'mdi mdi-heart-outline'
+      }
+    },
+    showViewMore (e) {
+      e.target.children[1].children[5].children[1].style = 'transition: .5s; right: 0 !important;'
+    },
+    hideViewMore (e) {
+      e.target.children[1].children[5].children[1].style = 'transition: .5s; right: -100% !important;'
+    },
     viewMore(ViewEvent) {
       if (ViewEvent) {
         this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
@@ -281,7 +310,7 @@ export default {
           this.$refs["workspace"].style =
             "width: 100% !important; margin-left: 0px !important; z-index: 2;";
           this.$refs["sidebar"].style =
-            "transition: 3s !important; right: 100% !important; z-index: 11;";
+            "transition: 3s !important; right: 100% !important; z-index: 11; width: 250px !important;";
           return;
         }
         this.$refs["workspace"].style =
@@ -297,7 +326,7 @@ export default {
           this.$refs["workspace"].style =
             "width: 100% !important; z-index: 2; margin-left: 0px !important;";
           this.$refs["sidebar"].style =
-            "transition: 3s !important; left: 0 !important; z-index: 11;";
+            "transition: 3s !important; left: 0 !important; z-index: 11; width: 250px !important;";
           return;
         }
         this.$refs["workspace"].style =
@@ -308,6 +337,18 @@ export default {
 };
 </script>
 <style>
+.ViewMoreIcon{
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color: #f2470f !important;
+  color: white !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: absolute !important;
+  bottom: 15px !important;
+  right: -100%;
+  /* left: 100%; */
+}
 .ViewMoreCard{
   direction: ltr;
 }
@@ -356,15 +397,15 @@ export default {
   transform: rotateY(0deg);
 }
 .mobileshow {
-  left: 400px !important;
+  left: 330px !important;
   top: 80px !important;
-  z-index: 12 !important;
+  z-index: 3 !important;
   transition: 0.5s;
 }
 .mobilehide {
   left: 45px !important;
   top: 80px !important;
-  z-index: 12;
+  z-index: 3;
 }
 .exit_view_more {
   margin-top: -15px;
@@ -454,6 +495,9 @@ export default {
 }
 .FeedCard:hover{
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+}
+.FeedCard{
+  overflow: hidden;
 }
 /**
 Category Text css initial
@@ -554,6 +598,7 @@ Category Text css initial
 }
 .locationIcon {
   color: #f2470f !important;
+  font-size: 14px !important;
 }
 .priceLabel {
   font-weight: normal;
