@@ -6,6 +6,16 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+      path: "/banner",
+      name: "banner",
+      component: () => import("@/view/pages/LandingPage.vue")
+    },
+    {
+      path: "/postjob",
+      name: "postjob",
+      component: () => import("@/view/pages/postjob/PostJob.vue")
+    },
+    {
       path: "/",
       redirect: "/dashboard",
       component: () => import("@/view/layout/Layout"),

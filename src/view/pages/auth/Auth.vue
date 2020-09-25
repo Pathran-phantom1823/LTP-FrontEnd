@@ -1,64 +1,16 @@
 <template>
-  <div class="d-flex flex-column flex-root">
-    <div
-      class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-row-fluid bg-white"
-      id="kt_login"
-    >
-      <!--begin::Aside-->
-      <div
-        class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-15"
-        :style="{ backgroundImage: `url(${backgroundImage})` }"
-      >
-        <!--begin: Aside Container -->
-        <div class="d-flex flex-row-fluid flex-column justify-content-between">
-          <!--begin: Aside header -->
-          <a href="#" class="flex-column-auto">
-            <img src="media/logos/logo-letter-1.png" class="h-25" />
-          </a>
-          <!--end: Aside header -->
-          <!--begin: Aside content -->
-          <div
-            class="flex-column-fluid d-flex flex-column justify-content-center"
-          >
-            <h3 class="font-size-h1 mt-10 mb-5 text-white">
-              Welcome to Metronic!
-            </h3>
-            <p class="font-weight-lighter text-white opacity-80">
-              The ultimate Bootstrap, Angular 8, React &amp; VueJS admin theme
-              framework for next generation web apps.
-            </p>
-          </div>
-          <!--end: Aside content -->
-          <!--begin: Aside footer for desktop -->
-          <div
-            class="d-none flex-column-auto d-lg-flex justify-content-between mt-15"
-          >
-            <div class="opacity-70 font-weight-bold text-white">
-              © 2020 Metronic
-            </div>
-            <div class="d-flex">
-              <a href="#" class="text-white">Privacy</a>
-              <a href="#" class="text-white ml-10">Legal</a>
-              <a href="#" class="text-white ml-10">Contact</a>
-            </div>
-          </div>
-          <!--end: Aside footer for desktop -->
-        </div>
-        <!--end: Aside Container -->
-      </div>
-      <!--begin::Aside-->
-
-      <!--begin::Content-->
-      <div
-        class="flex-row-fluid d-flex flex-column position-relative p-7 overflow-hidden"
-      >
-        <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
+  <v-container fluid class="content">
+    <b-row class="p-10">
+      <b-col sm="6">
+        <v-img src="../../../../public/media/bg/banner1.png" class="serviceImage"></v-img>
+      </b-col>
+      <b-col sm="6">
+        <div id="kt_login">
           <router-view></router-view>
         </div>
-      </div>
-      <!--end::Content-->
-    </div>
-  </div>
+      </b-col>
+    </b-row>
+  </v-container>
 </template>
 
 <!-- Load login custom page styles -->
@@ -74,11 +26,22 @@ export default {
   methods: {},
   computed: {
     ...mapState({
-      errors: state => state.auth.errors
+      errors: (state) => state.auth.errors,
     }),
     backgroundImage() {
-      return process.env.BASE_URL + "media/bg/bg-4.jpg";
-    }
-  }
+      return process.env.BASE_URL + "media/bg/bg-5.jpg";
+    },
+  },
 };
 </script>
+<style lang="scss" scoped>
+.content {
+  height: 100vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .content {
+  height: 150vh;
+}
+}
+</style>
