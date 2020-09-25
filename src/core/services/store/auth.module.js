@@ -94,6 +94,7 @@ const mutations = {
     state.user = user;
     state.errors = {};
     JwtService.saveToken(state.user.token);
+    localStorage.setItem('role', 'USER')
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
