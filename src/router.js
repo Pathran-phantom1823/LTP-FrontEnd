@@ -434,6 +434,11 @@ export default new Router({
           name: "feed",
           component: () => import("@/view/pages/userfeed.vue")
         },
+        {
+          path: "/user/job_board",
+          name: "jobboard",
+          component: () => import("@/view/pages/job.vue")
+        }
         // ADD ROUTES HERE FOR USERS
       ]
     },
