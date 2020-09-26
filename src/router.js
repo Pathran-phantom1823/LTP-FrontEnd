@@ -444,6 +444,11 @@ export default new Router({
           name: "feed",
           component: () => import("@/view/pages/userfeed.vue")
         },
+        {
+          path: "/user/messenger",
+          name: "messenger",
+          component: () => import("@/view/pages/communication/Messenger.vue")
+        },
         // ADD ROUTES HERE FOR USERS
       ]
     },
