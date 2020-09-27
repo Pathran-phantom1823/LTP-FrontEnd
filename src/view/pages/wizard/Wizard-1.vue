@@ -25,7 +25,7 @@
             <div class="wizard-step" data-wizard-type="step">
               <div class="wizard-label">
                 <i class="wizard-icon flaticon-list"></i>
-                <h3 class="wizard-title">2. Enter Details</h3>
+                <h3 class="wizard-title">2. Enter Details</h3>a
               </div>
               <i class="wizard-arrow flaticon2-next"></i>
             </div>
