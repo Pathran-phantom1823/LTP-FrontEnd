@@ -5,6 +5,18 @@ Vue.use(Router);
 
 export default new Router({
     routes: [{
+            path: "/banner",
+            name: "banner",
+            component: () =>
+                import ("@/view/pages/LandingPage.vue")
+        },
+        {
+            path: "/postjob",
+            name: "postjob",
+            component: () =>
+                import ("@/view/pages/postjob/PostJob.vue")
+        },
+        {
             path: "/",
             redirect: "/dashboard",
             component: () =>
@@ -483,11 +495,17 @@ export default new Router({
                         import ("@/view/pages/userfeed.vue")
                 },
                 {
+                    path: "/user/job_board",
+                    name: "jobboard",
+                    component: () =>
+                        import ("@/view/pages/job.vue")
+                },
+                {
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
                         import ("@/view/pages/Profile.vue")
-                },
+                }
                 // ADD ROUTES HERE FOR USERS
             ]
         },

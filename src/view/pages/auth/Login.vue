@@ -4,51 +4,33 @@
     <div
       class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
     >
-      <span class="font-weight-bold font-size-3 text-dark-60">
-        Don't have an account yet?
-      </span>
-      <router-link
-        class="font-weight-bold font-size-3 ml-2"
-        :to="{ name: 'register' }"
-      >
-        Sign Up!
-      </router-link>
+      <span class="font-weight-bold font-size-3 text-dark-60">Don't have an account yet?</span>
+      <router-link class="font-weight-bold font-size-3 ml-2" style="color:cyan"  :to="{ name: 'register' }">Sign Up!</router-link>
     </div>
     <!--end::Content header-->
 
     <!--begin::Signin-->
-    <div class="login-form login-signin">
+    <v-container class="mt-20">
       <div class="text-center mb-10 mb-lg-20">
         <h3 class="font-size-h1">Sign In</h3>
-        <p class="text-muted font-weight-semi-bold">
-          Enter your username and password
-        </p>
+        <p class="text-muted font-weight-semi-bold">Enter your username and password</p>
       </div>
 
       <!--begin::Form-->
       <b-form class="form" @submit.stop.prevent="onSubmit">
         <div role="alert" class="alert alert-info">
           <div class="alert-text">
-            Use account <strong>admin@demo.com</strong> and password
+            Use account
+            <strong>admin@demo.com</strong> and password
             <strong>demo</strong> to continue.
           </div>
         </div>
 
-        <div
-          role="alert"
-          v-bind:class="{ show: errors.length }"
-          class="alert fade alert-danger"
-        >
-          <div class="alert-text" v-for="(error, i) in errors" :key="i">
-            {{ error }}
-          </div>
+        <div role="alert" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
+          <div class="alert-text" v-for="(error, i) in errors" :key="i">{{ error }}</div>
         </div>
 
-        <b-form-group
-          id="example-input-group-1"
-          label=""
-          label-for="example-input-1"
-        >
+        <b-form-group id="example-input-group-1" label label-for="example-input-1">
           <b-form-input
             class="form-control form-control-solid h-auto py-5 px-6"
             id="example-input-1"
@@ -58,16 +40,12 @@
             aria-describedby="input-1-live-feedback"
           ></b-form-input>
 
-          <b-form-invalid-feedback id="input-1-live-feedback">
-            Email is required and a valid email address.
-          </b-form-invalid-feedback>
+          <b-form-invalid-feedback
+            id="input-1-live-feedback"
+          >Email is required and a valid email address.</b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group
-          id="example-input-group-2"
-          label=""
-          label-for="example-input-2"
-        >
+        <b-form-group id="example-input-group-2" label label-for="example-input-2">
           <b-form-input
             class="form-control form-control-solid h-auto py-5 px-6"
             type="password"
@@ -78,33 +56,25 @@
             aria-describedby="input-2-live-feedback"
           ></b-form-input>
 
-          <b-form-invalid-feedback id="input-2-live-feedback">
-            Password is required.
-          </b-form-invalid-feedback>
+          <b-form-invalid-feedback id="input-2-live-feedback">Password is required.</b-form-invalid-feedback>
         </b-form-group>
 
         <!--begin::Action-->
-        <div
-          class="form-group d-flex flex-wrap justify-content-between align-items-center"
-        >
+        <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
           <a
             href="#"
             class="text-dark-60 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
-          >
-            Forgot Password ?
-          </a>
+          >Forgot Password ?</a>
           <button
             ref="kt_login_signin_submit"
             class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
-          >
-            Sign In
-          </button>
+          >Sign In</button>
         </div>
         <!--end::Action-->
       </b-form>
       <!--end::Form-->
-    </div>
+    </v-container>
     <!--end::Signin-->
   </div>
 </template>
@@ -113,6 +83,11 @@
 .spinner.spinner-right {
   padding-right: 3.5rem !important;
 }
+// .login-form{
+//   position: relative;
+//   left:70%;
+//   margin-top:20%;
+// }
 </style>
 
 <script>
@@ -130,21 +105,21 @@ export default {
       // Remove this dummy login info
       form: {
         email: "admin@demo.com",
-        password: "demo"
-      }
+        password: "demo",
+      },
     };
   },
   validations: {
     form: {
       email: {
         required,
-        email
+        email,
       },
       password: {
         required,
-        minLength: minLength(3)
-      }
-    }
+        minLength: minLength(3),
+      },
+    },
   },
   methods: {
     validateState(name) {
@@ -154,7 +129,7 @@ export default {
     resetForm() {
       this.form = {
         email: null,
-        password: null
+        password: null,
       };
 
       this.$nextTick(() => {
@@ -191,12 +166,12 @@ export default {
           "spinner-right"
         );
       }, 2000);
-    }
+    },
   },
   computed: {
     ...mapState({
-      errors: state => state.auth.errors
-    })
-  }
+      errors: (state) => state.auth.errors,
+    }),
+  },
 };
 </script>

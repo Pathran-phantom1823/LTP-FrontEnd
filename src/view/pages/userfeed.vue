@@ -163,7 +163,21 @@
           </div>
           <div class="card ViewMoreCard mt-2">
             <div class="card-header ViewMoreHeader">
-              <b>Posted by: <b class="text-primary">Doom Bringer</b></b>
+              <b class="mb-5 font-weight-normal">Posted by:</b>
+              <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
+                <v-avatar>
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
+                    alt="John"
+                  >
+                </v-avatar>
+                <div class="ml-2">
+                  <p class="card-text">
+                    <b>Steve Jobs</b>
+                  </p>
+                </div>
+              </div>
+              <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
             </div>
             <div class="card-body ViewMoreBody">
               <p class="card-text mb-3"><b>Date Posted: </b> 9/24/2020</p>
@@ -174,7 +188,8 @@
                 </div>
               </div>
             </div>
-            <div class="card-footer ViewMoreFooter">
+            <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
+              <v-btn rounded class="acceptOffer" dark>Accept Offer</v-btn>
             </div>
           </div>
         </div>
@@ -336,7 +351,14 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.acceptOffer{
+  background-color: rgb(51, 188, 247) !important;
+}
+.post_owner{
+  display: flex;
+  align-items: center;
+}
 .ViewMoreIcon{
   padding-left: 25px;
   padding-right: 25px;
