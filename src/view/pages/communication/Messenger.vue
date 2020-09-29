@@ -230,19 +230,17 @@ export default {
     width: 5px;
 }
 
-/* Track */
+
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px lightblue;
     border-radius: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: lightblue;
     border-radius: 10px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #0a0af8;
 }
