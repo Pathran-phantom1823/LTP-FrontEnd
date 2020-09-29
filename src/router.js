@@ -449,6 +449,11 @@ export default new Router({
           name: "messenger",
           component: () => import("@/view/pages/communication/Messenger.vue")
         },
+        {
+          path: "/user/job_board",
+          name: "jobboard",
+          component: () => import("@/view/pages/job.vue")
+        }
         // ADD ROUTES HERE FOR USERS
       ]
     },

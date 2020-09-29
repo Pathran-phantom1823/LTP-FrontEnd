@@ -9,8 +9,8 @@
 
           <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav class="p-0 ml-auto text-center">
-              <a class="nav-link text-light navItems">Home</a>
-              <a class="nav-link text-light navItems">Jobs</a>
+              <a class="nav-link text-light navItems" @click="redirect('/user/feed')">Home</a>
+              <a class="nav-link text-light navItems" @click="redirect('/user/job_board')">Jobs</a>
               <a class="nav-link text-light navItems" @click="$router.push('/user/messenger')">Messages</a>
               <a class="nav-link text-light navItems">Communication</a>
               <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
@@ -50,6 +50,13 @@ export default {
     return {
       userdetails: [{ name: "Profile" }, { name: "Logout" }]
     };
+  },
+  methods: {
+    redirect (url) {
+      if(this.$route.path !== url){
+        this.$router.push(url)
+      }
+    }
   }
 };
 </script>
