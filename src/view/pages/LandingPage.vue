@@ -35,36 +35,36 @@
         </b-row>
       </v-container>
     </v-container>
-    <v-container class="bannerSubContent">
+    <v-container fluid class="bannerSubContent">
       <b-row>
-        <b-col sm="6">
+        <b-col sm="6" data-aos="fade-right"  data-aos-offset="300" data-aos-easing="ease-in-sine">
           <center>
-            <h1 class="serviceTitle">Translation</h1>
+            <h1 class="serviceTitle" >Translation</h1>
             <p class="serviceDesc">
-              Translate different kind of document in different kin of languages
+              Translate different kind of document in different kind of languages
             </p>
           </center>
         </b-col>
         <b-col sm="6">
-          <div class="jumbotron">
-            <v-img
+          <div class="jumbotron" data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
+             <center><v-img
               src="../../../public/media/bg/service1.png"
               class="serviceImage"
-            ></v-img>
+            ></v-img></center>
           </div>
         </b-col>
       </b-row>
       <hr />
       <b-row>
         <b-col sm="6">
-          <div class="jumbotron">
+          <div class="jumbotron" data-aos="fade-right" data-aos-duration="3000">
             <v-img
               src="../../../public/media/bg/service2.png"
               class="serviceImage"
             ></v-img>
           </div>
         </b-col>
-        <b-col sm="6">
+        <b-col sm="6" data-aos="fade-left" data-aos-duration="3000">
           <center>
             <h1 class="serviceTitle">Booking</h1>
             <p class="serviceDesc">Book translators and jobs that you want</p>
@@ -73,7 +73,7 @@
       </b-row>
       <hr />
       <b-row>
-        <b-col sm="6">
+        <b-col sm="6" data-aos="fade-up" data-aos-duration="3000">
           <center>
             <h1 class="serviceTitle">Real-Time Communication</h1>
             <p class="serviceDesc">
@@ -81,7 +81,7 @@
             </p>
           </center>
         </b-col>
-        <b-col sm="6">
+        <b-col sm="6" data-aos="fade-right" data-aos-duration="3000">
           <div class="jumbotron">
             <v-img src="../../../public/media/bg/Service3.png"></v-img>
           </div>
@@ -93,8 +93,8 @@
           <h1 class="servicesTitle">Available Services</h1>
         </b-row>
         <b-row>
-          <b-col sm="4" v-for="service in services" :key="service.name">
-            <v-card class="mx-auto services" max-width="344" outlined>
+          <b-col sm="4" v-for="service in services" :key="service.name" data-aos="flip-right" data-aos-duration="3000">
+            <v-card class="mx-auto services" max-width="344" outlined >
               <v-list-item three-line>
                 <v-list-item-content>
                   <v-list-item-title class="headline mb-1 text--primary"
@@ -106,7 +106,7 @@
                   tile
                   size="80"
                   
-                ><v-icon style="font-size:50px">{{service.icon}}</v-icon></v-list-item-avatar>
+                ><v-icon style="font-size:50px;color:#F2470F">{{service.icon}}</v-icon></v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
@@ -187,19 +187,22 @@ export default {
 }
 .bannerTitle {
   font-size: 50px;
-  color: rgb(51, 188, 247);
+  // color: rgb(51, 188, 247);
+  color: white;
 }
 .sectionTitle {
   font-size: 40px;
 }
 .bannerDesc {
   font-size: 20px;
-  color: rgb(51, 188, 247);
+  // color: rgb(51, 188, 247);
+  color: white;
 }
 .serviceImage {
   width: 500px;
 }
 .bannerMainContent {
+  background: linear-gradient(to bottom, #33bcf7 20%, #ffffff 100%);
   // background-image: linear-gradient(to right top, #eebd0b, #a9d146, #61da86, #00dbc1, #0bd6e9);
   height: 100vh;
 }
