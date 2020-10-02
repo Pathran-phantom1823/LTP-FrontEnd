@@ -19,7 +19,7 @@
     </center>
     <b-row v-if="isUser" class="justify-content-md-center">
         <b-col col lg="4">
-            <v-card class="mx-auto price" max-width="344" data-aos="fade-up" data-aos-duration="3000">
+            <v-card class="mx-auto price" max-width="344">
                 <v-card-text>
                     <center>
                         <div class="priceTitle"><h1>0</h1>USD/Yr</div>
@@ -41,7 +41,7 @@
             </v-card>
         </b-col>
         <b-col col lg="4">
-            <v-card class="mx-auto price" max-width="344" data-aos="fade-up" data-aos-duration="3000">
+            <v-card class="mx-auto price" max-width="344">
                 <v-card-text>
                     <center>
                         <div class="priceTitle"><h1>140</h1>USD/Yr</div>
