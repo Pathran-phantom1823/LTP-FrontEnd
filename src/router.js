@@ -529,6 +529,12 @@ export default new Router({
                     path: "/register",
                     component: () =>
                         import ("@/view/pages/auth/Register")
+                },
+                {
+                    name: "forgotpass",
+                    path: "/forgotpass",
+                    component: () =>
+                        import ("@/view/pages/auth/ForgotPass")
                 }
             ]
         },
