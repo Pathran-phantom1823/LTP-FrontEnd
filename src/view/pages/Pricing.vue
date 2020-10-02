@@ -7,8 +7,8 @@
             <v-btn color="success" @click="isUser = false">Organization</v-btn>
         </v-btn-toggle>
         <b-row>
-            <b-col sm="3" v-for="payment in paymentType" :key="payment.title" data-aos="flip-right" data-aos-duration="3000">
-                <b-card border-variant="primary">
+            <b-col sm="6" v-for="payment in paymentType" :key="payment.title" data-aos="flip-right" data-aos-duration="3000">
+                <b-card border-variant="primary" style="width:50%">
                     <b-card-text>
                         <h3> <i :class="payment.icon" style="font-size:30px" class="pr-5"></i>{{payment.title}}</h3>
                     </b-card-text>
@@ -166,6 +166,7 @@ export default {
     data() {
         return {
             isUser: true,
+            toggle_exclusive: undefined,
             paymentType: [{
                     title: "Credit Card",
                     icon: "far fa-credit-card"
@@ -174,14 +175,14 @@ export default {
                     title: "Paypal",
                     icon: "fab fa-cc-paypal"
                 },
-                {
-                    title: "Klarna.se",
-                    icon: "fa fa-id-card"
-                },
-                {
-                    title: "Qliro.se",
-                    icon: "fa fa-mobile"
-                },
+                // {
+                //     title: "Klarna.se",
+                //     icon: "fa fa-id-card"
+                // },
+                // {
+                //     title: "Qliro.se",
+                //     icon: "fa fa-mobile"
+                // },
             ],
         };
     },

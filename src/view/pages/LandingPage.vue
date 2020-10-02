@@ -29,6 +29,7 @@
             <b-col sm="6" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
                 <center>
                     <h1 class="serviceTitle">Translation</h1>
+                    <hr class="hrStyle"> 
                     <p class="serviceDesc">
                         Translate different kind of document in different kind of languages
                     </p>
@@ -52,6 +53,7 @@
             <b-col sm="6" data-aos="fade-left" data-aos-duration="3000">
                 <center>
                     <h1 class="serviceTitle">Booking</h1>
+                    <hr class="hrStyle"> 
                     <p class="serviceDesc">Book translators and jobs that you want</p>
                 </center>
             </b-col>
@@ -61,6 +63,7 @@
             <b-col sm="6" data-aos="fade-up" data-aos-duration="3000">
                 <center>
                     <h1 class="serviceTitle">Real-Time Communication</h1>
+                    <hr class="hrStyle"> 
                     <p class="serviceDesc">
                         Communicate with other people around the world real-time
                     </p>
@@ -273,6 +276,11 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
 
 }
 
+hr.hrStyle{
+      border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
 @media only screen and (max-width: 600px) {
     .logo {
         width: 300px;
