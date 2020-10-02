@@ -226,6 +226,7 @@ export default {
       fixedPrice: null,
       dateFrom: null,
       dateTo: null,
+      email: null,
       wizard: null,
       snackbar: false,
       text: null,
@@ -275,12 +276,14 @@ export default {
     },
     getBudget(data) {
       if (data.paymentType === "Pay per hour") {
+        this.email = data.email
         this.paymentType = data.paymentType;
         this.priceFrom = data.priceFrom;
         this.priceTo = data.priceTo;
         this.dateFrom = data.dateFrom;
         this.dateTo = data.dateTo;
       } else {
+        this.email = data.email
         this.paymentType = data.paymentType;
         this.fixedPrice = data.fixedPrice;
         this.dateFrom = data.dateFrom;

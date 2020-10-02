@@ -7,8 +7,8 @@
       style="background-color:rgb(51, 188, 247)"
       fixed="top"
     >
-      <b-navbar-brand href="#" style="color:white">
-        <v-img src="../../../public/media/bg/logo.png" width="50"></v-img>
+      <b-navbar-brand href="#" style="color:white" @click="$router.push('/banner')">
+        <h1>LTP</h1>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
