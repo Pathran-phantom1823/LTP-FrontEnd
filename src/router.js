@@ -539,8 +539,58 @@ export default new Router({
             ]
         },
         {
+
+          path: "error-5",
+          name: "error-5",
+          component: () => import("@/view/pages/error/Error-5.vue")
+        },
+        {
+          path: "error-6",
+          name: "error-6",
+          component: () => import("@/view/pages/error/Error-6.vue")
+        }
+      ]
+    },
+    {
+      path: "/user",
+      redirect: "/user/feed",
+      component: () => import("@/view/layout/Standard"),
+      children: [
+        {
+          path: "/user/feed",
+          name: "feed",
+          component: () => import("@/view/pages/userfeed.vue")
+        },
+        {
+          path: "/user/job_board",
+          name: "jobboard",
+          component: () => import("@/view/pages/job.vue")
+        },
+        {
+          path: "/user/forum",
+          name: "forum",
+          component: () => import("@/view/pages/forum.vue")
+        },
+        {
+          path: "/user/forumdetails",
+          name: "forum",
+          component: () => import("@/view/pages/forumDetails.vue")
+        }
+        // ADD ROUTES HERE FOR USERS
+      ]
+    },
+    {
+      path: "/",
+      component: () => import("@/view/pages/auth/Auth"),
+      children: [
+        {
+          name: "login",
+          path: "/login",
+          component: () => import("@/view/pages/auth/Login")
+
             path: "*",
             redirect: "/404"
+
         },
         {
             // the 404 route, when none of the above matches
