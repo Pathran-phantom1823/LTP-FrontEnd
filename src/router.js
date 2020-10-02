@@ -448,6 +448,11 @@ export default new Router({
           path: "/user/job_board",
           name: "jobboard",
           component: () => import("@/view/pages/job.vue")
+        },
+        {
+          path: "/user/review_bids",
+          name: "reviewbids",
+          component: () => import("@/view/pages/ReviewBids.vue")
         }
         // ADD ROUTES HERE FOR USERS
       ]
