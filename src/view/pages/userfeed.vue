@@ -407,7 +407,7 @@ export default {
   margin-left: -75px;
   position: fixed;
   z-index: 3;
-  top: 92px;
+  top: 92px; 
 }
 .hide {
   transition: 0.5s;

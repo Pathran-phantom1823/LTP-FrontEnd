@@ -12,7 +12,7 @@
               <a class="nav-link text-light navItems" @click="redirect('/user/feed')">Home</a>
               <a class="nav-link text-light navItems" @click="redirect('/user/job_board')">Jobs</a>
               <a class="nav-link text-light navItems">Messages</a>
-              <a class="nav-link text-light navItems">Communication</a>
+              <a class="nav-link text-light navItems"  @click="redirect('/user/forum')">Communication</a>
               <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
               <b-popover target="notifications" triggers="hover" placement="bottom">
                 <div class="card">
