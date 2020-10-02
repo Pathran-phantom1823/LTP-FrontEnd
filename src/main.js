@@ -28,9 +28,14 @@ import "@/core/plugins/inline-svg";
 import "@/core/plugins/apexcharts";
 import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 // API service init
 ApiService.init();
+
+//AnimATION
+AOS.init()
 
 // Remove this to disable mock API
 MockService.init();
@@ -49,6 +54,9 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
+  created: function() {
+    AOS.init()
+},
   router,
   store,
   i18n,

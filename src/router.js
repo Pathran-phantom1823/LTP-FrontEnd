@@ -501,6 +501,11 @@ export default new Router({
                         import ("@/view/pages/job.vue")
                 },
                 {
+                    path: "/user/messenger",
+                    name: "messenger",
+                    component: () => import("@/view/pages/communication/Messenger.vue")
+                  },
+                {
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
