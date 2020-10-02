@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-12 pl-7 pr-7">
         <div class="row">
           <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4 translator">
             <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
@@ -125,7 +125,7 @@
               </div>
             </div>
           </div>
-           <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4">
+          <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4 organization">
             <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
               <div class="card p-0 cards bid_cards">
                 <div class="card-body p-4">
@@ -557,6 +557,23 @@ export default {
   margin-bottom: 10px;
 }
 .translator::-webkit-scrollbar-thumb {
+  background-color: #c7cbcc;
+  border-radius: 20px;
+  border: 0px;
+}
+.translator, .organization{
+  overflow-y: scroll;
+  height: 600px;
+}
+.organization::-webkit-scrollbar {
+  width: 7px;
+  background-color: #F5F5F5;
+}
+.organization::-webkit-scrollbar-track {
+  background: rgb(240, 237, 235);
+  margin-bottom: 10px;
+}
+.organization::-webkit-scrollbar-thumb {
   background-color: #c7cbcc;
   border-radius: 20px;
   border: 0px;
