@@ -510,7 +510,7 @@ export default new Router({
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
-                        import ("@/view/pages/Profile.vue")
+                        import ("@/view/pages/UserProfile.vue")
                 },
                 {
                     path: "/user/review_bids",
