@@ -501,10 +501,34 @@ export default new Router({
                         import ("@/view/pages/job.vue")
                 },
                 {
+                    path: "/user/messenger",
+                    name: "messenger",
+                    component: () =>
+                        import ("@/view/pages/communication/Messenger.vue")
+                },
+                {
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
-                        import ("@/view/pages/UserProfile.vue")
+                        import ("@/view/pages/Profile.vue")
+                },
+                {
+                    path: "/user/review_bids",
+                    name: "reviewbids",
+                    component: () =>
+                        import ("@/view/pages/ReviewBids.vue")
+                },
+                {
+                    path: "/user/forum",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forum.vue")
+                },
+                {
+                    path: "/user/forumdetails",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forumDetails.vue")
                 },
                 {
                     path: "/user/orgprofile",
@@ -543,19 +567,7 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/auth/ForgotPass")
                 }
-
             ]
-        },
-        {
-            path: "*",
-            redirect: "/404"
-        },
-        {
-            // the 404 route, when none of the above matches
-            path: "/404",
-            name: "404",
-            component: () =>
-                import ("@/view/pages/error/Error-1.vue")
         }
     ]
 });
