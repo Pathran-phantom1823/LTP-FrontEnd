@@ -1,15 +1,14 @@
 <template>
   <div class="jobBoard">
-    <div class="d-flex justify-content-between">
-      <p class="job_board_title">Job Board</p>
-      <v-btn rounded color="primary" class="post_job" dark>
-        <v-icon dark class="post_job_icon">mdi-plus</v-icon>post a job
-      </v-btn>
-    </div>
-    <div class="card mb-20">
-      <div class="card-header board_header_container">
-        <div class="jobnav_container" v-for="(jobheader, index) in boardHeader" :key="index">
+    <div class="card mb-20 bid_cards_container">
+      <div class="card-header board_header_container pb-0 bid_cards_container">
+        <!-- <div class="jobnav_container" v-for="(jobheader, index) in boardHeader" :key="index">
           <a :ref="'nav' + index" class="jobnav" @click="navigateTo">{{jobheader}}</a>
+        </div> -->
+        <div class="card col-sm-12 p-0 cards bid_cards">
+          <div class="card-body p-3">
+            <b class="font-weight-normal bids_title"> Review Bids </b>
+          </div>
         </div>
       </div>
       <div class="card-body pt-4 pb-4">
@@ -23,14 +22,6 @@
           <div class="col-sm-12 card pl-3 pr-3 pt-5 pb-5 jobCard">
             <div class="card-body p-0 d-flex justify-content-between data_header">
               <b class="mb-0">{{data.title}}</b>
-              <div class="saveJobIcon">
-                <i
-                  :class="(String(returnNavEvent.text).toLowerCase() === 'save jobs') ? 'mdi mdi-heart' : 'mdi mdi-heart-outline'"
-                  @click="saveJob($event, index)"
-                  title="save job"
-                  v-if="String(returnNavEvent.text).toLowerCase() === 'active contracts' || String(returnNavEvent.text).toLowerCase() === 'save jobs'"
-                ></i>
-              </div>
             </div>
           </div>
           <div class="col-sm-4 card p-0 jobCard">
@@ -82,12 +73,6 @@
                 {{data.price}}
               </p>
               <p class="card-text locationbid mt-2">Bids: 0</p>
-              <p class="ViewMoreIcon" @click="redirect('/user/review_bids')" v-if="String(returnNavEvent.text).toLowerCase() === 'posted jobs'">
-                <v-icon
-                  title="review bids"
-                >mdi mdi-eye</v-icon>
-                 view bids
-              </p>
               <v-avatar class="edit_posts" size="36">
                 <v-icon title="edit" class="white--text headline">
                   mdi mdi-lead-pencil
@@ -98,6 +83,82 @@
                   mdi mdi-delete-forever
                 </v-icon>
               </v-avatar>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4 translator">
+            <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
+              <div class="card p-0 cards bid_cards">
+                <div class="card-body p-4">
+                  <b class="font-weight-normal"> Translators </b>
+                </div>
+              </div>
+            </div>
+            <div class="card-body pt-0 pb-0">
+              <div class="row cards" v-for="(element) in 10" :key="element">
+                <div class="col-sm-4 card p-3 bid_card">
+                  <div class="card-body p-0">
+                    <div class="d-flex justify-content-start align-items-center">
+                      <v-avatar
+                        color="indigo"
+                        size="36"
+                      >
+                        <img
+                          src="https://cdn.vuetifyjs.com/images/john.jpg"
+                          alt="John"
+                        >
+                      </v-avatar>
+                      <b class="ml-2 font-weight-normal">Bill Gates</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 card p-3 bid_card">
+                  <div class="card-body p-0 d-flex align-items-center justify-content-start">
+                    <div class="location_bids">
+                      <b class=" mr-2">Location: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">Philippines, </b></b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4">
+            <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
+              <div class="card p-0 cards bid_cards">
+                <div class="card-body p-4">
+                  <b class="font-weight-normal"> Organization </b>
+                </div>
+              </div>
+            </div>
+            <div class="card-body pt-0 pb-0">
+              <div class="row cards" v-for="(element) in 5" :key="element">
+                <div class="col-sm-4 card p-3 bid_card">
+                  <div class="card-body p-0">
+                    <div class="d-flex justify-content-start align-items-center">
+                      <v-avatar
+                        color="indigo"
+                        size="36"
+                      >
+                        <img
+                          src="https://cdn.vuetifyjs.com/images/john.jpg"
+                          alt="John"
+                        >
+                      </v-avatar>
+                      <b class="ml-2 font-weight-normal">Bill Gates</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 card p-3 bid_card">
+                  <div class="card-body p-0 d-flex align-items-center justify-content-start">
+                    <div class="location_bids">
+                      <b class=" mr-2">Location: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">Philippines, </b></b>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -117,7 +178,7 @@
           <div class="card-body ViewMoreBody">
             <p class="card-text mb-3">
               <b>Price:</b>
-              {{returnData[0].price}}
+              {{data[0].price}}
             </p>
             <p class="card-text">
               <b>Description :</b>Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents
@@ -128,7 +189,7 @@
               <div class="row">
                 <b
                   class="skills"
-                  v-for="(skill, index) in returnData[0].skills"
+                  v-for="(skill, index) in data[0].skills"
                   :key="index"
                 >{{skill}}</b>
               </div>
@@ -200,41 +261,6 @@ export default {
             "W3Schools is optimized for learning, testing, and training. Examples might be simplified to improve reading and basic understanding. Tutorials, references, and examples are constantly reviewed to avoid errors, but we cannot warrant full correctness of all content. While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy. Copyright 1999-2020 by Refsnes Data. All Rights Reserved.",
           skills: ["ENGLISH", "RUSSIAN", "KOREAN"],
           price: "$300"
-        },
-        {
-          title: "Premeiere mechanical for the Global Agriculture Industry",
-          description:
-            "Translate all mechanical documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300"
-        },
-        {
-          title: "Premeiere doctoral for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300"
-        },
-        {
-          title: "Premeiere philosophical for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300"
-        },
-        {
-          title: "Premeiere managerial for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300"
-        },
-        {
-          title: "Premeiere imperial for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300"
         }
       ],
       navEvent: "",
@@ -242,9 +268,6 @@ export default {
     };
   },
   components: {},
-  mounted() {
-    this.$refs["nav0"][0].click();
-  },
   computed: {
     returnNavEvent() {
       return this.navEvent;
@@ -255,24 +278,18 @@ export default {
   },
   methods: {
     showViewMore(e) {
-      if(String(this.navEvent.text).toLowerCase() === 'posted jobs'){
-        let target = e.target.children[2].children[0].children
-        target[5].classList.remove('hide_posts_icons')
-        target[5].classList.add('show_posts_icons')
-        target[6].classList.remove('hide_posts_icons')
-        target[6].classList.add('show_posts_icons')
-        target[4].style = "transition: .5s; right: 0 !important;";
-      }
+      let target = e.target.children[2].children[0].children
+      target[4].classList.remove('hide_posts_icons')
+      target[4].classList.add('show_posts_icons')
+      target[5].classList.remove('hide_posts_icons')
+      target[5].classList.add('show_posts_icons')
     },
     hideViewMore(e) {
-      if(String(this.navEvent.text).toLowerCase() === 'posted jobs'){
-        let target = e.target.children[2].children[0].children
-        target[5].classList.add('hide_posts_icons')
-        target[5].classList.remove('show_posts_icons')
-        target[6].classList.add('hide_posts_icons')
-        target[6].classList.remove('show_posts_icons')
-        target[4].style = "transition: .5s; right: -100% !important;";
-      }
+      let target = e.target.children[2].children[0].children
+      target[4].classList.add('hide_posts_icons')
+      target[4].classList.remove('show_posts_icons')
+      target[5].classList.add('hide_posts_icons')
+      target[5].classList.remove('show_posts_icons')
     },
     viewMore(ViewEvent) {
       if (ViewEvent) {
@@ -288,43 +305,33 @@ export default {
         this.$refs["moreInfo"].style =
           "transition: .5s !important; right: 100% !important";
       }
-    },
-    saveJob(e, index) {
-      if (e.target.className === "mdi mdi-heart-outline") {
-        e.target.className = "mdi mdi-heart";
-      } else {
-        if (
-          String(this.navEvent.text).toLowerCase() === "save jobs" &&
-          e.target.className === "mdi mdi-heart"
-        ) {
-          this.data.splice(index, 1);
-        } else {
-          e.target.className = "mdi mdi-heart-outline";
-        }
-      }
-    },
-    navigateTo(e) {
-      if (e.target !== this.navEvent) {
-        e.target.parentNode.classList.add("focused");
-        e.target.style = "color: white !important;";
-        if (this.navEvent !== "") {
-          this.navEvent.parentNode.classList.add("notFocused");
-          this.navEvent.parentNode.classList.remove("focused");
-          this.navEvent.style = "color: rgb(51, 188, 247) !important;";
-        }
-      }
-      this.navEvent = e.target;
-    },
-    redirect(url){
-      if(this.$route.path !== url){
-        this.$router.push(url)
-      }
     }
   }
 };
 </script>
 
 <style scoped>
+.location_bids{
+  white-space: nowrap; 
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.bid_cards_container{
+  border: none !important;
+}
+.bid_cards{
+  border-radius: 0px;
+}
+.bid_card{
+  border: none;
+  border-radius: 0px;
+  white-space: nowrap; 
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.bids_title{
+  font-size: 20px;
+}
 .view_more_truncate{
   color: rgb(51, 188, 247);
   cursor: pointer;
@@ -351,7 +358,7 @@ export default {
   font-size: 14px !important;
   background-color:rgb(51, 188, 247) !important;
   position: absolute;
-  right: 185px;
+  right: 60px;
   bottom: 15px;
   cursor: pointer;
   display: none;
@@ -359,7 +366,7 @@ export default {
 .delete_posts{
   font-size: 14px !important;
   position: absolute;
-  right: 140px;
+  right: 15px;
   bottom: 15px;
   cursor: pointer;
   display: none;
@@ -399,13 +406,6 @@ export default {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.saveJobIcon i {
-  width: 40px;
-  text-align: right;
-  font-size: 20px;
-  color: #f2470f !important;
-  cursor: pointer;
-}
 .jobCard {
   border-radius: 0px;
 }
@@ -434,23 +434,6 @@ export default {
 }
 .jobBoard {
   margin-top: 72px !important;
-}
-.post_job_icon {
-  font-size: 12px !important;
-  padding: 2px !important;
-  margin-right: 10px !important;
-  border: 1px solid white;
-  border-radius: 50%;
-}
-.post_job {
-  margin-top: 52px;
-  background-color: #f2470f !important;
-}
-.job_board_title {
-  padding-top: 50px;
-  font-size: 35px;
-  padding-bottom: 0px;
-  margin-bottom: 0px !important;
 }
 .jobnav {
   padding-left: 20px;
@@ -558,6 +541,22 @@ export default {
   margin-bottom: 10px;
 }
 .moreInfo::-webkit-scrollbar-thumb {
+  background-color: #c7cbcc;
+  border-radius: 20px;
+  border: 0px;
+}
+.translator{
+  overflow-y: scroll;
+  height: 600px;
+}
+.translator::-webkit-scrollbar {
+  width: 7px;
+}
+.translator::-webkit-scrollbar-track {
+  background: rgb(240, 237, 235);
+  margin-bottom: 10px;
+}
+.translator::-webkit-scrollbar-thumb {
   background-color: #c7cbcc;
   border-radius: 20px;
   border: 0px;

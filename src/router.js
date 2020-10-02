@@ -567,6 +567,11 @@ export default new Router({
           component: () => import("@/view/pages/job.vue")
         },
         {
+          path: "/user/review_bids",
+          name: "reviewbids",
+          component: () => import("@/view/pages/ReviewBids.vue")
+        },
+        {
           path: "/user/forum",
           name: "forum",
           component: () => import("@/view/pages/forum.vue")
