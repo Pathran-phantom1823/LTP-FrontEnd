@@ -8,30 +8,37 @@
                     <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                         <div class="wizard-label">
                             <i class="wizard-icon flaticon-information"></i>
-                            <h3 class="wizard-title">1. Personal Information</h3>
+                            <h3 class="wizard-title">1. Information</h3>
                         </div>
                         <i class="wizard-arrow flaticon2-next"></i>
                     </div>
                     <div class="wizard-step" data-wizard-type="step">
                         <div class="wizard-label">
                             <i class="wizard-icon flaticon-bus-stop"></i>
-                            <h3 class="wizard-title">2. Setup Address</h3>
+                            <h3 class="wizard-title">2. Address</h3>
                         </div>
                         <i class="wizard-arrow flaticon2-next"></i>
                     </div>
                     <div class="wizard-step" data-wizard-type="step">
                         <div class="wizard-label">
                             <i class="wizard-icon flaticon-list"></i>
-                            <h3 class="wizard-title">3. Translation Skills</h3>
+                            <h3 class="wizard-title">3. Translations</h3>
                         </div>
                         <i class="wizard-arrow flaticon2-next"></i>
                     </div>
                     <div class="wizard-step" data-wizard-type="step">
                         <div class="wizard-label">
                             <i class="wizard-icon flaticon-responsive"></i>
-                            <h3 class="wizard-title">4. Interested Services</h3>
+                            <h3 class="wizard-title">4. Services</h3>
                         </div>
-                        <i class="wizard-arrow flaticon2-next"></i>
+                         <i class="wizard-arrow flaticon2-next"></i>
+                    </div>
+                    <div class="wizard-step" data-wizard-type="step">
+                        <div class="wizard-label">
+                            <i class="wizard-icon flaticon-calendar"></i>
+                            <h3 class="wizard-title">5. Availability</h3>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -52,14 +59,14 @@
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Enter Firstname</label>
+                                        <label>Enter Firstname</label><span style="color:red">*</span>
                                         <input type="text" class="form-control form-control-solid form-control-lg" name="firstname" placeholder="Firstname" />
                                         <span class="form-text text-muted">Please enter your firstname</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Enter Lastname</label>
+                                        <label>Enter Lastname</label><span style="color:red">*</span>
                                         <input type="text" class="form-control form-control-solid form-control-lg" name="lastname" placeholder="Lastname" />
                                         <span class="form-text text-muted">Please enter your Lastname</span>
                                     </div>
@@ -75,7 +82,7 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Enter Age</label>
+                                        <label>Enter Age</label><span style="color:red">*</span>
                                         <input type="number" class="form-control form-control-solid form-control-lg" name="age" placeholder="Age" />
                                         <span class="form-text text-muted">Please enter your age</span>
                                     </div>
@@ -84,14 +91,14 @@
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Enter Birthdate</label>
-                                        <input type="date" class="form-control form-control-solid form-control-lg" name="birthdate" placeholder="Birthdare" />
+                                        <label>Enter Birthdate</label><span style="color:red">*</span>
+                                        <input type="date" class="form-control form-control-solid form-control-lg" name="birthdate" placeholder="Birthdate" />
                                         <span class="form-text text-muted">Please enter your Birthdate</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Gender</label>
+                                        <label>Gender</label><span style="color:red">*</span>
                                         <select name="gender" class="form-control form-control-solid form-control-lg">
                                             <option value="">Select</option>
                                             <option value="F">Female</option>
@@ -101,7 +108,7 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Email</label>
+                                        <label>Email</label><span style="color:red">*</span>
                                         <input type="eamil" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
                                         <span class="form-text text-muted">Please enter your Email</span>
                                     </div>
@@ -110,19 +117,19 @@
                         </div>
                         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                             <h3 class="mb-10 font-weight-bold text-dark">
-                                Address
+                                Home 
                             </h3>
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Postcode</label>
+                                        <label>Postcode</label><span style="color:red">*</span>
                                         <input type="text" class="form-control form-control-solid form-control-lg" name="postcode" placeholder="Postcode" />
                                         <span class="form-text text-muted">Please enter your Postcode.</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>City</label>
+                                        <label>City</label><span style="color:red">*</span>
                                         <input type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" />
                                         <span class="form-text text-muted">Please enter your City.</span>
                                     </div>
@@ -131,14 +138,14 @@
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>State</label>
+                                        <label>State</label><span style="color:red">*</span>
                                         <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="State" />
                                         <span class="form-text text-muted">Please enter your State.</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Country</label>
+                                        <label>Country</label><span style="color:red">*</span>
                                         <select name="country" class="form-control form-control-solid form-control-lg">
                                             <option value="">Select</option>
                                             <option v-for="(country, index) in countries" :key="index" :value="country.initial">{{country.name}}</option>
@@ -146,7 +153,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <h3 class="mb-10 font-weight-bold text-dark">
+                                School
+                                </h3>
+                               <div class="row">  
+                             <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>School</label><span style="color:red">*</span>
+                                        <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="School/University" />
+                                        <span class="form-text text-muted">Please enter the name of your school.</span>
+                                    </div>
+                                </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>School address</label><span style="color:red">*</span>
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="School address" />
+                                    <span class="form-text text-muted">Please enter the name of your school address.</span>
+                                </div>
+                            </div>
                         </div>
+                    </div>
                         <!--end: Wizard Step 1-->
                         <!--begin: Wizard Step 2-->
                         <div class="pb-5" data-wizard-type="step-content">
@@ -154,7 +180,7 @@
                                 Select languages that you are skilled for
                             </h4>
                             <div class="form-group">
-                                <label>Languages</label>
+                                <label>Languages</label><span style="color:red">*</span>
                                 <v-select multiple chips filled :items="languages" name="languages" dense>
                                 </v-select>
                             </div>
@@ -166,12 +192,15 @@
                                 Select your Services
                             </h4>
                             <div class="form-group">
-                                <label>Services</label>
+                                <label>Services</label><span style="color:red">*</span>
                                 <v-select multiple chips filled :items="services" name="services" dense>
                                 </v-select>
                             </div>
                         </div>
                         <!--end: Wizard Step 3-->
+                        <div class="pb-5" data-wizard-type="step-content">
+                            <Calendar/>
+                        </div>
                         <!--begin: Wizard Actions -->
                         <div class="d-flex justify-content-between border-top pt-10">
                             <div class="mr-2">
@@ -215,9 +244,13 @@ import {
 import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
+import Calendar from "@/view/pages/Calendar.vue";
 
 export default {
     name: "Wizard-1",
+    components:{
+        Calendar
+    },
     mounted() {
         this.$store.dispatch(SET_BREADCRUMB, [{
                 title: "Wizard"

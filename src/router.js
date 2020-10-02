@@ -503,13 +503,44 @@ export default new Router({
                 {
                     path: "/user/messenger",
                     name: "messenger",
-                    component: () => import("@/view/pages/communication/Messenger.vue")
-                  },
+                    component: () =>
+                        import ("@/view/pages/communication/Messenger.vue")
+                },
                 {
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
-                        import ("@/view/pages/Profile.vue")
+                        import ("@/view/pages/UserProfile.vue")
+                },
+                {
+                    path: "/user/review_bids",
+                    name: "reviewbids",
+                    component: () =>
+                        import ("@/view/pages/ReviewBids.vue")
+                },
+                {
+                    path: "/user/forum",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forum.vue")
+                },
+                {
+                    path: "/user/forumdetails",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forumDetails.vue")
+                },
+                {
+                    path: "/user/orgprofile",
+                    name: "orgprofile",
+                    component: () =>
+                        import ("@/view/pages/OrgProfile.vue")
+                },
+                {
+                    path: "/user/viewprofile",
+                    name: "viewprofile",
+                    component: () =>
+                        import ("@/view/pages/ViewProfile.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
@@ -537,17 +568,6 @@ export default new Router({
                         import ("@/view/pages/auth/ForgotPass")
                 }
             ]
-        },
-        {
-            path: "*",
-            redirect: "/404"
-        },
-        {
-            // the 404 route, when none of the above matches
-            path: "/404",
-            name: "404",
-            component: () =>
-                import ("@/view/pages/error/Error-1.vue")
         }
     ]
 });

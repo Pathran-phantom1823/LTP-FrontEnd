@@ -31,8 +31,15 @@
                 <b-form-invalid-feedback id="input-2-live-feedback">Password is required.</b-form-invalid-feedback>
             </b-form-group>
 
+         
+                <select name="account" class="form-control form-control-solid h-auto py-5 px-6" style="border-color:rgb(51,188,247);">
+                <option value="">Account Type</option>
+                <option v-for="(account, index) in accountype" :key="index">{{account.name}}</option>
+                </select>
+      
+
             <!--begin::Action-->
-            <div class="form-group">
+            <div class="form-group h-auto py-5">
                 <input ref="kt_login_signup_submit" style="background-color: rgb(51, 188, 247);border-radius:7px;color:white;" name="btn-submit" class="btn btn-block control-group" value="REGISTER" type="submit">
             </div>
 
@@ -84,15 +91,15 @@ import {
 export default {
     mixins: [validationMixin],
     name: "register",
-    data() {
-        return {
-            // Remove this dummy login info
-            form: {
-                email: "admin@demo.com",
-                password: "demo",
+    data: () => ({
+        accountype: [{
+                name: "User",
             },
-        };
-    },
+            {
+                name: "Organization",
+            }
+        ],
+    }),
     validations: {
         form: {
             username: {

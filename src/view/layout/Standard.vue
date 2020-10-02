@@ -11,8 +11,8 @@
             <b-navbar-nav class="p-0 ml-auto text-center">
               <a class="nav-link text-light navItems" @click="redirect('/user/feed')">Home</a>
               <a class="nav-link text-light navItems" @click="redirect('/user/job_board')">Jobs</a>
+              <a class="nav-link text-light navItems"  @click="redirect('/user/forum')">Communication</a>
               <a class="nav-link text-light navItems" @click="$router.push('/user/messenger')">Messages</a>
-              <a class="nav-link text-light navItems">Communication</a>
               <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
               <b-popover target="notifications" triggers="hover" placement="bottom">
                 <div class="card">
@@ -60,7 +60,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .navItems{
   margin-left: 10px;
   margin-right: 10px;
