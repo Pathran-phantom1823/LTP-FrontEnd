@@ -1,6 +1,6 @@
 <template>
   <div>
-    <br />
+    <br /><br />
     <v-col>
       <p class="forum_title">Forum</p>
     </v-col>
@@ -38,6 +38,16 @@
                 <br />
                 {{ a.commentDetails }}
               </p>
+              <div class="saveJobIcon">
+                <i
+                  class="mdi mdi-thumb-up-outline"
+                  @click="saveJob"
+                  title="save job"
+                ></i>
+              </div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <p class="likeSections">Likes: {{ a.like }}</p>
+
               <br />
             </v-row>
           </div>
@@ -78,6 +88,7 @@ export default {
             commentDetails:
               "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
+            like: 100,
           },
           {
             id: 2,
@@ -85,6 +96,7 @@ export default {
             commentDetails:
               "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
+            like: 300,
           },
           {
             id: 3,
@@ -92,13 +104,16 @@ export default {
             commentDetails:
               "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
-          },{
+            like: 200,
+          },
+          {
             id: 4,
             commentedBy: "Commentator 4",
             commentDetails:
               "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 32, 2020",
-          }
+            like: 100,
+          },
         ],
       },
     };
@@ -110,16 +125,26 @@ export default {
       }
     },
     saveJob(e) {
-      if (e.target.className === "mdi mdi-heart-outline") {
-        e.target.className = "mdi mdi-heart";
+      if (e.target.className === "mdi mdi-thumb-up-outline") {
+        e.target.className = "mdi mdi-thumb-up";
       } else {
-        e.target.className = "mdi mdi-heart-outline";
+        e.target.className = "mdi mdi-thumb-up-outline";
       }
     },
   },
 };
 </script>
 <style scoped>
+.likeSections {
+  font-size: 15px;
+}
+.saveJobIcon i {
+  color: #f2470f;
+}
+.likeButton {
+  margin-bottom: 20px;
+  font-size: 5px;
+}
 .commentDate {
   font-size: 13px;
   color: cornflowerblue;
@@ -130,6 +155,7 @@ export default {
 }
 .commentSection {
   margin-left: 80px;
+  margin-right: 190px;
 }
 .likeEmoticon {
   color: #f2470f;

@@ -26,11 +26,9 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                class="btnPostForum"
-                dark
+                class="btnPostForum primary"
                 v-bind="attrs"
                 v-on="on"
-                offset-md="4"
               >
                 POST TO FORUM
               </v-btn>
@@ -77,13 +75,15 @@
         :key="index"
       >
         <div class="card-body dataBody">
-          <b class="titleLabel">Topic: </b>
+          <b class="emphasizeWords">Topic: </b>
           <b
-            class="titleLabel navItems"
+            class="emphasizeWords navItems"
             @click="redirect('/user/forumdetails')"
             >{{ data.title }}</b
           >
-          <p>{{ data.datePosted }}</p>
+          <p style="font-weight:bold;">{{ data.datePosted }}<br>
+          Comments: 200 Comments
+          </p>
           <p class="card-text descriptionText">{{ data.description }}</p>
         </div>
       </div>
@@ -144,6 +144,10 @@ export default {
 };
 </script>
 <style scoped>
+.emphasizeWords {
+  font-weight: bold;
+  font-size: 17px;
+}
 .header {
   font-size: 20px;
 }
@@ -270,7 +274,6 @@ export default {
 .btnPostForum {
   margin-top: 52px;
   float: right;
-  background-color: #f2470f;
 }
 .forum_title {
   padding-top: 50px;
