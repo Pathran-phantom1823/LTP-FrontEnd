@@ -1,6 +1,5 @@
 <template>
 <div>
-
     <KTCodePreview v-bind:title="'Media with text'">
         <template v-slot:preview>
                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -54,7 +53,7 @@ import {
 
 export default {
     data() {
-        return {
+        return {}
             
     },
     components: {
