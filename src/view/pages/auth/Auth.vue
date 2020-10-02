@@ -40,12 +40,17 @@ export default {
   height: 100vh;
   background-color: #045de9;
   background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+  
  
 }
 .row{
-  margin-left:40px;
-  margin-right:40px;
-  margin-top:130px;
+  padding: 1em;
+  width:90% !important;
+  position: absolute; 
+  top: 50%; 
+  left: 51%; 
+  margin-right:-50%;
+  transform: translate(-50%, -50%) ;
   border-radius:7px;
 }
 

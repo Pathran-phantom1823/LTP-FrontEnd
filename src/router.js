@@ -504,7 +504,19 @@ export default new Router({
                     path: "/user/profile",
                     name: "profile",
                     component: () =>
-                        import ("@/view/pages/Profile.vue")
+                        import ("@/view/pages/UserProfile.vue")
+                },
+                {
+                    path: "/user/orgprofile",
+                    name: "orgprofile",
+                    component: () =>
+                        import ("@/view/pages/OrgProfile.vue")
+                },
+                {
+                    path: "/user/viewprofile",
+                    name: "viewprofile",
+                    component: () =>
+                        import ("@/view/pages/ViewProfile.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
@@ -531,6 +543,7 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/auth/ForgotPass")
                 }
+
             ]
         },
         {
