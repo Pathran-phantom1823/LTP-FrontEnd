@@ -11,6 +11,17 @@
     </v-snackbar>
     <v-container>
       <form style="text-align: left">
+        <v-card class="p-5">
+          <label for="title">
+            <strong>Enter your Email address*</strong>
+          </label>
+          <b-form-input
+            type="text"
+            v-model="email"
+            id="title"
+            class="form-control"
+          ></b-form-input> </v-card
+        ><br />
         <v-card style="padding: 10px">
           <label for="title">
             <strong>How much would you pay your translator?*</strong>
@@ -119,6 +130,7 @@ export default {
       IsNext: false,
       AddBtnClick: false,
       hourly: true,
+      email: null,
       typeOfPayment: [
         { id: 0, name: "Pay per hour", click: false },
         { id: 1, name: "Pay a fixed price", click: false },
@@ -170,6 +182,7 @@ export default {
           this.snackbar = true
         } else {
           let paremeter = {
+            email: this.email,
             paymentType: this.paymentType,
             priceFrom: this.withRange.from,
             priceTo: this.withRange.to,
@@ -188,6 +201,7 @@ export default {
           this.snackbar = true
         } else {
           let paremeter = {
+            email: this.email,
             paymentType: this.paymentType,
             fixedPrice: this.paymentNoRange,
             dateFrom: this.dateRange.from,
@@ -201,6 +215,7 @@ export default {
       }
     },
     reset() {
+      this.email = null
       this.paymentType = null;
       this.withRange.from = null;
       this.withRange.to = null;
