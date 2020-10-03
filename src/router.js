@@ -487,7 +487,7 @@ export default new Router({
             path: "/user",
             redirect: "/user/feed",
             component: () =>
-                import ("@/view/layout/Standard"),
+                import ("@/view/myLayouts/Standard"),
             children: [{
                     path: "/user/feed",
                     name: "feed",
