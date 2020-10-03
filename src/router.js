@@ -487,7 +487,7 @@ export default new Router({
             path: "/user",
             redirect: "/user/feed",
             component: () =>
-                import ("@/view/layout/Standard"),
+                import ("@/view/myLayouts/Standard"),
             children: [{
                     path: "/user/feed",
                     name: "feed",
@@ -543,6 +543,19 @@ export default new Router({
                         import ("@/view/pages/ViewProfile.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
+            ]
+        },
+        {
+            path: "/",
+            redirect: "/myDashboard",
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+                children: [{
+                    path: "/myDashboard",
+                    name: "myDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue")
+                },
             ]
         },
         {

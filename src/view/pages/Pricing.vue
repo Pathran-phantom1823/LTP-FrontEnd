@@ -7,8 +7,8 @@
             <v-btn color="success" @click="isUser = false">Organization</v-btn>
         </v-btn-toggle>
         <b-row>
-            <b-col sm="3" v-for="payment in paymentType" :key="payment.title" data-aos="flip-right" data-aos-duration="3000">
-                <b-card border-variant="primary">
+            <b-col sm="6" v-for="payment in paymentType" :key="payment.title" data-aos="flip-right" data-aos-duration="3000">
+                <b-card border-variant="primary" style="width:50%">
                     <b-card-text>
                         <h3> <i :class="payment.icon" style="font-size:30px" class="pr-5"></i>{{payment.title}}</h3>
                     </b-card-text>
@@ -19,7 +19,7 @@
     </center>
     <b-row v-if="isUser" class="justify-content-md-center">
         <b-col col lg="4">
-            <v-card class="mx-auto price" max-width="344" data-aos="fade-up" data-aos-duration="3000">
+            <v-card class="mx-auto price" max-width="344">
                 <v-card-text>
                     <center>
                         <div class="priceTitle"><h1>0</h1>USD/Yr</div>
@@ -41,7 +41,7 @@
             </v-card>
         </b-col>
         <b-col col lg="4">
-            <v-card class="mx-auto price" max-width="344" data-aos="fade-up" data-aos-duration="3000">
+            <v-card class="mx-auto price" max-width="344">
                 <v-card-text>
                     <center>
                         <div class="priceTitle"><h1>140</h1>USD/Yr</div>
@@ -108,7 +108,7 @@
                     </center>
                 </v-card-text>
                 <v-card-actions>
-                    <b-button variant="outline-primary" block @click="$emit('avail', org)" class="button">Avail Now</b-button>
+                    <b-button variant="outline-primary" block @click="avail('organization')" class="button">Avail Now</b-button>
                 </v-card-actions><br>
             </v-card>
         </b-col>
@@ -166,6 +166,7 @@ export default {
     data() {
         return {
             isUser: true,
+            toggle_exclusive: undefined,
             paymentType: [{
                     title: "Credit Card",
                     icon: "far fa-credit-card"
@@ -174,17 +175,23 @@ export default {
                     title: "Paypal",
                     icon: "fab fa-cc-paypal"
                 },
-                {
-                    title: "Klarna.se",
-                    icon: "fa fa-id-card"
-                },
-                {
-                    title: "Qliro.se",
-                    icon: "fa fa-mobile"
-                },
+                // {
+                //     title: "Klarna.se",
+                //     icon: "fa fa-id-card"
+                // },
+                // {
+                //     title: "Qliro.se",
+                //     icon: "fa fa-mobile"
+                // },
             ],
         };
     },
+    methods: {
+      avail(data){
+        this.$store.commit('setplan', data)
+        localStorage.setItem('plan', data)
+      }
+    }
 };
 </script>
 

@@ -12,16 +12,21 @@ export const UPDATE_USER = "updateUser";
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
 export const SET_ERROR = "setError";
+export const SET_PLAN = "setplan"
 
 const state = {
   errors: null,
   user: {},
+  plan: null,
   isAuthenticated: !!JwtService.getToken()
 };
 
 const getters = {
   currentUser(state) {
     return state.user;
+  },
+  getPlan(state){
+    return state.plan
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
@@ -82,7 +87,7 @@ const actions = {
       context.commit(SET_AUTH, data);
       return data;
     });
-  }
+  },
 };
 
 const mutations = {
@@ -101,6 +106,10 @@ const mutations = {
     state.user = {};
     state.errors = {};
     JwtService.destroyToken();
+  },
+  [SET_PLAN](state, plan) {
+    state.plan = plan;
+    // state.errors = {};
   }
 };
 

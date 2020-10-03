@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       dialog: false,
+      toggle_exclusive: undefined,
       searchCategory: ["Job", "Translator"],
       languages: [
         "Chines",
