@@ -547,6 +547,19 @@ export default new Router({
         },
         {
             path: "/",
+            redirect: "/myDashboard",
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+                children: [{
+                    path: "/myDashboard",
+                    name: "myDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue")
+                },
+            ]
+        },
+        {
+            path: "/",
             component: () =>
                 import ("@/view/pages/auth/Auth"),
             children: [{

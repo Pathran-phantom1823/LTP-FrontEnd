@@ -108,7 +108,7 @@
                     </center>
                 </v-card-text>
                 <v-card-actions>
-                    <b-button variant="outline-primary" block @click="$emit('avail', org)" class="button">Avail Now</b-button>
+                    <b-button variant="outline-primary" block @click="avail('organization')" class="button">Avail Now</b-button>
                 </v-card-actions><br>
             </v-card>
         </b-col>
@@ -186,6 +186,12 @@ export default {
             ],
         };
     },
+    methods: {
+      avail(data){
+        this.$store.commit('setplan', data)
+        localStorage.setItem('plan', data)
+      }
+    }
 };
 </script>
 

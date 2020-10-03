@@ -154,7 +154,7 @@ export default {
                     })
                     // go to which page after successfully login
                     .then(() => this.$router.push({
-                        name: "dashboard"
+                        name: "myDashboard"
                     }));
 
                 submitButton.classList.remove(

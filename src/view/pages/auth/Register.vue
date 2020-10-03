@@ -31,16 +31,22 @@
                 <b-form-invalid-feedback id="input-2-live-feedback">Password is required.</b-form-invalid-feedback>
             </b-form-group>
 
-         
-                <select name="account" class="form-control form-control-solid h-auto py-5 px-6" style="border-color:rgb(51,188,247);">
+            <b-form-group>
+                <select name="account" v-model="form.accountType" :state="validateState('accountType')" class="form-control form-control-solid h-auto py-5 px-6" style="border-color:rgb(51,188,247);">
+                    <option disabled value="">Account Type</option>
+                    <option value="user">User</option>
+                    <option value="organization">Organization</option>
+                </select>
+                <b-form-invalid-feedback id="input-1-live-feedback">Account Type is required</b-form-invalid-feedback>
+            </b-form-group>
+            <!-- <select name="account" class="form-control form-control-solid h-auto py-5 px-6" style="border-color:rgb(51,188,247);">
                 <option value="">Account Type</option>
                 <option v-for="(account, index) in accountype" :key="index">{{account.name}}</option>
-                </select>
-      
+            </select> -->
 
             <!--begin::Action-->
             <div class="form-group h-auto py-5">
-                <input ref="kt_login_signup_submit" style="background-color: rgb(51, 188, 247);border-radius:7px;color:white;" name="btn-submit" class="btn btn-block control-group" value="REGISTER" type="submit">
+                <button type="submit" ref="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3 btn-block">Register</button>
             </div>
 
             <div style="justify-content:center;display:flex">
@@ -69,9 +75,9 @@
 </style>
 
 <script>
-import {
-    mapState
-} from "vuex";
+// import {
+//     mapState
+// } from "vuex";
 import {
     REGISTER
 } from "@/core/services/store/auth.module";
@@ -87,18 +93,25 @@ import {
     required,
     minLength
 } from "vuelidate/lib/validators";
+import Swal from "sweetalert2";
 
 export default {
     mixins: [validationMixin],
     name: "register",
     data: () => ({
-        accountype: [{
-                name: "User",
-            },
-            {
-                name: "Organization",
-            }
-        ],
+        form: {
+            email: "admin@demo.com",
+            password: "demo",
+            username: '',
+            accountType: ''
+        },
+        // accountype: [{
+        //         name: "User",
+        //     },
+        //     {
+        //         name: "Organization",
+        //     }
+        // ],
     }),
     validations: {
         form: {
@@ -114,6 +127,9 @@ export default {
                 required,
                 minLength: minLength(3),
             },
+            accountType: {
+                required
+            }
         },
     },
     methods: {
@@ -144,6 +160,7 @@ export default {
             const username = this.$v.form.username.$model;
             const email = this.$v.form.email.$model;
             const password = this.$v.form.password.$model;
+            // const accountType = this.$v.form.accountType.$model;
 
             // clear existing errors
             this.$store.dispatch(LOGOUT);
@@ -155,16 +172,68 @@ export default {
             // dummy delay
             setTimeout(() => {
                 // send register request
-                this.$store
-                    .dispatch(REGISTER, {
-                        email: email,
-                        password: password,
-                        username: username,
-                    })
-                    .then(() => this.$router.push({
-                        name: "dashboard"
-                    }));
-
+                if (localStorage.getItem() === 'organization' || this.form.accountType === 'organization') {
+                    this.$store
+                        .dispatch(REGISTER, {
+                            email: email,
+                            password: password,
+                            username: username,
+                        })
+                        .then(() => {
+                            this.$router.push({
+                                name: "dashboard"
+                            })
+                            this.$store.commit('setplan', 'organization')
+                        });
+                } else if (localStorage.getItem() === 'user_standard' && this.form.accountType === 'user') {
+                    this.$store
+                        .dispatch(REGISTER, {
+                            email: email,
+                            password: password,
+                            username: username,
+                        })
+                        .then(() => {
+                            this.$router.push({
+                                name: "dashboard"
+                            })
+                            this.$store.commit('setplan', 'user_standard')
+                        });
+                } else if (localStorage.getItem() === 'user_free' && this.form.accountType === 'user') {
+                    this.$store
+                        .dispatch(REGISTER, {
+                            email: email,
+                            password: password,
+                            username: username,
+                        })
+                        .then(() => {
+                            this.$router.push({
+                                name: "myDashboard"
+                            })
+                            this.$store.commit('setplan', 'user_free')
+                        });
+                }else if (localStorage.getItem() === '' && this.form.accountType === 'user') {
+                    this.$store
+                        .dispatch(REGISTER, {
+                            email: email,
+                            password: password,
+                            username: username,
+                        })
+                        .then(() => {
+                            this.$router.push({
+                                name: "dashboard"
+                            })
+                            this.$store.commit('setplan', 'user_free')
+                        });
+                } else {
+                    Swal.fire({
+                        title: "",
+                        text: "Please select the plan that you want to avail!",
+                        icon: "error",
+                        confirmButtonClass: "btn btn-secondary",
+                    }).then(() =>{
+                        this.$router.push('/banner')
+                    });
+                }
                 submitButton.classList.remove(
                     "spinner",
                     "spinner-light",
@@ -173,10 +242,10 @@ export default {
             }, 2000);
         },
     },
-    computed: {
-        ...mapState({
-            errors: (state) => state.auth.errors,
-        }),
-    },
+    // computed: {
+    //     ...mapState({
+    //         errors: (state) => state.auth.errors,
+    //     }),
+    // },
 };
 </script>
