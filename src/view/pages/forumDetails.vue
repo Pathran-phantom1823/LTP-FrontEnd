@@ -1,73 +1,48 @@
 <template>
-  <div>
-    <br /><br />
-    <v-col>
-      <p class="forum_title">Forum</p>
-    </v-col>
-    <div>
-      <div class="card FeedCard">
-        <div class="card-body dataBody">
-          <b class="emphasizeWords">Topic: </b>
-          <b class="emphasizeWords navItems">{{ forumDetails.title }}</b>
-          <p>
-            Posted by:
-            <span>
-              {{ forumDetails.postedBy }}
-            </span>
-            <br />
-            Posted Date:
-            <span>
-              {{ forumDetails.datePosted }}
-            </span>
-          </p>
-          <p class="card-text descriptionText">
-            {{ forumDetails.description }}
-          </p>
+  <div class="forumDetails">
+    <v-card max-width="1200" class="mx-auto">
+      <v-card-text>
+        <v-card-title class="headline font-weight-bold"
+          >Topic: {{ forumDetails.title }}
+        </v-card-title>
+        <v-card-subtitle class="text--primary text-justify "
+          >Posted by: {{ forumDetails.postedBy }} <br />Posted Date:
+          {{ forumDetails.datePosted }}</v-card-subtitle
+        >
+        <v-card-subtitle>
+          <span class=" mx-12  text-center text-justify">{{
+            forumDetails.description
+          }}</span>
           <hr />
-          <div
-            class="commentSection"
-            v-for="a in forumDetails.comments"
-            :key="a.id"
-          >
-            <v-row class=".col-5">
-              <b class="replyNames">{{ a.commentedBy }} </b>
-              <br />
-              <p class="card-text descriptionText">
-                Commented Date:
-                <span class="commentDate">{{ a.commentDate }}</span>
-                <br />
-                {{ a.commentDetails }}
-              </p>
-              <div class="saveJobIcon">
-                <i
-                  class="mdi mdi-thumb-up-outline"
-                  @click="saveJob"
-                  title="save job"
-                ></i>
-              </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <p class="likeSections">Likes: {{ a.like }}</p>
-
-              <br />
-            </v-row>
+        </v-card-subtitle>
+        <div v-for="a in forumDetails.comments" :key="a.id" max-width="200">
+          <v-card-sutitle class="mx-12 text--primary font-weight-bold">
+            {{ a.commentedBy }} </v-card-sutitle
+          ><br />
+          <v-card-sutitle class="mx-12 text--primary font-weight-light">
+            {{ a.commentDetails }}
+          </v-card-sutitle>
+          <div class="btnLike">
+            <i class="mdi mdi-thumb-up-outline" @click="changeLikeColor"></i>
+            <p class="likeNumber">{{ a.like }}</p>
           </div>
-          <center>
-            <v-col class="col-11">
-              <v-text-field
-                outlined
-                label="Reply"
-                class="searchBox"
-                append-icon="mdi-message-text"
-                dense
-                clearable
-                rounded
-                color="blue lighten-1"
-              ></v-text-field>
-            </v-col>
-          </center>
+          <br />
         </div>
-      </div>
-    </div>
+        <center>
+          <v-text-field
+            outlined
+            label="Reply"
+            class="searchBox"
+            append-icon="mdi-message-text"
+            dense
+            clearable
+            rounded
+            color="blue lighten-1"
+          ></v-text-field>
+        </center>
+      </v-card-text>
+    </v-card>
+    <br />
   </div>
 </template>
 <script>
@@ -86,7 +61,7 @@ export default {
             id: 1,
             commentedBy: "Commentator 1",
             commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
+              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
             like: 100,
           },
@@ -94,7 +69,7 @@ export default {
             id: 2,
             commentedBy: "Commentator 2",
             commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
+              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
             like: 300,
           },
@@ -102,7 +77,7 @@ export default {
             id: 3,
             commentedBy: "Commentator 3",
             commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
+              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 1, 2020",
             like: 200,
           },
@@ -110,7 +85,7 @@ export default {
             id: 4,
             commentedBy: "Commentator 4",
             commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
+              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
             commentDate: "October 32, 2020",
             like: 100,
           },
@@ -119,12 +94,7 @@ export default {
     };
   },
   methods: {
-    redirect(url) {
-      if (this.$route.path !== url) {
-        this.$router.push(url);
-      }
-    },
-    saveJob(e) {
+    changeLikeColor(e) {
       if (e.target.className === "mdi mdi-thumb-up-outline") {
         e.target.className = "mdi mdi-thumb-up";
       } else {
@@ -135,58 +105,24 @@ export default {
 };
 </script>
 <style scoped>
-.likeSections {
-  font-size: 15px;
+.forumDetails {
+  margin-top: 130px;
 }
-.saveJobIcon i {
+#description {
+  width: 20px !important;
+}
+.btnLike i {
   color: #f2470f;
-}
-.likeButton {
   margin-bottom: 20px;
-  font-size: 5px;
-}
-.commentDate {
-  font-size: 13px;
-  color: cornflowerblue;
-}
-.replyArea {
-  width: 300px;
-  height: 30px;
-}
-.commentSection {
-  margin-left: 80px;
-  margin-right: 190px;
-}
-.likeEmoticon {
-  color: #f2470f;
-}
-
-.likeEmoticon {
-  width: 40px;
-  text-align: right;
-  font-size: 20px;
-}
-.likeEmoticon i {
-  color: #f2470f;
-}
-.likeEmoticon:hover {
-  cursor: pointer;
-}
-.likeEmoticon:active {
-  transform: scaleY(1.2);
-}
-.forum_title {
-  padding-top: 50px;
-  font-size: 35px;
-  padding-bottom: 0px;
-  margin-bottom: 0px !important;
-}
-.emphasizeWords {
-  font-weight: bold;
-  font-size: 20px;
-}
-.replyNames {
-  font-weight: bold;
+  margin-left: 50px;
   font-size: 15px;
+}
+.likeNumber {
+  margin-top: -20px;
+  margin-left: 70px !important;
+  font-size: 10px;
+}
+.searchBox {
+  width: 950px;
 }
 </style>
