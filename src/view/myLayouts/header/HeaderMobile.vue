@@ -1,93 +1,91 @@
 <template>
-  <div
-    id="kt_header_mobile"
-    class="header-mobile align-items-center"
-    v-bind:class="headerClasses"
-  >
+<div id="kt_header_mobile" class="header-mobile align-items-center" v-bind:class="headerClasses">
     <!--begin::Logo-->
     <a href="/">
-      <img alt="Logo" :src="headerLogo" />
+        <h1>L T P</h1>
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->
     <div class="d-flex align-items-center">
-      <!--begin::Aside Mobile Toggle-->
-      <button
-        v-if="asideEnabled"
-        class="btn p-0 burger-icon burger-icon-left"
-        id="kt_aside_mobile_toggle"
-      >
-        <span></span>
-      </button>
-      <!--end::Aside Mobile Toggle-->
-      <!--begin::Header Menu Mobile Toggle-->
-      <button
-        class="btn p-0 burger-icon ml-4"
-        id="kt_header_mobile_toggle"
-        ref="kt_header_mobile_toggle"
-      >
-        <span></span>
-      </button>
-      <!--end::Header Menu Mobile Toggle-->
-      <!--begin::Topbar Mobile Toggle-->
-      <button
-        class="btn btn-hover-text-primary p-0 ml-2"
-        id="kt_header_mobile_topbar_toggle"
-        ref="kt_header_mobile_topbar_toggle"
-      >
-        <span class="svg-icon svg-icon-xl">
-          <!--begin::Svg Icon | path:svg/icons/General/User.svg-->
-          <inline-svg class="svg-icon" src="media/svg/icons/General/User.svg" />
-          <!--end::Svg Icon-->
-        </span>
-      </button>
-      <!--end::Topbar Mobile Toggle-->
+        <!--begin::Aside Mobile Toggle-->
+        <button v-if="asideEnabled" class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
+            <span></span>
+        </button>
+        <!--end::Aside Mobile Toggle-->
+        <!--begin::Header Menu Mobile Toggle-->
+        <b-dropdown size="sm" id="kt_quick_search_toggle" variant="link" toggle-class="topbar-item text-decoration-none" no-caret right no-flip>
+            <template v-slot:button-content>
+                <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+                    <span class="svg-icon svg-icon-xl">
+                        <inline-svg src="media/svg/icons/General/Search.svg" />
+                    </span>
+                </div>
+            </template>
+            <b-dropdown-text tag="div" class="min-w-md-350px">
+                <KTSearchDefault></KTSearchDefault>
+            </b-dropdown-text>
+        </b-dropdown>
+        <!--end::Header Menu Mobile Toggle-->
+        <!--begin::Topbar Mobile Toggle-->
+        <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle" ref="kt_header_mobile_topbar_toggle">
+            <span class="svg-icon svg-icon-xl">
+                <!--begin::Svg Icon | path:svg/icons/General/User.svg-->
+                <inline-svg class="svg-icon" src="media/svg/icons/General/User.svg" />
+                <!--end::Svg Icon-->
+            </span>
+        </button>
+        <!--end::Topbar Mobile Toggle-->
     </div>
     <!--end::Toolbar-->
-  </div>
+</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+    mapGetters
+} from "vuex";
+import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
 import KTLayoutHeaderTopbar from "@/assets/js/layout/base/header-topbar.js";
 
 export default {
-  name: "KTHeaderMobile",
-  components: {},
-  mounted() {
-    // Init Header Topbar For Mobile Mode
-    KTLayoutHeaderTopbar.init(this.$refs["kt_header_mobile_topbar_toggle"]);
-  },
-  computed: {
-    ...mapGetters(["layoutConfig", "getClasses"]),
-
-    /**
-     * Get header logo
-     * @returns {string}
-     */
-    headerLogo() {
-      return process.env.BASE_URL + this.layoutConfig("self.logo.dark");
+    name: "KTHeaderMobile",
+    components: {
+        KTSearchDefault,
     },
-
-    /**
-     * Get classes for mobile header
-     * @returns {null|*}
-     */
-    headerClasses() {
-      const classes = this.getClasses("header_mobile");
-      if (typeof classes !== "undefined") {
-        return classes.join(" ");
-      }
-      return null;
+    mounted() {
+        // Init Header Topbar For Mobile Mode
+        KTLayoutHeaderTopbar.init(this.$refs["kt_header_mobile_topbar_toggle"]);
     },
+    computed: {
+        ...mapGetters(["layoutConfig", "getClasses"]),
 
-    /**
-     * Check if the left aside menu is enabled
-     * @returns {boolean}
-     */
-    asideEnabled() {
-      return !!this.layoutConfig("aside.self.display");
+        /**
+         * Get header logo
+         * @returns {string}
+         */
+        headerLogo() {
+            return process.env.BASE_URL + this.layoutConfig("self.logo.dark");
+        },
+
+        /**
+         * Get classes for mobile header
+         * @returns {null|*}
+         */
+        headerClasses() {
+            const classes = this.getClasses("header_mobile");
+            if (typeof classes !== "undefined") {
+                return classes.join(" ");
+            }
+            return null;
+        },
+
+        /**
+         * Check if the left aside menu is enabled
+         * @returns {boolean}
+         */
+        asideEnabled() {
+            return !!this.layoutConfig("aside.self.display");
+        }
     }
-  }
 };
 </script>

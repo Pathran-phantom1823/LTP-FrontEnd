@@ -4,6 +4,7 @@
 
 .aside {
 	width: get($aside-config, base, width);
+	background-color: get($aside-config, base, bg-color);
 
 	// Aside Menu
 	.aside-menu {

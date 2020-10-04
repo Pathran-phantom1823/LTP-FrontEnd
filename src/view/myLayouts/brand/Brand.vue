@@ -1,14 +1,14 @@
 <template>
   <!-- begin:: Aside -->
   <div class="brand flex-column-auto" id="kt_brand" ref="kt_brand">
-    <div class="brand-logo">
+    <div class="brand-logo ml-5">
       <router-link to="/">
-        <h1 style="color:white">LTP</h1>
+        <h1 style="color:white;margin-left:10px">LTP</h1>
       </router-link>
     </div>
     <div class="brand-tools" v-if="allowMinimize">
       <button
-        class="brand-toggle btn btn-sm px-0"
+        class="brand-toggle btn btn-sm px-0 btn-primary btn-hover-primary hadow-sm pl-1"
         id="kt_aside_toggle"
         ref="kt_aside_toggle"
       >

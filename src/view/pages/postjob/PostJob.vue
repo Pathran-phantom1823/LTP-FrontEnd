@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Landingnav />
+    <Landingnav v-if="!hideNav"/>
      <v-snackbar v-model="snackbar" :timeout="timeout" color="red"
       elevation="24">
       {{ text }}
@@ -237,6 +237,9 @@ export default {
     backgroundImage() {
       return process.env.BASE_URL + "media/bg/bg-5.jpg";
     },
+    hideNav(){
+      return (this.$route.path === "/quotation")
+    }
   },
   mounted() {
     // Initialize form wizard

@@ -21,6 +21,9 @@
             <v-btn icon @click.stop="dialog = true" style="color:#1a75ff;background-color:#1a75ff">
               <v-icon color="white">mdi-magnify</v-icon>
             </v-btn>
+            <v-btn color="white" style="color:#1a75ff" @click="$router.push('/instant-quote')">
+              <strong>Instant Quote</strong>
+            </v-btn>
             <v-btn color="white" style="color:#1a75ff">
               <strong>Forum</strong>
             </v-btn>
