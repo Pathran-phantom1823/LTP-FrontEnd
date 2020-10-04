@@ -568,6 +568,18 @@ export default new Router({
                     }
                 },
                 {
+                    path: "/forum",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forum.vue")
+                },
+                {
+                    path: "/forumdetails",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forumDetails.vue")
+                },
+                {
                     path: "/quotation",
                     name: "quotation",
                     component: () =>
