@@ -17,6 +17,12 @@ export default new Router({
                 import ("@/view/pages/postjob/PostJob.vue")
         },
         {
+            path: "/instant-quote",
+            name: "instantQuote",
+            component: () =>
+                import ("@/view/pages/postjob/PostJob.vue")
+        },
+        {
             path: "/",
             redirect: "/dashboard",
             component: () =>
@@ -554,7 +560,62 @@ export default new Router({
                     path: "/myDashboard",
                     name: "myDashboard",
                     component: () =>
-                        import ("@/view/pages/Dashboard.vue")
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Dashboard'}
+                        ]
+                    }
+                },
+                {
+                    path: "/forum",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forum.vue")
+                },
+                {
+                    path: "/forumdetails",
+                    name: "forum",
+                    component: () =>
+                        import ("@/view/pages/forumDetails.vue")
+                },
+                {
+                    path: "/quotation",
+                    name: "quotation",
+                    component: () =>
+                        import ("@/view/pages/postjob/PostJob.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Quotation', link: 'quotation'}
+                        ]
+                    }
+                },
+                {
+                    path: "/accounts",
+                    name: "accounts",
+                    component: () =>
+                        import ("@/view/pages/Accounts.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Accounts', link: 'accounts'},
+                            {name: 'View Accounts'}
+                        ]
+                    }
+                },
+
+
+                // JObs Here
+                {
+                    path: "/view-jobs",
+                    name: "viewJobs",
+                    component: () =>
+                        import ("@/view/pages/job-management/ViewJobs.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Jobs', link: 'viewJobs'},
+                            {name: 'View Jobs'}
+                        ]
+                    }
                 },
             ]
         },

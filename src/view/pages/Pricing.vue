@@ -61,7 +61,7 @@
                     </center>
                 </v-card-text>
                 <v-card-actions>
-                    <b-button variant="outline-primary" block @click="$emit('avail', user)" class="button">Avail Now</b-button>
+                    <b-button variant="outline-primary" block @click="avail('user_standard')" class="button">Avail Now</b-button>
                 </v-card-actions><br>
             </v-card>
         </b-col>
@@ -190,6 +190,7 @@ export default {
       avail(data){
         this.$store.commit('setplan', data)
         localStorage.setItem('plan', data)
+        this.$router.push('/register')
       }
     }
 };

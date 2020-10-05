@@ -172,7 +172,7 @@ export default {
             // dummy delay
             setTimeout(() => {
                 // send register request
-                if (localStorage.getItem() === 'organization' || this.form.accountType === 'organization') {
+                if (localStorage.getItem('plan') === 'organization' && this.form.accountType === 'organization') {
                     this.$store
                         .dispatch(REGISTER, {
                             email: email,
@@ -185,7 +185,8 @@ export default {
                             })
                             this.$store.commit('setplan', 'organization')
                         });
-                } else if (localStorage.getItem() === 'user_standard' && this.form.accountType === 'user') {
+                    // alert('complete 1 condtion')
+                } else if (localStorage.getItem('plan') === 'user_standard' && this.form.accountType === 'user') {
                     this.$store
                         .dispatch(REGISTER, {
                             email: email,
@@ -198,20 +199,8 @@ export default {
                             })
                             this.$store.commit('setplan', 'user_standard')
                         });
-                } else if (localStorage.getItem() === 'user_free' && this.form.accountType === 'user') {
-                    this.$store
-                        .dispatch(REGISTER, {
-                            email: email,
-                            password: password,
-                            username: username,
-                        })
-                        .then(() => {
-                            this.$router.push({
-                                name: "myDashboard"
-                            })
-                            this.$store.commit('setplan', 'user_free')
-                        });
-                }else if (localStorage.getItem() === '' && this.form.accountType === 'user') {
+                    // alert('complete 2 condtion')
+                } else if (this.form.accountType === 'user') {
                     this.$store
                         .dispatch(REGISTER, {
                             email: email,
@@ -224,10 +213,11 @@ export default {
                             })
                             this.$store.commit('setplan', 'user_free')
                         });
+                    // alert('complete 3 condtion')
                 } else {
                     Swal.fire({
                         title: "",
-                        text: "Please select the plan that you want to avail!",
+                        text: "Please select the plan that you want to avail appropriate to your chosen account!",
                         icon: "error",
                         confirmButtonClass: "btn btn-secondary",
                     }).then(() =>{

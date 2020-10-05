@@ -111,10 +111,15 @@
                 <!--end:Item-->
                 <v-divider></v-divider>
                 <h3>Set your unavailable date</h3>
-                        <v-date-picker v-model="dates" multiple color="red"  header-color="primary" style="margin-right:10px"></v-date-picker>
+                <v-date-picker v-model="dates" multiple color="red" header-color="primary" style="margin-right:10px"></v-date-picker>
             </div>
             <!--end::Nav-->
             <div class="separator separator-dashed my-7"></div>
+             <a
+                class="btn btn-light-primary font-weight-bolder btn-sm"
+                href="#"
+                >Upgrade plan</a
+              >
         </perfect-scrollbar>
         <!--end::Content-->
     </div>
