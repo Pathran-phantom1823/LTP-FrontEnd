@@ -541,12 +541,6 @@ export default new Router({
                     name: "orgprofile",
                     component: () =>
                         import ("@/view/pages/OrgProfile.vue")
-                },
-                {
-                    path: "/user/viewprofile",
-                    name: "viewprofile",
-                    component: () =>
-                        import ("@/view/pages/ViewProfile.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
