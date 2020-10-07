@@ -33,8 +33,6 @@
                 v-model="languageFrom"
                 :items="languages"
                 label="Select"
-                multiple
-                chips
                 outlined
                 height="20"
               ></v-select>
@@ -81,7 +79,7 @@ export default {
       dialog: false,
       IsNext: false,
       description: null,
-      languageFrom: [],
+      languageFrom: null,
       languageTo: [],
       file: [],
       data: [],
@@ -110,7 +108,7 @@ export default {
     next() {
       if (
         this.description === null ||
-        this.languageFrom.length === 0 ||
+        this.languageFrom === null ||
         this.languageTo.length === 0
       ) {
         this.snackbar = true

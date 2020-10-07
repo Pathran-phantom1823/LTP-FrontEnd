@@ -6,11 +6,25 @@ import JwtService from "@/core/services/jwt.service";
 /**
  * Service to call HTTP request via Axios
  */
+const config = {
+  headers: {
+    "Authorization": `${JwtService.getToken()}`,
+    "Access-Control-Allow-Origin": "*",
+    "Constent-type": "multipart/form-data"
+  }
+};
+const config2 = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Content-type": "multipart/form-data"
+  }
+};
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = "http://localhost";
+    Vue.axios.defaults.baseURL = "http://localhost:8003/api/test/";
   },
+
 
   /**
    * Set the default HTTP request headers
@@ -18,11 +32,11 @@ const ApiService = {
   setHeader() {
     Vue.axios.defaults.headers.common[
       "Authorization"
-    ] = `Token ${JwtService.getToken()}`;
+    ] = `${JwtService.getToken()}`;
   },
 
   query(resource, params) {
-    return Vue.axios.get(resource, params).catch(error => {
+    return Vue.axios.get(resource, params, config).catch(error => {
       // console.log(error);
       throw new Error(`[KT] ApiService ${error}`);
     });
@@ -34,11 +48,9 @@ const ApiService = {
    * @param slug
    * @returns {*}
    */
-  get(resource, slug = "") {
-    return Vue.axios.get(`${resource}/${slug}`).catch(error => {
-      // console.log(error);
-      throw new Error(`[KT] ApiService ${error}`);
-    });
+  get(resource) {
+    // console.log(resource, slug)
+    return Vue.axios.get(`${resource}`, config)
   },
 
   /**
@@ -48,7 +60,9 @@ const ApiService = {
    * @returns {*}
    */
   post(resource, params) {
-    return Vue.axios.post(`${resource}`, params);
+    let header = config.headers.Authorization === "null" ? config2 : config
+    console.log('headers', header)
+    return Vue.axios.post(`${resource}`, params, header);
   },
 
   /**

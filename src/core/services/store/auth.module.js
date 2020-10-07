@@ -1,5 +1,6 @@
 import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
+// import axios from "axios";
 
 // action types
 export const VERIFY_AUTH = "verifyAuth";
@@ -18,6 +19,7 @@ const state = {
   errors: null,
   user: {},
   plan: null,
+  userId: null,
   isAuthenticated: !!JwtService.getToken()
 };
 
@@ -36,13 +38,15 @@ const getters = {
 const actions = {
   [LOGIN](context, credentials) {
     return new Promise(resolve => {
-      ApiService.post("login", credentials)
+      console.log(credentials)
+      ApiService.post("login/", credentials)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data);
+          console.log(data)
           resolve(data);
         })
         .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
+          console.log(response);
+          // context.commit(SET_ERROR, response.data.errors);
         });
     });
   },
@@ -50,28 +54,37 @@ const actions = {
     context.commit(PURGE_AUTH);
   },
   [REGISTER](context, credentials) {
-    return new Promise((resolve, reject) => {
-      ApiService.post("users", { user: credentials })
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-          resolve(data);
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
-          reject(response);
-        });
+    // console.log(credentials)
+    return new Promise((resolve) => {
+      ApiService.post("register/", credentials).then(res => {
+        console.log(res)
+        context.commit(SET_AUTH, res);
+        resolve(res)
+      }).catch(error => {
+        console.log(error)
+      })
+        // .then(({ data }) => {
+        //   console.log(data)
+        //   context.commit(SET_AUTH, data);
+        //   resolve(data);
+        // })
+        // .catch(({ response }) => {
+        //   // context.commit(SET_ERROR, response.data.errors);
+        //   reject(response);
+        // });
     });
   },
   [VERIFY_AUTH](context) {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      ApiService.get("verify")
+      console.log(state.userId)
+      ApiService.query("verify", state.userId)
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
         })
         .catch(({ response }) => {
           context.commit(SET_ERROR, response.data.errors);
-        });
+        }); 
     } else {
       context.commit(PURGE_AUTH);
     }
@@ -95,11 +108,13 @@ const mutations = {
     state.errors = error;
   },
   [SET_AUTH](state, user) {
+    console.log("user", user)
     state.isAuthenticated = true;
     state.user = user;
     state.errors = {};
-    JwtService.saveToken(state.user.token);
-    localStorage.setItem('role', 'USER')
+    state.userId = user.data.id
+    JwtService.saveToken(`Bearer ${user.data.token}`);
+    localStorage.setItem('role', `${state.plan}`)
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
