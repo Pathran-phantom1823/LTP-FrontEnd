@@ -44,21 +44,21 @@
             <b-form-radio
               v-model="confidential"
               class="form-check-input"
-              value="Translation"
+              value="High"
               name="optradio"
               >High</b-form-radio
             >
             <b-form-radio
               v-model="confidential"
               class="form-check-input"
-              value="Language Localization"
+              value="Medium"
               name="optradio"
               >Medium</b-form-radio
             >
             <b-form-radio
               v-model="confidential"
               class="form-check-input"
-              value="Technnical Translation"
+              value="Low"
               name="optradio"
               >Low</b-form-radio
             >

@@ -105,13 +105,6 @@ export default {
             username: '',
             accountType: ''
         },
-        // accountype: [{
-        //         name: "User",
-        //     },
-        //     {
-        //         name: "Organization",
-        //     }
-        // ],
     }),
     validations: {
         form: {
@@ -145,6 +138,7 @@ export default {
                 username: null,
                 email: null,
                 password: null,
+                accountType: null,
             };
 
             this.$nextTick(() => {
@@ -160,6 +154,7 @@ export default {
             const username = this.$v.form.username.$model;
             const email = this.$v.form.email.$model;
             const password = this.$v.form.password.$model;
+            const accountType = this.form.accountType
             // const accountType = this.$v.form.accountType.$model;
 
             // clear existing errors
@@ -178,10 +173,11 @@ export default {
                             email: email,
                             password: password,
                             username: username,
+                            accountType: accountType
                         })
                         .then(() => {
                             this.$router.push({
-                                name: "dashboard"
+                                name: "myDashboard"
                             })
                             this.$store.commit('setplan', 'organization')
                         });
@@ -192,10 +188,11 @@ export default {
                             email: email,
                             password: password,
                             username: username,
+                            accountType: accountType
                         })
                         .then(() => {
                             this.$router.push({
-                                name: "dashboard"
+                                name: "myDashboard"
                             })
                             this.$store.commit('setplan', 'user_standard')
                         });
@@ -206,10 +203,11 @@ export default {
                             email: email,
                             password: password,
                             username: username,
-                        })
+                            accountType: accountType
+                        })  
                         .then(() => {
                             this.$router.push({
-                                name: "dashboard"
+                                name: "myDashboard"
                             })
                             this.$store.commit('setplan', 'user_free')
                         });
