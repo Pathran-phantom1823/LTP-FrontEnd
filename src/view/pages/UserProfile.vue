@@ -229,14 +229,13 @@
 </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/sass/pages/wizard/wizard-1.scss";
 
 .card-img-input {
     cursor: pointer
 }
 </style>
-
 <script>
 import {
     SET_BREADCRUMB

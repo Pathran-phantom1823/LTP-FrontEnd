@@ -535,6 +535,12 @@ export default new Router({
                     name: "orgprofile",
                     component: () =>
                         import ("@/view/pages/OrgProfile.vue")
+                },
+                {
+                    path: "/user/payment",
+                    name: "payment",
+                    component: () =>
+                        import ("@/view/pages/Payment.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
