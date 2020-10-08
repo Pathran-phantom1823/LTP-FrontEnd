@@ -38,7 +38,7 @@
         <div class="menu-submenu">
             <span class="menu-arrow"></span>
             <ul class="menu-subnav">
-                <router-link to="/vue-bootstrap/alert" v-slot="{ href, navigate, isActive, isExactActive }">
+                <router-link to="/add-accounts" v-slot="{ href, navigate, isActive, isExactActive }">
                     <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
                 isActive && 'menu-item-active',
                 isExactActive && 'menu-item-active'

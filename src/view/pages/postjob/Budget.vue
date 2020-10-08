@@ -145,7 +145,7 @@ export default {
                     this.withRange.from === null ||
                     this.withRange.to === null ||
                     this.dateRange.from === null ||
-                    this.dateRange.to === null
+                    this.dateRange.to === null || this.email === null
                 ) {
                     this.snackbar = true
                 } else {
@@ -165,7 +165,7 @@ export default {
                 if (
                     this.paymentNoRange === null ||
                     this.dateRange.from === null ||
-                    this.dateRange.to === null
+                    this.dateRange.to === null || this.email === null
                 ) {
                     this.snackbar = true
                 } else {

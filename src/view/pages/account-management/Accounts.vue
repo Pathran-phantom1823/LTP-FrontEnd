@@ -2,15 +2,10 @@
 <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
     <template v-slot:top>
         <v-toolbar flat>
-            <v-toolbar-title>My CRUD</v-toolbar-title>
+            <v-toolbar-title>My Members</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                        New Item
-                    </v-btn>
-                </template>
                 <v-card>
                     <v-card-title>
                         <span class="headline">{{ formTitle }}</span>

@@ -21,7 +21,7 @@
                 <b-form-invalid-feedback id="input-1-live-feedback">Email is required and a valid email address.</b-form-invalid-feedback>
             </b-form-group>
             <div class="form-group">
-                <input ref="kt_login_signin_submit" style="background-color: rgb(51, 188, 247);border-radius:7px;color:white;" name="btn-submit" class="btn btn-block control-group" value="SUBMIT" type="submit">
+                <button ref="kt_login_signin_submit" style="background-color: rgb(51, 188, 247);border-radius:7px;color:white;" class="btn btn-primary btn-block font-weight-bold px-9 py-4 my-3 font-size-3" type="submit">SUBMIT</button>
             </div>
             <!--begin::Action-->
             <div style="justify-content:center;display:flex">
