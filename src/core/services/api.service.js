@@ -16,7 +16,7 @@ const config = {
 const config2 = {
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "Content-type": "multipart/form-data"
+    "Content-type": "application/json"
   }
 };
 const ApiService = {

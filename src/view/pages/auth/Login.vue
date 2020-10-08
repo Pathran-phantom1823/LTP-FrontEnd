@@ -5,7 +5,7 @@
       class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
     >
       <span class="font-weight-bold font-size-3 text-dark-60">Don't have an account yet?</span>
-      <router-link class="font-weight-bold font-size-3 ml-2" style="color:cyan"  :to="{ name: 'register' }">Sign Up!</router-link>
+      <router-link class="font-weight-bold font-size-3 ml-2" style="color:#0093E9"  :to="{ name: 'register' }">Sign Up!</router-link>
     </div>
     <!--end::Content header-->
 
@@ -55,7 +55,7 @@
         <!--begin::Action-->
         <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
           <a
-            href="#"
+            @click="$router.push('/forgotpass')"
             class="text-dark-60 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
           >Forgot Password ?</a>

@@ -56,7 +56,7 @@ const actions = {
   [REGISTER](context, credentials) {
     // console.log(credentials)
     return new Promise((resolve) => {
-      ApiService.post("register/", credentials).then(res => {
+      ApiService.post("register", credentials).then(res => {
         console.log(res)
         context.commit(SET_AUTH, res);
         resolve(res)
@@ -78,7 +78,7 @@ const actions = {
     if (JwtService.getToken()) {
       ApiService.setHeader();
       console.log(state.userId)
-      ApiService.query("verify", state.userId)
+      ApiService.get("verify")
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
         })

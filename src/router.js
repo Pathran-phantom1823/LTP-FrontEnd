@@ -594,11 +594,23 @@ export default new Router({
                     path: "/accounts",
                     name: "accounts",
                     component: () =>
-                        import ("@/view/pages/Accounts.vue"),
+                        import ("@/view/pages/account-management/Accounts.vue"),
                     meta: {
                         breadcrumb:[
                             {name: 'Accounts', link: 'accounts'},
                             {name: 'View Accounts'}
+                        ]
+                    }
+                },
+                {
+                    path: "/add-accounts",
+                    name: "accounts",
+                    component: () =>
+                        import ("@/view/pages/account-management/AddAccounts.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Accounts', link: 'accounts'},
+                            {name: 'Add Accounts'}
                         ]
                     }
                 },

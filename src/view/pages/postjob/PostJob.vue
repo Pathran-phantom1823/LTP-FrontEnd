@@ -218,7 +218,7 @@ export default {
         // Initialize form wizard
         this.wizard = new KTWizard("kt_wizard_v2", {
             startStep: 1, // initial active step number
-            clickableSteps: false, // allow step clicking
+            clickableSteps: true, // allow step clicking
         });
 
         // Validation before going to next page
@@ -246,6 +246,7 @@ export default {
             this.languageFrom = data.languageFrom;
             this.languageTo = data.languageTo;
             console.log(this.file)
+            // console.log(this.languageTo.toString());
         },
         getVisibility(data) {
             this.canSeeJob = data.canSee;
@@ -282,7 +283,7 @@ export default {
                 description: this.description,
                 category: this.service,
                 languageFrom: this.languageFrom,
-                languageTo: JSON.stringify(this.languageTo),
+                languageTo: this.languageTo.toString(),
                 email: this.email,
                 fromDate: this.dateFrom,
                 toDate: this.dateTo,
@@ -291,7 +292,8 @@ export default {
                 priceType: this.paymentType,
                 visibility: this.canSeeJob,
                 levelOfConfidentiality: this.confidentiality,
-                fixedPrice: this.fixedPrice
+                fixedPrice: this.fixedPrice,
+                type: localStorage.getItem('method')
             }
             formData.append("postDetails", JSON.stringify(postDetails))
             formData.append("file", this.file)
@@ -303,6 +305,13 @@ export default {
                     title: "",
                     text: "The Job is successfully posted",
                     icon: "success",
+                    confirmButtonClass: "btn btn-secondary",
+                });
+            }).catch(e =>{
+                 Swal.fire({
+                    title: "",
+                    text: `${e.message}`,
+                    icon: "error",
                     confirmButtonClass: "btn btn-secondary",
                 });
             })
