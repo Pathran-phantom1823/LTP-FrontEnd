@@ -10,13 +10,14 @@ const config = {
   headers: {
     "Authorization": `${JwtService.getToken()}`,
     "Access-Control-Allow-Origin": "*",
-    "Constent-type": "multipart/form-data"
+    // "Content-type": "multipart/form-data"
+    // "Content-type": "app lication/json"
   }
 };
 const config2 = {
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "Content-type": "application/json"
+    // "Content-type": "application/json"
   }
 };
 const ApiService = {
@@ -35,12 +36,20 @@ const ApiService = {
     ] = `${JwtService.getToken()}`;
   },
 
+  /**
+   * Set the POST HTTP request
+   * @param resource
+   * @param params
+   * @returns {*}
+   */
+
   query(resource, params) {
-    return Vue.axios.get(resource, params, config).catch(error => {
-      // console.log(error);
-      throw new Error(`[KT] ApiService ${error}`);
-    });
+    let header = config.headers.Authorization === "null" ? config : config2
+    console.log('param', header)
+    return Vue.axios.get(`${resource}`, params, header)
   },
+
+  
 
   /**
    * Send the GET HTTP request
@@ -51,6 +60,20 @@ const ApiService = {
   get(resource) {
     // console.log(resource, slug)
     return Vue.axios.get(`${resource}`, config)
+  },
+
+
+/**
+   * Set the POST HTTP request
+   * @param resource
+   * @param params
+   * @returns {*}
+   * @constructor
+   */
+  getById(resource, params){
+    let header = config.headers.Authorization === "null" ? config2 : config
+    console.log('headers', header)
+    return Vue.axios.get(`${resource}`, params, header);
   },
 
   /**
@@ -83,7 +106,9 @@ const ApiService = {
    * @returns {IDBRequest<IDBValidKey> | Promise<void>}
    */
   put(resource, params) {
-    return Vue.axios.put(`${resource}`, params);
+    let header = config.headers.Authorization === "null" ? config2 : config
+    console.log('headers', params)
+    return Vue.axios.put(`${resource}`, params, header);
   },
 
   /**

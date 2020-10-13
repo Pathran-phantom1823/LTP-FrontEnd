@@ -55,9 +55,12 @@ const actions = {
   },
   [REGISTER](context, credentials) {
     // console.log(credentials)
+    const string = Math.random().toString(36).substring(2,5)
     return new Promise((resolve) => {
       ApiService.post("register", credentials).then(res => {
+        const result = string + '*' +  res.data[1].id
         console.log(res)
+        localStorage.setItem('value', result)
         context.commit(SET_AUTH, res);
         resolve(res)
       }).catch(error => {
@@ -112,14 +115,15 @@ const mutations = {
     state.isAuthenticated = true;
     state.user = user;
     state.errors = {};
-    state.userId = user.data.id
-    JwtService.saveToken(`Bearer ${user.data.token}`);
+    state.userId = user.data[1].id
+    JwtService.saveToken(`Bearer ${user.data[0]}`);
     localStorage.setItem('role', `${state.plan}`)
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
     state.user = {};
     state.errors = {};
+    localStorage.clear();
     JwtService.destroyToken();
   },
   [SET_PLAN](state, plan) {
