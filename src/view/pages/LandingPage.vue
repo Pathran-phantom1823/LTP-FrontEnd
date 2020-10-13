@@ -162,6 +162,11 @@ export default {
             ],
         };
     },
+    mounted(){
+        // const string = Math.random().toString(36).substring(2,5)
+        // const insert = string + ':' + 12
+        // alert(insert.substr(insert.lastIndexOf(':') + 1))  
+    },
     computed:{
       backgroundImage() {
         return process.env.BASE_URL + "media/bg/service4.png";

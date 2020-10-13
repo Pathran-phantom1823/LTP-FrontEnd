@@ -9,7 +9,7 @@
     <!-- Begin:Forums -->
     <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-            <v-btn text class="mt-1" title="Forums" v-bind="attrs" v-on="on" @click="$router.push('forum')">
+            <v-btn text class="mt-1" title="Forums" v-bind="attrs" v-on="on" @click="$router.push('/organization/forum')">
                 <span class=" svg-icon svg-icon-xl svg-icon-primary">
                 <inline-svg src="media/svg/icons/Communication/Group-chat.svg" />
                 </span>

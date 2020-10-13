@@ -17,11 +17,11 @@
                     <a class="nav-link text-light navItems" @click="redirect('/user/job_board')">Jobs</a>
                 </v-btn>
                 <v-btn text>
-                    <a class="nav-link text-light navItems" @click="redirect('/user/forum')">Communication</a>
+                    <a class="nav-link text-light navItems" @click="redirect('/user/forum')">Forums</a>
                 </v-btn>
-                <v-btn text>
+                <!-- <v-btn text>
                     <a class="nav-link text-light navItems" @click="$router.push('/user/messenger')">Messages</a>
-                </v-btn>
+                </v-btn> -->
                 <v-btn text>
                     <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
                 </v-btn>
@@ -37,13 +37,15 @@
                     <img src="https://static.toiimg.com/thumb/72975551.cms?width=680&height=512&imgsize=881753" alt="Profile Picture" class="profile" id="profile-popover">
                 </div>
                 <b-popover target="profile-popover" triggers="hover" placement="bottom">
-                    <button class="btn form-control">profile info</button>
+                    <button class="btn form-control" @click="$router.push('/user/profile')">profile info</button>
                     <button class="btn form-control">logout</button>
                 </b-popover>
-            </b-navbar-nav>
+            </b-navbar-nav  >
         </b-collapse>
     </b-navbar>
-    <router-view></router-view>
+    <v-container>
+        <router-view></router-view>
+    </v-container>
 </div>
 </template>
 

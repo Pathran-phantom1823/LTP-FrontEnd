@@ -10,10 +10,9 @@
                 </div><br>
                 <p style="color:red">{{errorMessage}}</p>
                 <v-form>
-                    <v-text-field v-model="email" label="Email" outlined></v-text-field>
-                    <v-text-field v-model="username" label="Username" outlined></v-text-field>
-                    <v-text-field v-model="password" label="Password" outlined></v-text-field>
-                    <v-select v-model="role" :items="roleList" outlined label="Select User Role"></v-select>
+                    <v-text-field type="email" v-model="email" label="Email" outlined required></v-text-field>
+                    <v-text-field type="text" v-model="username" label="Username" outlined required></v-text-field>
+                    <v-text-field :type="showPass ? 'password' : 'text'" v-model="password" label="Password" outlined required :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPass = !showPass"></v-text-field>
                 </v-form>
                 <b-btn variant="primary" block @click="submit">Add Member</b-btn>
             </v-card>
@@ -24,17 +23,22 @@
 
 <script>
 import Swal from "sweetalert2";
+import ApiService from "@/core/services/api.service";
 
 export default {
     data() {
         return {
-            roleList: ["Member", "Admin"],
-            role: null,
             email: null,
             password: null,
             username: null,
-            errorMessage: null
+            errorMessage: null,
+            userID: null,
+            showPass: true
         }
+    },
+    mounted(){
+        const id = localStorage.getItem('value')
+        this.userID = id.substr(id.lastIndexOf('*') + 1)
     },
     computed: {
         presentError() {
@@ -43,15 +47,39 @@ export default {
     },
     methods: {
         submit() {
-            if (this.role === null || this.email === null || this.password === null || this.username === null) {
+            if (this.email === null || this.password === null || this.username === null) {
                 this.errorMessage = "Fields are required"
             } else {
-                this.errorMessage = null
-                Swal.fire({
-                    title: "",
-                    text: "Member is Successfully added",
-                    icon: "success",
-                    confirmButtonClass: "btn btn-secondary",
+                let formData = new FormData();
+                let params = {
+                    username: this.username,
+                    email: this.email,
+                    password: this.password,
+                }
+                let param2 = {
+                    orgId: this.userID
+                }
+                formData.append('account', JSON.stringify(params));
+                formData.append('org', JSON.stringify(param2));
+
+                ApiService.post('member/create', formData).then(() => {
+                    this.errorMessage = null
+                    Swal.fire({
+                        title: "",
+                        text: "Member is Successfully added",
+                        icon: "success",
+                        confirmButtonClass: "btn btn-secondary",
+                    })
+                    this.username = null
+                    this.email = null
+                    this.password = null
+                }).catch(err => {
+                    Swal.fire({
+                        title: "",
+                        text: `${err.message}`,
+                        icon: "error",
+                        confirmButtonClass: "btn btn-secondary",
+                    })
                 })
             }
         }
