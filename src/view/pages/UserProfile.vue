@@ -160,15 +160,22 @@
                              <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>School</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="School/University" />
+                                        <input type="text" class="form-control form-control-solid form-control-lg" name="school/university" placeholder="School/University" />
                                         <span class="form-text text-muted">Please enter the name of your school.</span>
                                     </div>
                                 </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label>School address</label><span style="color:red">*</span>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="School address" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="schooladdress" placeholder="School address" />
                                     <span class="form-text text-muted">Please enter the name of your school address.</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>School Year</label><span style="color:red">*</span>
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="schoolyear" placeholder="2018-2020" />
+                                    <span class="form-text text-muted">Please enter the name of your school year.</span>
                                 </div>
                             </div>
                         </div>
@@ -199,6 +206,7 @@
                         </div>
                         <!--end: Wizard Step 3-->
                         <div class="pb-5" data-wizard-type="step-content">
+                            <Rating/>
                             <Calendar/>
                         </div>
                         <!--begin: Wizard Actions -->
@@ -237,6 +245,7 @@
 }
 </style>
 <script>
+
 import {
     SET_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
@@ -244,11 +253,13 @@ import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
 import Calendar from "@/view/pages/Calendar.vue";
+import Rating from "@/view/pages/Rating.vue";
 
 export default {
     name: "Wizard-1",
     components:{
-        Calendar
+        Calendar,
+        Rating
     },
     mounted() {
         this.$store.dispatch(SET_BREADCRUMB, [{
