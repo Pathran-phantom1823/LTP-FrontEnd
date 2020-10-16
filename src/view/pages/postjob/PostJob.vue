@@ -204,6 +204,7 @@ export default {
             snackbar: false,
             text: null,
             timeout: 3000,
+            userID: null
         };
     },
     computed: {
@@ -215,6 +216,8 @@ export default {
         }
     },
     mounted() {
+        const id = localStorage.getItem('value')
+        this.userID = id.substr(id.lastIndexOf('*') + 1)
         // Initialize form wizard
         this.wizard = new KTWizard("kt_wizard_v2", {
             startStep: 1, // initial active step number
@@ -293,7 +296,8 @@ export default {
                 visibility: this.canSeeJob,
                 levelOfConfidentiality: this.confidentiality,
                 fixedPrice: this.fixedPrice,
-                type: localStorage.getItem('method')
+                type: localStorage.getItem('method'),
+                postById: this.userID 
             }
             formData.append("postDetails", JSON.stringify(postDetails))
             formData.append("file", this.file)

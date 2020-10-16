@@ -162,9 +162,11 @@
 </template>
 
 <script>
+import ApiService from "@/core/services/api.service";
 export default {
   data() {
     return {
+      userID: null,
       feedData: [
         {
           title: "Premeiere Translation for the Global Agriculture Industry",
@@ -245,6 +247,12 @@ export default {
   },
   components: {},
   mounted() {
+    const id = localStorage.getItem('value')
+    this.userID = id.substr(id.lastIndexOf('*') + 1)
+    ApiService.post("getFile", {id: this.userID}).then(res => {
+      console.log(res);
+    })
+
     if (window.innerWidth < 750) {
       this.$refs["sidebar"].style = "right: 100% !important;";
       this.$refs["workspace"].style =
