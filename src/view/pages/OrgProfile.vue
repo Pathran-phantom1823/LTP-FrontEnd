@@ -76,11 +76,29 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Email</label><span style="color:red">*</span>
-                                        <input type="eamil" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
+                                        <input type="email" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
                                         <span class="form-text text-muted">Please enter your Organization's email</span>
                                     </div>
                                 </div>
                             </div>
+
+                             <div class= "row">
+                                <div class ="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Your Pricing</label><span style="color:red">*</span>
+                                        <input type="float" class="form-control form-control-solid form-control-lg" name="pricing" placeholder="$200.05" />
+                                        <span class="form-text text-muted">How much do your client/s pay?</span>
+                                    </div>
+                                </div>
+                                 <div class ="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Telephone</label><span style="color:red">*</span>
+                                        <input type="tel" class="form-control form-control-solid form-control-lg" name="telephone" placeholder="123-4567-8901" />
+                                        <span class="form-text text-muted">Please enter you organization's telephone number</span>
+                                    </div>
+                                </div>
+                            </div>
+                              
                         </div>
                         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                             <h3 class="mb-10 font-weight-bold text-dark">
