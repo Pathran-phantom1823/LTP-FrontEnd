@@ -23,7 +23,7 @@ const config2 = {
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = "http://localhost:8003/api/test/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
   },
 
 
@@ -57,9 +57,9 @@ const ApiService = {
    * @param slug
    * @returns {*}
    */
-  get(resource) {
+  get(resource, slug= "") {
     // console.log(resource, slug)
-    return Vue.axios.get(`${resource}`, config)
+    return Vue.axios.get(`${resource}/${slug}`, config)
   },
 
 

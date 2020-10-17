@@ -66,18 +66,18 @@
                             <b-form-datepicker type="date" v-model="dateRange.to" class="form-control"></b-form-datepicker>
                         </b-col>
                     </b-row>
+                    <div class="mt-20">
+                        <v-btn color="primary" @click="next" :disabled="handleNext">Done</v-btn>
+                        <v-btn color="danger" @click.prevent="reset">Reset</v-btn>
+                    </div>
                 </v-card>
-                <br>
+                <!-- <br>
                 <v-card class="p-5">
                     <label for="title">
                         <strong>Enter your Email address*</strong>
                     </label>
                     <b-form-input type="text" v-model="email" id="title" class="form-control"></b-form-input>
-                </v-card>
-            </div>
-            <div class="mt-20">
-                <v-btn color="primary" @click="next" :disabled="handleNext">Done</v-btn>
-                <v-btn color="danger" @click.prevent="reset">Reset</v-btn>
+                </v-card> -->
             </div>
         </form>
     </v-container>
@@ -91,7 +91,7 @@ export default {
             IsNext: false,
             AddBtnClick: false,
             hourly: true,
-            email: null,
+            // email: null,
             typeOfPayment: [{
                     id: 0,
                     name: "Pay per hour",
@@ -145,13 +145,13 @@ export default {
                     this.withRange.from === null ||
                     this.withRange.to === null ||
                     this.dateRange.from === null ||
-                    this.dateRange.to === null || this.email === null
+                    this.dateRange.to === null
                 ) {
                     this.snackbar = true
                 } else {
                     // console.log(this.email)
                     let paremeter = {
-                        email: this.email,
+                        // email: this.email,
                         paymentType: this.paymentType,
                         priceFrom: this.withRange.from,
                         priceTo: this.withRange.to,
@@ -165,12 +165,12 @@ export default {
                 if (
                     this.paymentNoRange === null ||
                     this.dateRange.from === null ||
-                    this.dateRange.to === null || this.email === null
+                    this.dateRange.to === null
                 ) {
                     this.snackbar = true
                 } else {
                     let paremeter = {
-                        email: this.email,
+                        // email: this.email,
                         paymentType: this.paymentType,
                         fixedPrice: this.paymentNoRange,
                         dateFrom: this.dateRange.from,
@@ -184,10 +184,10 @@ export default {
             }
         },
         reset() {
-            this.email = null
+            // this.email = null
             this.paymentType = null;
             this.typeOfPayment.map((el) => {
-              el.click = false
+                el.click = false
             })
             this.withRange.from = null;
             this.withRange.to = null;

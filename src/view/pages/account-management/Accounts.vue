@@ -193,8 +193,16 @@ export default {
         },
 
         deleteItemConfirm() {
-            ApiService.post("deleteMember", {
-                id: this.itemId
+            ApiService.put("deleteMember", {
+                id: this.editedItem.id,
+                username: this.editedItem.username,
+                email: this.editedItem.email,
+                expired: this.editedItem.expired,
+                password: this.editedItem.password,
+                isMember: this.editedItem.isMember,
+                isDisabled: "true",
+                roleId: this.editedItem.roleId,
+                createdAt: this.editedItem.createdAt
             }).then(() => {
                 this.retrieve()
                 this.$router.push('/add-accounts')
