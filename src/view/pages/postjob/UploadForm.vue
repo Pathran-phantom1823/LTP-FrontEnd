@@ -22,6 +22,19 @@
             class="form-control"
           ></b-form-input> </v-card
         ><br />
+        <v-card style="padding: 10px">
+              <label for="title">
+                <strong>Subject field of the document:*</strong>
+              </label>
+              <v-select
+                v-model="subject"
+                :items="subjects"
+                label="Select"
+                outlined
+                height="20"
+              ></v-select>
+        </v-card>
+        <br>
         <v-card class="p-5">
           <label for="title">
             <strong>Translation Service:*</strong>
@@ -85,6 +98,17 @@ export default {
       snackbar: false,
       text: "Fields with(*) are required",
       timeout: 3000,
+      subject: null,
+      subjects: [
+        "Agriculture",
+        "Architecture",
+        "Arts Crafts",
+        "Automotive",
+        "Banking",
+        "Biotechnology",
+        "Certification & Lincences",
+        "Chemical"
+      ],
     };
   },
   mounted() {
@@ -115,12 +139,13 @@ export default {
     },
     next() {
       console.log(this.category);
-      if (this.title === null || this.category === null) {
+      if (this.title === null || this.category === null || this.subject === null) {
         this.snackbar = true;
       } else {
         let title = {
           title: this.title,
           category: this.category,
+          subject: this.subject
         };
         this.$emit("title", title);
         this.IsNext = true;
@@ -129,6 +154,7 @@ export default {
     reset() {
       this.title = null;
       this.category = null;
+      this.subject = null
       this.IsNext = false;
       let title = {
         title: this.title,
