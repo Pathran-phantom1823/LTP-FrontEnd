@@ -23,7 +23,7 @@ const config2 = {
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = "http://localhost:8003/api/test/";
+    Vue.axios.defaults.baseURL = "http://localhost:8003/ltp/";
   },
 
 

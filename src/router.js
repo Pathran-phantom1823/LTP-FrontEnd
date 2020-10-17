@@ -574,7 +574,8 @@ export default new Router({
             redirect: "/myDashboard",
             component: () =>
                 import ("@/view/myLayouts/Layout"),
-                children: [{
+                children: [
+                {
                     path: "/myDashboard",
                     name: "myDashboard",
                     component: () =>
@@ -583,7 +584,7 @@ export default new Router({
                         breadcrumb:[
                             {name: 'Dashboard'}
                         ]
-                    }
+                    },
                 },
                 {
                     path: "/organization/forum",
@@ -659,6 +660,17 @@ export default new Router({
                         ]
                     }
                 },
+                {
+                    path: "/job_board",
+                    name: "Job_Board",
+                    component: () => import("@/view/pages/Organization/JobBoard.vue"),
+                    meta: {
+                        breadcrumb:[
+                            {name: 'Jobs', link: 'viewJobs'},
+                            {name: 'Job Board'}
+                        ]
+                    }
+                }
             ]
         },
         {
