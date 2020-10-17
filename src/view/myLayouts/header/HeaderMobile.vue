@@ -39,6 +39,12 @@
     <!--end::Toolbar-->
 </div>
 </template>
+<style scoped>
+#kt_header_mobile{
+    height: 65px !important;
+    min-height: 65x !important;
+}
+</style>
 
 <script>
 import {
