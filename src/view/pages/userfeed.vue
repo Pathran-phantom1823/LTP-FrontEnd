@@ -684,27 +684,29 @@ Category Text css initial
   color: grey;
 }
 .sidebar::-webkit-scrollbar {
-  width: 7px;
+  width: 7px !important;
 }
 .sidebar::-webkit-scrollbar-track {
-  background: rgb(240, 237, 235);
-  margin-bottom: 10px;
+  box-shadow: inset 0 0 5px rgb(230, 230, 230) !important;
+  background: rgb(240, 237, 235) !important;
+  margin-bottom: 10px !important;
 }
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #c7cbcc;
-  border-radius: 20px;
-  border: 0px;
+  background-color: #c7cbcc !important;
+  border-radius: 20px !important;
+  border: 0px !important;
 }
 .moreInfo::-webkit-scrollbar {
-  width: 7px;
+  width: 7px !important;
 }
 .moreInfo::-webkit-scrollbar-track {
-  background: rgb(240, 237, 235);
-  margin-bottom: 10px;
+  box-shadow: inset 0 0 5px rgb(230, 230, 230);
+  background: rgb(240, 237, 235) !important;
+  margin-bottom: 10px !important;
 }
 .moreInfo::-webkit-scrollbar-thumb {
-  background-color: #c7cbcc;
-  border-radius: 20px;
-  border: 0px;
+  background-color: #c7cbcc !important;
+  border-radius: 20px !important;
+  border: 0px !important;
 }
 </style>

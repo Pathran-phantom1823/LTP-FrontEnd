@@ -95,7 +95,7 @@
         </li>
     </router-link>
 
-     <router-link to="/accounts" v-slot="{ href, navigate, isActive, isExactActive }">
+     <router-link to="/job_board" v-slot="{ href, navigate, isActive, isExactActive }">
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
           isActive && 'menu-item-active',
           isExactActive && 'menu-item-active'

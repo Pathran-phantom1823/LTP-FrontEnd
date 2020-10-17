@@ -38,10 +38,10 @@ const getters = {
 const actions = {
   [LOGIN](context, credentials) {
     return new Promise(resolve => {
-      console.log(credentials)
-      ApiService.post("login/", credentials)
+      ApiService.post("authenticate", credentials)
         .then(({ data }) => {
-          console.log(data)
+          console.log('data', data)
+          context.commit(SET_AUTH, data);
           resolve(data);
         })
         .catch(({ response }) => {
@@ -81,7 +81,7 @@ const actions = {
   [VERIFY_AUTH](context) {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      console.log(state.userId)
+      // console.log(state.userId)
       ApiService.get("verify")
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
@@ -112,7 +112,6 @@ const mutations = {
     state.errors = error;
   },
   [SET_AUTH](state, user) {
-    console.log("user", user)
     state.isAuthenticated = true;
     state.user = user;
     state.errors = {};
