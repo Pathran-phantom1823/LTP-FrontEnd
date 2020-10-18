@@ -39,6 +39,7 @@
                                     {{ item[key.toLowerCase()] }}
                                 </v-list-item-content>
                             </v-list-item>
+                            <v-rating v-model="item.rating" readonly color="yellow darken-3" background-color="grey darken-1" empty-icon="$ratingFull" medium></v-rating>
                         </v-list>
                         <v-card-actions>
                             <v-btn color="info" block>View Profile</v-btn>
@@ -98,36 +99,44 @@ export default {
                 'name',
                 'email',
                 'status',
+                'rating'
             ],
             items:  [{
                     name: 'Gingerbread',
                     email: 'gingerbread@gmail.com',
-                    status: 'assigned'
+                    status: 'assigned',
+                    rating: 2.5
+
                 },
                 {
                     name: 'Jelly bean',
                     email: 'jellybean@gmail.com',
-                    status: 'no assignment'
+                    status: 'no assignment',
+                    rating: 3.5
                 },
                 {
                     name: 'Lollipop',
                     email: 'lolipop@gmail.com',
-                    status: 'no assignment'
+                    status: 'no assignment',
+                    rating: 3
                 },
                 {
                     name: 'Honeycomb',
                     email: 'Honeycomb@gmail.com',
-                    status: 'no assignment'
+                    status: 'no assignment',
+                    rating: 4
                 },
                 {
                     name: 'Donut',
                     email: 'Donut@gmail.com',
-                    status: 'assigned'
+                    status: 'assigned',
+                    rating: 4.5
                 },
                 {
                     name: 'KitKat',
                     email: 'kitkat@gmail.com',
-                    status: 'no assignment'
+                    status: 'no assignment',
+                    rating: 2
                 },
             ]
         }

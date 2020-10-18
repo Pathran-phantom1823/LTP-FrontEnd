@@ -93,7 +93,7 @@ import {
     minLength
 } from "vuelidate/lib/validators";
 import Swal from "sweetalert2";
-
+// import JwtService from "@/core/services/jwt.service";
 export default {
     mixins: [validationMixin],
     name: "register",
@@ -123,6 +123,9 @@ export default {
                 required
             }
         },
+    },
+    mounted(){
+        // console.log("token", JwtService.getToken())
     },
     methods: {
         validateState(name) {
@@ -172,7 +175,7 @@ export default {
                             email: email,
                             password: password,
                             username: username,
-                            accountType: accountType
+                            roleType: accountType
                         })
                         .then(() => {
                             this.$router.push({
@@ -187,7 +190,7 @@ export default {
                             email: email,
                             password: password,
                             username: username,
-                            accountType: accountType
+                            roleType: accountType
                         })
                         .then(() => {
                             this.$router.push({
@@ -202,7 +205,7 @@ export default {
                             email: email,
                             password: password,
                             username: username,
-                            accountType: accountType
+                            roleType: accountType
                         })
                         .then(() => {
                             this.$router.push({

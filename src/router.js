@@ -59,7 +59,7 @@ export default new Router({
                         import ("@/view/pages/communication/Messenger.vue")
                 },
                 {
-                    path: "/user/profile",
+                    path: "/user/userprofile",
                     name: "profile",
                     component: () =>
                         import ("@/view/pages/UserProfile.vue")
@@ -115,8 +115,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/Dashboard.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Dashboard'}
+                        breadcrumb: [
+                            { name: 'Dashboard' }
                         ]
                     },
                 },
@@ -138,8 +138,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/postjob/PostJob.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Quotation', link: 'quotation'}
+                        breadcrumb: [
+                            { name: 'Quotation', link: 'quotation' }
                         ]
                     }
                 },
@@ -149,9 +149,9 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/account-management/Accounts.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Accounts', link: 'accounts'},
-                            {name: 'View Accounts'}
+                        breadcrumb: [
+                            { name: 'Accounts', link: 'accounts' },
+                            { name: 'View Accounts' }
                         ]
                     }
                 },
@@ -161,9 +161,9 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/account-management/AddAccounts.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Accounts', link: 'accounts'},
-                            {name: 'Add Accounts'}
+                        breadcrumb: [
+                            { name: 'Accounts', link: 'accounts' },
+                            { name: 'Add Accounts' }
                         ]
                     }
                 },
@@ -176,9 +176,9 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/job-management/ViewJobs.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Jobs', link: 'viewJobs'},
-                            {name: 'View Jobs'}
+                        breadcrumb: [
+                            { name: 'Jobs', link: 'viewJobs' },
+                            { name: 'View Jobs' }
                         ]
                     }
                 },
@@ -188,20 +188,21 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/postjob/PostJob.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Jobs', link: 'viewJobs'},
-                            {name: 'Post Jobs'}
+                        breadcrumb: [
+                            { name: 'Jobs', link: 'viewJobs' },
+                            { name: 'Post Jobs' }
                         ]
                     }
                 },
                 {
                     path: "/organization/job_board",
                     name: "Job_Board",
-                    component: () => import("@/view/pages/Organization/JobBoard.vue"),
+                    component: () =>
+                        import ("@/view/pages/Organization/JobBoard.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Jobs', link: 'viewJobs'},
-                            {name: 'Job Board'}
+                        breadcrumb: [
+                            { name: 'Jobs', link: 'viewJobs' },
+                            { name: 'Job Board' }
                         ]
                     }
                 }
@@ -212,14 +213,14 @@ export default new Router({
             redirect: "/admin/Dashboard",
             component: () =>
                 import ("@/view/myLayouts/Layout"),
-                children: [{
+            children: [{
                     path: "/admin/Dashboard",
                     name: "adminDashboard",
                     component: () =>
                         import ("@/view/pages/Dashboard.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Dashboard'}
+                        breadcrumb: [
+                            { name: 'Dashboard' }
                         ]
                     }
                 },
@@ -229,8 +230,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/admin/Quotations.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Quotations'}
+                        breadcrumb: [
+                            { name: 'Quotations' }
                         ]
                     }
                 },
@@ -240,8 +241,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/admin/Members.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Members Translators'}
+                        breadcrumb: [
+                            { name: 'Members Translators' }
                         ]
                     }
                 },
@@ -251,8 +252,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/admin/NonMembers.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Non Members Translators'}
+                        breadcrumb: [
+                            { name: 'Non Members Translators' }
                         ]
                     }
                 },
@@ -262,8 +263,8 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/admin/Organizations.vue"),
                     meta: {
-                        breadcrumb:[
-                            {name: 'Organizations'}
+                        breadcrumb: [
+                            { name: 'Organizations' }
                         ]
                     }
                 }

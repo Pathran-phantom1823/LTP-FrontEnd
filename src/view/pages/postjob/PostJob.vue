@@ -188,6 +188,7 @@ export default {
             projectTitle: null,
             service: null,
             description: null,
+            subject: null,
             languageFrom: null,
             languageTo: [],
             file: null,
@@ -199,11 +200,11 @@ export default {
             fixedPrice: null,
             dateFrom: null,
             dateTo: null,
-            email: null,
             wizard: null,
             snackbar: false,
             text: null,
             timeout: 3000,
+            userID: null
         };
     },
     computed: {
@@ -215,6 +216,8 @@ export default {
         }
     },
     mounted() {
+        const id = localStorage.getItem('value')
+        this.userID = id.substr(id.lastIndexOf('*') + 1)
         // Initialize form wizard
         this.wizard = new KTWizard("kt_wizard_v2", {
             startStep: 1, // initial active step number
@@ -239,13 +242,19 @@ export default {
         getTitle(data) {
             this.projectTitle = data.title;
             this.service = data.category;
+            this.subject = data.subject
         },
         getDescription(data) {
+            // console.log("file", data.file[0]);
             this.description = data.description;
-            this.file = data.file[0];
+            if(data.file[0] !== undefined){
+                this.file = data.file[0];
+            }else{
+                this.file = null
+            }
             this.languageFrom = data.languageFrom;
             this.languageTo = data.languageTo;
-            console.log(this.file)
+            console.log('file', this.file)
             // console.log(this.languageTo.toString());
         },
         getVisibility(data) {
@@ -253,16 +262,13 @@ export default {
             this.confidentiality = data.confidential;
         },
         getBudget(data) {
-            console.log(this.email)
             if (data.paymentType === "Pay per hour") {
-                this.email = data.email
                 this.paymentType = data.paymentType;
                 this.priceFrom = data.priceFrom;
                 this.priceTo = data.priceTo;
                 this.dateFrom = data.dateFrom;
                 this.dateTo = data.dateTo;
             } else {
-                this.email = data.email
                 this.paymentType = data.paymentType;
                 this.fixedPrice = data.fixedPrice;
                 this.dateFrom = data.dateFrom;
@@ -284,7 +290,6 @@ export default {
                 category: this.service,
                 languageFrom: this.languageFrom,
                 languageTo: this.languageTo.toString(),
-                email: this.email,
                 fromDate: this.dateFrom,
                 toDate: this.dateTo,
                 fromPrice: this.priceFrom,
@@ -293,7 +298,9 @@ export default {
                 visibility: this.canSeeJob,
                 levelOfConfidentiality: this.confidentiality,
                 fixedPrice: this.fixedPrice,
-                type: localStorage.getItem('method')
+                type: localStorage.getItem('method'),
+                postById: this.userID, 
+                subject: this.subject
             }
             formData.append("postDetails", JSON.stringify(postDetails))
             formData.append("file", this.file)

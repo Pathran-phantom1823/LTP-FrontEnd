@@ -58,6 +58,7 @@ const actions = {
     const string = Math.random().toString(36).substring(2,5)
     return new Promise((resolve) => {
       ApiService.post("register", credentials).then(res => {
+        console.log(res)
         const result = string + '*' +  res.data[1].id
         console.log(res)
         localStorage.setItem('value', result)
@@ -115,9 +116,7 @@ const mutations = {
     state.user = user;
     state.errors = {};
     // state.userId = user.data[1].id
-    // JwtService.saveToken(`Bearer ${user.data[0].token}`);
-    localStorage.setItem('id_token', `Bearer ${user.data[0].token}`)
-    // console.log("user", user.data[0].token)
+    JwtService.saveToken(`Bearer ${user.data[0]}`);
     localStorage.setItem('role', `${state.plan}`)
   },
   [PURGE_AUTH](state) {

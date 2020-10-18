@@ -14,7 +14,9 @@
         <v-card style="padding: 10px">
           <label for="title">
             <strong>Description:*</strong>
-          </label>
+          </label><br>
+            <span style="color:orange">Descibe the jobs that you will post, and/or the kind of translator that you want to work</span>
+          <br><br>
           <b-form-textarea
             type="text"
             v-model="description"
@@ -56,7 +58,7 @@
         <br />
         <v-card style="padding: 10px">
           <label for="title">
-            <strong>Additional File:(Optional)</strong>
+            <strong>Additional File: *</strong>
           </label>
           <b-form-file class="form-control" @change="getFile"></b-form-file>
           <div class="mt-20">
