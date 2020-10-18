@@ -80,22 +80,31 @@
                                         <span class="form-text text-muted">Please enter your Middlename</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
+                                <div class="col-xl-3">
                                     <div class="form-group">
                                         <label>Enter Age</label><span style="color:red">*</span>
                                         <input type="number" class="form-control form-control-solid form-control-lg" name="age" placeholder="Age" />
                                         <span class="form-text text-muted">Please enter your age</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-6">
+
+                             <div class="col-xl-3">
                                     <div class="form-group">
                                         <label>Enter Birthdate</label><span style="color:red">*</span>
                                         <input type="date" class="form-control form-control-solid form-control-lg" name="birthdate" placeholder="Birthdate" />
                                         <span class="form-text text-muted">Please enter your Birthdate</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Email</label><span style="color:red">*</span>
+                                        <input type="email" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
+                                        <span class="form-text text-muted">Please enter your Email</span>
+                                    </div>
+                                </div>
+                               
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Gender</label><span style="color:red">*</span>
@@ -106,11 +115,20 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class = "row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Email</label><span style="color:red">*</span>
-                                        <input type="eamil" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
-                                        <span class="form-text text-muted">Please enter your Email</span>
+                                        <label>Phone Number</label><span style="color:red">*</span>
+                                        <input type="tel"  class="form-control form-control-solid form-control-lg" name="phone" placeholder="+(650)251-53-21" />
+                                        <span class="form-text text-muted">Please Enter your Phone Number</span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Your Pricing</label><span style="color:red">*</span>
+                                        <input type="float"  class="form-control form-control-solid form-control-lg" name="pricing" placeholder="$200.05" />
+                                        <span class="form-text text-muted">How much do client/s pay you?</span>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +224,7 @@
                         </div>
                         <!--end: Wizard Step 3-->
                         <div class="pb-5" data-wizard-type="step-content">
-                            <Rating/>
+                            <!-- <Rating/> -->
                             <Calendar/>
                         </div>
                         <!--begin: Wizard Actions -->
@@ -253,13 +271,13 @@ import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
 import Calendar from "@/view/pages/Calendar.vue";
-import Rating from "@/view/pages/Rating.vue";
+// import Rating from "@/view/pages/Rating.vue";
 
 export default {
     name: "Wizard-1",
     components:{
         Calendar,
-        Rating
+        // Rating
     },
     mounted() {
         this.$store.dispatch(SET_BREADCRUMB, [{
