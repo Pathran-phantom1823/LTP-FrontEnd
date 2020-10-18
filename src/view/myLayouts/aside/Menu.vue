@@ -1,169 +1,149 @@
 <template>
-<ul class="menu-nav menu">
-    <router-link to="/myDashboard" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
+  <ul ref="menu-nav" class="menu-nav menu">
+    <router-link v-for="(dItems, ndx) in returnItems" :key="ndx" :to="dItems.link" v-slot="{ href, navigate, isActive, isExactActive }">
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
           isActive && 'menu-item-active',
           isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon flaticon2-architecture-and-city"></i>
-                <span class="menu-text">Dashboards</span>
-            </a>
-        </li>
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i :class="'menu-icon ' + dItems.icon"></i>
+          <span class="menu-text">{{dItems.name}}</span>
+        </a>
+      </li>
     </router-link>
-
-    <router-link to="/quotation" v-slot="{ href, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="goToQuotation">
-                <i class="menu-icon flaticon2-expand"></i>
-                <span class="menu-text">Instant Quote</span>
-            </a>
-        </li>
-    </router-link>
-
-    <router-link to="/admin/quotation" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon flaticon2-expand"></i>
-                <span class="menu-text">Quotations</span>
-            </a>
-        </li>
-    </router-link>
-
-    <li class="menu-section">
-        <h4 class="menu-text">Account Management</h4>
-        <i class="menu-icon flaticon-more-v2"></i>
-    </li>
-
-    <router-link to="/add-accounts" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fa fa-user-plus"></i>
-                <span class="menu-text">Add Members</span>
-            </a>
-        </li>
-    </router-link>
-
-    <router-link to="/accounts" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fa fa-users"></i>
-                <span class="menu-text">View member accounts</span>
-            </a>
-        </li>
-    </router-link>
-
-
-    <li class="menu-section">
-        <h4 class="menu-text">Jobs Management</h4>
-        <i class="menu-icon flaticon-more-v2"></i>
-    </li>
-
-     <router-link to="/view-jobs" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fa fa-language"></i>
-                <span class="menu-text">View Jobs</span>
-            </a>
-        </li>
-    </router-link>
-
-     <router-link to="/organization/postjob" v-slot="{ href, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="goToPostJobs">
-                <i class="menu-icon fas fa-upload"></i>
-                <span class="menu-text">Post Jobs</span>
-            </a>
-        </li>
-    </router-link>
-
-     <router-link to="/job_board" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fas fa-tools"></i>
-                <span class="menu-text">Post Board</span>
-            </a>
-        </li>
-    </router-link>
-
-    <li class="menu-section">
-        <h4 class="menu-text">Accounts</h4>
-        <i class="menu-icon flaticon-more-v2"></i>
-    </li>
-
-    <router-link to="/admin/members-translators" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fas fa-id-badge"></i>
-                <span class="menu-text">Member Translators</span>
-            </a>
-        </li>
-    </router-link>
-
-    <router-link to="/admin/non-members-translators" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fas fa-user-friends"></i>
-                <span class="menu-text">Non Member Translators</span>
-            </a>
-        </li>
-    </router-link>
-
-    <router-link to="/admin/organizations" v-slot="{ href, navigate, isActive, isExactActive }">
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item" :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]">
-            <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-icon fas fa-users"></i>
-                <span class="menu-text">Organizations</span>
-            </a>
-        </li>
-    </router-link>
-</ul>
+  </ul>
 </template>
 
 <script>
 export default {
-    name: "KTMenu",
-    methods: {
-        hasActiveChildren(match) {
-            return this.$route["path"].indexOf(match) !== -1;
-        },
-        goToQuotation(){
-            localStorage.setItem('method', 'quotation')
-        },
-        goToPostJobs(){
-            localStorage.setItem('method', 'postjob')
-        }
+  name: "KTMenu",
+  data() {
+    return {
+      index: null,
+       items: [
+        [
+          'Home',
+          {
+            icon: "flaticon2-architecture-and-city",
+            name: "Dashboard",
+            link: "/admin/dashboard"
+          },
+          {
+            icon: "flaticon2-expand",
+            name: "Quotations",
+            link: "/admin/quotations"
+          },
+          'Account Management',
+          {
+            icon: "fas fa-id-badge",
+            name: "Member Translators",
+            link: "#"
+          },
+          {
+            icon: "fas fa-user-friends",
+            name: "Non Member Translators",
+            link: "#"
+          },
+          {
+            icon: "fas fa-user",
+            name: "Organizations",
+            link: "#"
+          }
+        ],
+        [
+          'Home',
+          {
+            icon: "flaticon2-architecture-and-city",
+            name: "Dashboard",
+            link: "/organization/dashboard"
+          },
+          {
+            icon: "flaticon2-expand",
+            name: "Instant Quote",
+            link: "/organization/quotation"
+          },
+          'Account Management',
+          {
+            icon: "fa fa-user-plus",
+            name: "Add Members",
+            link: "/organization/add_account"
+          },
+          {
+            icon: "fa fa-users",
+            name: "Members",
+            link: "/organization/accounts"
+          },
+          'Account Management',
+          {
+            icon: "fa fa-language",
+            name: "View Jobs",
+            link: "/organization/view_jobs"
+          },
+          {
+            icon: "fas fa-upload",
+            name: "Post Job",
+            link: "/organization/post_job"
+          },
+          {
+            icon: "fas fa-tools",
+            name: "Job Board",
+            link: "/organization/job_board"
+          }
+        ]
+      ],
+      item_index: []
+    };
+  },
+  beforeMount(){
+    this.drawerItems();
+  },
+  mounted(){
+    this.addGrouper()
+  },
+  computed: {
+    returnIndex(){
+      return this.index
+    },
+    returnItems(){
+      return this.items[this.index].filter(element => {
+        return typeof element !== 'string'
+      })
     }
+  },
+  methods: {
+    drawerItems(){
+      // this.items.forEach((element, index) => {
+      //   if(element.user === 'organization'){
+      //     this.index = index
+      //   }
+      // })
+      this.index = 1;
+    },
+    addGrouper(){
+      this.items[this.index].forEach((element, index) => {
+        if(typeof element === 'string'){
+          let new_child = document.createElement('li')
+          new_child.className = 'menu-section'
+          new_child.innerHTML = '<h4 class="menu-text">'+ element +'</h4><i class="menu-icon flaticon-more-v2"></i>'
+          this.$refs['menu-nav'].insertBefore(new_child, this.$refs['menu-nav'].children[index])
+        }
+      })
+    },
+    hasActiveChildren(match) {
+      return this.$route["path"].indexOf(match) !== -1;
+    },
+    goToQuotation() {
+      localStorage.setItem("method", "quotation");
+    },
+    goToPostJobs() {
+      localStorage.setItem("method", "postjob");
+    }
+  }
 };
 </script>
 
