@@ -23,6 +23,18 @@ export default new Router({
                 import ("@/view/pages/postjob/PostJob.vue")
         },
         {
+            path: "/forums",
+            name: "forum",
+            component: () =>
+                import ("@/view/pages/forum.vue")
+        },
+        {
+            path: "/forumdetails",
+            name: "forum",
+            component: () =>
+                import ("@/view/pages/forumDetails.vue")
+        },
+        {
             path: "/",
             redirect: "/dashboard",
             component: () =>
@@ -543,6 +555,12 @@ export default new Router({
                         import ("@/view/pages/OrgProfile.vue")
                 },
                 {
+                    path: "/user/viewprofile",
+                    name: "viewprofile",
+                    component: () =>
+                        import ("@/view/pages/ViewProfile.vue")
+                },
+                {
                     path: "/user/payment",
                     name: "payment",
                     component: () =>
@@ -565,16 +583,16 @@ export default new Router({
                         breadcrumb: [
                             { name: 'Dashboard' }
                         ]
-                    }
+                    },
                 },
                 {
-                    path: "/forum",
+                    path: "/organization/forum",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forum.vue")
                 },
                 {
-                    path: "/forumdetails",
+                    path: "/organization/forumdetails",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forumDetails.vue")
@@ -629,6 +647,92 @@ export default new Router({
                         ]
                     }
                 },
+                {
+                    path: "/organization/postjob",
+                    name: "orgPostjob",
+                    component: () =>
+                        import ("@/view/pages/postjob/PostJob.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Jobs', link: 'viewJobs' },
+                            { name: 'Post Jobs' }
+                        ]
+                    }
+                },
+                {
+                    path: "/job_board",
+                    name: "Job_Board",
+                    component: () =>
+                        import ("@/view/pages/Organization/JobBoard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Jobs', link: 'viewJobs' },
+                            { name: 'Job Board' }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            path: "/admin",
+            redirect: "/admin/Dashboard",
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+            children: [{
+                    path: "/admin/Dashboard",
+                    name: "adminDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Dashboard' }
+                        ]
+                    }
+                },
+                {
+                    path: "/admin/quotation",
+                    name: "adminQuotations",
+                    component: () =>
+                        import ("@/view/pages/admin/Quotations.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Quotations' }
+                        ]
+                    }
+                },
+                {
+                    path: "/admin/members-translators",
+                    name: "MemberTranslators",
+                    component: () =>
+                        import ("@/view/pages/admin/Members.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Members Translators' }
+                        ]
+                    }
+                },
+                {
+                    path: "/admin/non-members-translators",
+                    name: "NonMemberTranslators",
+                    component: () =>
+                        import ("@/view/pages/admin/NonMembers.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Non Members Translators' }
+                        ]
+                    }
+                },
+                {
+                    path: "/admin/organizations",
+                    name: "Organizations",
+                    component: () =>
+                        import ("@/view/pages/admin/Organizations.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Organizations' }
+                        ]
+                    }
+                }
             ]
         },
         {

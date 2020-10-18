@@ -1,11 +1,11 @@
 <template>
-<v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+<v-data-table :headers="headers" :items="members" sort-by="calories" class="elevation-1">
     <template v-slot:top>
         <v-toolbar flat>
             <v-toolbar-title>My Members</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="500px">
+            <v-dialog v-model="dialog" max-width="500px" persistent>
                 <v-card>
                     <v-card-title>
                         <span class="headline">{{ formTitle }}</span>
@@ -13,23 +13,9 @@
 
                     <v-card-text>
                         <v-container>
-                            <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                                </v-col>
-                            </v-row>
+                            <v-text-field v-model="editedItem.username" label="Username"></v-text-field>
+                            <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                            <!-- <v-text-field v-model="editedItem.password" label="Password"></v-text-field> -->
                         </v-container>
                     </v-card-text>
 
@@ -57,6 +43,11 @@
             </v-dialog>
         </v-toolbar>
     </template>
+    <!-- <template v-slot:item.status="{ item }">
+        <v-chip class="ma-2" :color="item.status === 'assigned' ? 'success' : null " style="cursor:pointer" @click="updateStatus(item.email)">
+            {{item.status}}
+        </v-chip>
+    </template> -->
     <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
@@ -72,178 +63,230 @@
     </template>
 </v-data-table>
 </template>
+
 <script>
-  export default {
+import Swal from "sweetalert2";
+import ApiService from "@/core/services/api.service";
+
+export default {
     data: () => ({
-      dialog: false,
-      dialogDelete: false,
-      headers: [
-        {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          sortable: false,
-          value: 'name',
+        dialog: false,
+        dialogDelete: false,
+        headers: [{
+                text: 'Email',
+                align: 'start',
+                sortable: false,
+                value: 'email',
+            },
+            {
+                text: 'Useraname',
+                value: 'username'
+            },
+            {
+                text: 'Password',
+                value: 'password'
+            },
+            // {
+            //     text: 'Status',
+            //     value: 'status',
+            //     sortable: false
+            // },
+            {
+                text: 'Actions',
+                value: 'actions',
+                sortable: false
+            },
+        ],
+        desserts: [],
+        members: [],
+        itemId: null,
+        editedIndex: -1,
+        editedItem: {
+            username: '',
+            email: '',
+            password: '',
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
+        defaultItem: {
+            username: '',
+            email: 0,
+            password: 0,
+        },
     }),
 
+    mounted() {
+        this.retrieve()
+    },
+
     computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        },
     },
 
     watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
+        dialog(val) {
+            val || this.close()
+        },
+        dialogDelete(val) {
+            val || this.closeDelete()
+        },
     },
 
-    created () {
-      this.initialize()
+    created() {
+        this.initialize()
     },
 
     methods: {
-      initialize () {
-        this.desserts = [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ]
-      },
+        initialize() {
+            this.desserts = [{
+                    name: 'Gingerbread',
+                    email: 'gingerbread@gmail.com',
+                    password: 'pass6',
+                    status: 'assigned'
+                },
+                {
+                    name: 'Jelly bean',
+                    email: 'jellybean@gmail.com',
+                    password: 'pass5',
+                    status: 'no assignment'
+                },
+                {
+                    name: 'Lollipop',
+                    email: 'lolipop@gmail.com',
+                    password: 'pass4',
+                    status: 'no assignment'
+                },
+                {
+                    name: 'Honeycomb',
+                    email: 'Honeycomb@gmail.com',
+                    password: 'pass3',
+                    status: 'no assignment'
+                },
+                {
+                    name: 'Donut',
+                    email: 'Donut@gmail.com',
+                    password: 'pass2',
+                    status: 'assigned'
+                },
+                {
+                    name: 'KitKat',
+                    email: 'kitkat@gmail.com',
+                    password: 'pass1',
+                    status: 'no assignment'
+                },
+            ]
+        },
 
-      editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
+        editItem(item) {
+            // console.log(item.id);
+            this.itemId = item.id
+            this.editedIndex = this.members.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
+        },
 
-      deleteItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      },
+        deleteItem(item) {
+            this.itemId = item.id
+            this.editedIndex = this.members.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
+        },
 
-      deleteItemConfirm () {
-        this.desserts.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
+        deleteItemConfirm() {
+            ApiService.put("deleteMember", {
+                id: this.editedItem.id,
+                username: this.editedItem.username,
+                email: this.editedItem.email,
+                expired: this.editedItem.expired,
+                password: this.editedItem.password,
+                isMember: this.editedItem.isMember,
+                isDisabled: "true",
+                roleId: this.editedItem.roleId,
+                createdAt: this.editedItem.createdAt
+            }).then(() => {
+                this.retrieve()
+                this.$router.push('/add-accounts')
+            })
+            this.closeDelete()
+        },
 
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
+        close() {
+            this.dialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
 
-      closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
+        closeDelete() {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
 
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
+        save() {
+            // console.log(this.itemId)
+            console.log("data", this.editedItem)
+            this.members.map(el => {
+                if (el.id === this.itemId) {
+                    this.members.splice(this.itemId, 1);
+                    ApiService.put("updateMember", {
+                        id: this.itemId,
+                        username: this.editedItem.username,
+                        email: this.editedItem.email,
+                        accountType: this.editedItem.accountType,
+                        expired: this.editedItem.expired,
+                        password: this.editedItem.password,
+                        isMember: false,
+
+                    }).then(() => {
+                        // console.log(res)
+                        this.$router.push('/add-accounts')
+                        Swal.fire({
+                            title: "",
+                            text: `${this.itemId} is Successfully Update`,
+                            icon: "success",
+                            confirmButtonClass: "btn btn-secondary",
+                        })
+                    })
+                }
+            })
+            this.close()
+        },
+
+        // updateStatus(email){
+        //   this.desserts.map(el =>{
+        //     if(el.email === email){
+        //       if(el.status === 'assigned'){
+        //         el.status = 'not assigned'
+        //       }else{
+        //         el.status = 'assigned'
+        //       }
+        //     }
+        //   })
+        // }
+        retrieve() {
+            const id = localStorage.getItem('value')
+            const userID = id.substr(id.lastIndexOf('*') + 1)
+            // let formData = new FormData();
+            // let params = {
+            //     id: userID
+            // }
+            // formData.append('id', JSON.stringify(params))
+            // // console.log('id',userID.toString())
+            ApiService.post('getmembers', {
+                id: userID
+            }).then(res => {
+                console.log(res.data);
+                res.data.map(el => {
+                    this.members.push(el)
+                })
+                // this.members = res
+                console.log(this.members);
+            })
         }
-        this.close()
-      },
     },
-  }
+}
 </script>

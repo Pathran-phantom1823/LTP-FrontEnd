@@ -168,7 +168,7 @@ export default {
             isUser: true,
             toggle_exclusive: undefined,
             paymentType: [{
-                    title: "Credit Card",
+                    title: "Credit Card (Coming Soon)",
                     icon: "far fa-credit-card"
                 },
                 {
