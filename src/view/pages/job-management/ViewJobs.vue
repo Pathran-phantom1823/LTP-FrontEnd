@@ -6,7 +6,7 @@
     <div ref="workspace" class="workspace">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card FeedCard" v-for="(data, index) in feedData" :key="index" @mouseenter="showViewMore" @mouseleave="hideViewMore">
+                <div class="card FeedCard" v-for="(data, index) in allJobs" :key="index" @mouseenter="showViewMore" @mouseleave="hideViewMore">
                     <div class="card-header dataHeader">
                         <div class="data_title">{{ data.title }}</div>
                         <div class="saveJobIcon">
@@ -39,26 +39,26 @@
         <div class="text-center mt-5 mb-5">
             <v-pagination v-if="feedData.length > 7" v-model="page" :length="feedData.length" :total-visible="7" circle color="blue lighten-1"></v-pagination>
         </div>
-
-        <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
-            <div ref="moreInfo" class="moreInfo">
-                <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
-                <div class="card ViewMoreTitle mb-3">
-                    <b>{{feedDetails.title}}</b>
-                </div>
-                <div class="card ViewMoreCard pt-3">
-                    <!-- <div class="card-header ViewMoreHeader">
+    </div>
+    <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
+        <div ref="moreInfo" class="moreInfo">
+            <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
+            <div class="card ViewMoreTitle mb-3">
+                <b>{{feedDetails.title}}</b>
+            </div>
+            <div class="card ViewMoreCard pt-3">
+                <!-- <div class="card-header ViewMoreHeader">
               <b>{{feedData[0].title}}</b>
             </div> -->
-                    <div class="card-body ViewMoreBody">
-                        <p class="card-text mb-3">
-                            <span v-if="feedDetails.fixedPrice !== null"><b>Price: </b> ${{feedDetails.fixedPrice }}</span>
-                            <span v-else><b>Price: </b> ${{feedDetails.fromPrice}} - ${{feedDetails.toPrice}}</span>
-                        </p>
-                        <p class="card-text">
-                            <b> Description : </b>{{feedDetails.description}}
-                        </p>
-                        <!-- <div class="col-sm-12 skillsPadding">
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3">
+                        <span v-if="feedDetails.fixedPrice !== null"><b>Price: </b> ${{feedDetails.fixedPrice }}</span>
+                        <span v-else><b>Price: </b> ${{feedDetails.fromPrice}} - ${{feedDetails.toPrice}}</span>
+                    </p>
+                    <p class="card-text">
+                        <b> Description : </b>{{feedDetails.description}}
+                    </p>
+                    <!-- <div class="col-sm-12 skillsPadding">
                 <div class="row">
                   <b
                     class="skills"
@@ -68,44 +68,43 @@
                   >
                 </div>
               </div> -->
+                </div>
+                <div class="card-footer ViewMoreFooter">
+                    <p class="locationbid"><b>Language Tranlation:</b> {{feedDetails.languageTo}}</p>
+                    <p class="locationbid"><b>Bids:</b> 0</p>
+                    <p class="locationbid">
+                        <b>Location:</b>
+                        <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                        Philippines
+                    </p>
+                </div>
+            </div>
+            <div class="card ViewMoreCard mt-2">
+                <div class="card-header ViewMoreHeader">
+                    <b class="mb-5 font-weight-normal">Posted by:</b>
+                    <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
+                        <v-avatar>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                        </v-avatar>
+                        <div class="ml-2">
+                            <p class="card-text">
+                                <b>{{feedDetails.username}}</b>
+                            </p>
+                        </div>
                     </div>
-                    <div class="card-footer ViewMoreFooter">
-                        <p class="locationbid"><b>Language Tranlation:</b> {{feedDetails.languageTo}}</p>
-                        <p class="locationbid"><b>Bids:</b> 0</p>
-                        <p class="locationbid">
-                            <b>Location:</b>
-                            <v-icon class="locationIcon">mdi-map-marker</v-icon>
-                            Philippines
-                        </p>
+                    <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
+                </div>
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3"><b>Date Posted: </b> 9/24/2020</p>
+                    <p class="card-text mb-3"><b>Date Needed: </b>{{feedDetails.fromDate}} - {{feedDetails.toDate}}</p>
+                    <div class="col-sm-12 skillsPadding">
+                        <div class="row">
+                            <b class="mr-2"> Category :</b><b class="skills">{{feedDetails.subject}}</b>
+                        </div>
                     </div>
                 </div>
-                <div class="card ViewMoreCard mt-2">
-                    <div class="card-header ViewMoreHeader">
-                        <b class="mb-5 font-weight-normal">Posted by:</b>
-                        <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
-                            <v-avatar>
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                            </v-avatar>
-                            <div class="ml-2">
-                                <p class="card-text">
-                                    <b>{{feedDetails.username}}</b>
-                                </p>
-                            </div>
-                        </div>
-                        <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
-                    </div>
-                    <div class="card-body ViewMoreBody">
-                        <p class="card-text mb-3"><b>Date Posted: </b> 9/24/2020</p>
-                        <p class="card-text mb-3"><b>Date Needed: </b>{{feedDetails.fromDate}} - {{feedDetails.toDate}}</p>
-                        <div class="col-sm-12 skillsPadding">
-                            <div class="row">
-                                <b class="mr-2"> Category :</b><b class="skills">{{feedDetails.subject}}</b>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
-                        <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)">Accept Offer</v-btn>
-                    </div>
+                <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
+                    <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)">Accept Offer</v-btn>
                 </div>
             </div>
         </div>
@@ -169,7 +168,9 @@ export default {
     mounted() {
         const id = localStorage.getItem('value')
         this.userID = id.substr(id.lastIndexOf('*') + 1)
-        ApiService.post("getAllJobs", {id: this.userID}).then(res => {
+        ApiService.post("getAllJobs", {
+            id: this.userID
+        }).then(res => {
             console.log(res);
             this.feedData = res.data
         })
@@ -181,16 +182,20 @@ export default {
             this.$refs["sidebarToggler"].click();
         }
     },
-    computed: {},
+    computed: {
+        allJobs() {
+            return this.feedData
+        }
+    },
     methods: {
         saveJob(e, jobId, postedById) {
-            console.log("jobId: ", jobId," postedBy:",  postedById);
+            console.log("jobId: ", jobId, " postedBy:", postedById);
             ApiService.post("save-job", {
                 jobId: jobId,
                 postedById: postedById,
                 savedById: this.userID
             }).then(() => {
-                 Swal.fire({
+                Swal.fire({
                     title: "",
                     text: "Job is Successfully saved",
                     icon: "success",
@@ -401,7 +406,7 @@ export default {
     width: 100% !important;
     position: fixed;
     left: 100%;
-    top: 0px;
+    top: 0px !important;
     z-index: 96;
     background: rgba(95, 92, 92, 0.4);
 }

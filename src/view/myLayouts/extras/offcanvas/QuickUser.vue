@@ -5,12 +5,12 @@
             Hi,
         </span>
         <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-            Seans
+            {{currentUser}}
         </span>
         <span class="symbol symbol-35 symbol-light-success">
             <img v-if="false" alt="Pic" :src="picture" />
             <span v-if="true" class="symbol-label font-size-h5 font-weight-bold">
-                S
+                {{user}}
             </span>
         </span>
     </div>
@@ -115,11 +115,7 @@
             </div>
             <!--end::Nav-->
             <div class="separator separator-dashed my-7"></div>
-             <a
-                class="btn btn-light-primary font-weight-bolder btn-sm"
-                href="#"
-                >Upgrade plan</a
-              >
+            <a class="btn btn-light-primary font-weight-bolder btn-sm" href="#">Upgrade plan</a>
         </perfect-scrollbar>
         <!--end::Content-->
     </div>
@@ -138,6 +134,7 @@ import {
 } from "@/core/services/store/auth.module";
 import KTLayoutQuickUser from "@/assets/js/layout/extended/quick-user.js";
 import KTOffcanvas from "@/assets/js/components/offcanvas.js";
+import ApiService from "@/core/services/api.service";
 
 export default {
     name: "KTQuickUser",
@@ -145,19 +142,36 @@ export default {
         return {
             dates: ['2018-09-15', '2018-09-20'],
             menu: false,
+            userID: null,
+            currentUser: null,
+            user: null,
         };
     },
     mounted() {
         // Init Quick User Panel
         KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
+
+        const id = localStorage.getItem('value')
+        this.userID = id.substr(id.lastIndexOf('*') + 1)
+        ApiService.post("getCurrentUser", {
+            id: this.userID
+        }).then(res => {
+            // console.log(res.data.substr(0,2));
+            this.currentUser = res.data
+            this.user = res.data.substr(0,2).toUpperCase()
+        })
+
     },
     methods: {
         onLogout() {
             this.$store
                 .dispatch(LOGOUT)
-                .then(() => this.$router.push({
-                    name: "login"
-                }));
+                .then(() => {
+                    window.location.reload();
+                    this.$router.push({
+                        name: "login"
+                    })
+                });
         },
         closeOffcanvas() {
             new KTOffcanvas(KTLayoutQuickUser.getElement()).hide();
