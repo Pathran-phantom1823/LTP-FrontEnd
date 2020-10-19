@@ -23,7 +23,7 @@ const config2 = {
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = JwtService.getToken() !== null || JwtService.getToken() !== undefined ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ?  "http://localhost:8003/ltp" : "http://localhost:8003/api/";
   },
 
 
@@ -58,6 +58,7 @@ const ApiService = {
    * @returns {*}
    */
   get(resource, slug= "") {
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null  ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
     // console.log(resource, slug)
     return Vue.axios.get(`${resource}/${slug}`, config)
   },
@@ -83,6 +84,7 @@ const ApiService = {
    * @returns {*}
    */
   post(resource, params) {
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
     let header = config.headers.Authorization === "null" ? config2 : config
     console.log('headers', header)
     return Vue.axios.post(`${resource}`, params, header);
@@ -106,6 +108,7 @@ const ApiService = {
    * @returns {IDBRequest<IDBValidKey> | Promise<void>}
    */
   put(resource, params) {
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
     let header = config.headers.Authorization === "null" ? config2 : config
     console.log('headers', params)
     return Vue.axios.put(`${resource}`, params, header);

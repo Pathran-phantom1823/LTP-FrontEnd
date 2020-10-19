@@ -29,7 +29,7 @@
 
             <b-form-group id="example-input-group-2" label label-for="example-input-2">
                 <b-input-group>
-                    <b-form-input class="form-control form-control-solid h-auto py-5 px-6" :type="showPass === false? 'text' : 'password'" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback"></b-form-input>
+                    <b-form-input class="form-control form-control-solid h-auto py-5 px-6" :type="showPass === false ? 'text' : 'password'" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback"></b-form-input>
                     <b-input-group-append>
                         <b-button @click="showPass = !showPass"><i :class="showPass === false ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></b-button>
                     </b-input-group-append>
@@ -90,7 +90,7 @@ export default {
                 username: "admin@demo.com",
                 password: "demo",
             },
-            showPass: false
+            showPass: true
         };
     },
     validations: {
