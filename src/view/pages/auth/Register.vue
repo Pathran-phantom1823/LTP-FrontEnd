@@ -42,8 +42,12 @@
             </b-form-group>
 
             <b-form-group id="example-input-group-2" label label-for="example-input-2">
-                <b-form-input class="form-control form-control-solid h-auto py-5 px-6" type="password" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback" placeholder="Password"></b-form-input>
-
+                <b-input-group>
+                    <b-form-input class="form-control form-control-solid h-auto py-5 px-6" :type="showPass === false? 'text' : 'password'" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback" placeholder="Password"></b-form-input>
+                    <b-input-group-append>
+                        <b-button @click="showPass = !showPass"><i :class="showPass === false ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></b-button>
+                    </b-input-group-append>
+                </b-input-group>
                 <b-form-invalid-feedback id="input-2-live-feedback">Password is required.</b-form-invalid-feedback>
             </b-form-group>
 
@@ -104,6 +108,7 @@ export default {
             username: '',
             accountType: ''
         },
+        showPass: true
     }),
     validations: {
         form: {
@@ -124,7 +129,7 @@ export default {
             }
         },
     },
-    mounted(){
+    mounted() {
         // console.log("token", JwtService.getToken())
     },
     methods: {

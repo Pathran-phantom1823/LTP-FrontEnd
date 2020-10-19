@@ -37,10 +37,13 @@ const getters = {
 
 const actions = {
   [LOGIN](context, credentials) {
+    const string = Math.random().toString(36).substring(2,5)
     return new Promise(resolve => {
       ApiService.post("authenticate", credentials)
         .then(({ data }) => {
-          console.log('data', data)
+          // console.log('data', data.data[0].id)
+          const result = string + '*' +  data.data[0].id
+          localStorage.setItem('value', result)
           context.commit(SET_AUTH, data);
           resolve(data);
         })
@@ -116,6 +119,7 @@ const mutations = {
     state.user = user;
     state.errors = {};
     // state.userId = user.data[1].id
+    console.log(user.data[0].token);
     JwtService.saveToken(`Bearer ${user.data[0].token}`);
     localStorage.setItem('role', `${state.plan}`)
   },
