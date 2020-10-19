@@ -62,7 +62,7 @@ const actions = {
         const result = string + '*' +  res.data[1].id
         console.log(res)
         localStorage.setItem('value', result)
-        context.commit(SET_AUTH, res);
+        // context.commit(SET_AUTH, res);
         resolve(res)
       }).catch(error => {
         console.log(error)
@@ -116,7 +116,7 @@ const mutations = {
     state.user = user;
     state.errors = {};
     // state.userId = user.data[1].id
-    JwtService.saveToken(`Bearer ${user.data[0]}`);
+    JwtService.saveToken(`Bearer ${user.data[0].token}`);
     localStorage.setItem('role', `${state.plan}`)
   },
   [PURGE_AUTH](state) {

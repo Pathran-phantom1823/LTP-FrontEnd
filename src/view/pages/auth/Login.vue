@@ -19,7 +19,7 @@
       <!--begin::Form-->
       <b-form class="form" @submit.stop.prevent="onSubmit">
 
-        <div role="alert" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
+        <div role="alert" v-if="errors !== undefined" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
           <div class="alert-text" v-for="(error, i) in errors" :key="i">{{ error }}</div>
         </div>
 
