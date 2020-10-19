@@ -61,9 +61,7 @@ const actions = {
     const string = Math.random().toString(36).substring(2,5)
     return new Promise((resolve) => {
       ApiService.post("register", credentials).then(res => {
-        console.log(res)
         const result = string + '*' +  res.data[1].id
-        console.log(res)
         localStorage.setItem('value', result)
         // context.commit(SET_AUTH, res);
         resolve(res)
@@ -85,13 +83,13 @@ const actions = {
     if (JwtService.getToken()) {
       ApiService.setHeader();
       // console.log(state.userId)
-      ApiService.get("verify")
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
-        }); 
+      // ApiService.get("verify")
+      //   .then(({ data }) => {
+      //     context.commit(SET_AUTH, data);
+      //   })
+      //   .catch(({ response }) => {
+      //     context.commit(SET_ERROR, response.data.errors);
+      //   }); 
     } else {
       context.commit(PURGE_AUTH);
     }
@@ -119,7 +117,6 @@ const mutations = {
     state.user = user;
     state.errors = {};
     // state.userId = user.data[1].id
-    console.log(user.data[0].token);
     JwtService.saveToken(`Bearer ${user.data[0].token}`);
     localStorage.setItem('role', `${state.plan}`)
   },
