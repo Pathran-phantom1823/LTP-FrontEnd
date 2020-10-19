@@ -16,8 +16,6 @@
           class="row mb-1 cards FeedCard"
           v-for="(data, index) in returnData"
           :key="index"
-          @mouseenter="showViewMore"
-          @mouseleave="hideViewMore"
         >
           <div class="col-sm-12 card pl-3 pr-3 pt-5 pb-5 jobCard">
             <div class="card-body p-0 d-flex justify-content-between data_header">
@@ -52,7 +50,7 @@
               <div class="col-sm-12 skillsPadding">
                 <div class="row">
                   <b class="mr-2 font-weight-normal">Category :</b>
-                  <b class="skills" v-for="skill in 1" :key="skill">Arts Crafts</b>
+                  <b class="skills font-weight-normal" v-for="skill in 1" :key="skill">Arts Crafts</b>
                 </div>
               </div>
             </div>
@@ -65,7 +63,7 @@
               </p>
               <div class="col-sm-12 skillsPadding">
                 <div class="row">
-                  <b class="skills" v-for="(skill, index) in data.skills" :key="index">{{skill}}</b>
+                  <b class="skills font-weight-normal" v-for="(skill, index) in data.skills" :key="index">{{skill}}</b>
                 </div>
               </div>
               <p class="card-text mb-0 mt-3">
@@ -73,88 +71,91 @@
                 {{data.price}}
               </p>
               <p class="card-text locationbid mt-2">Bids: 0</p>
-              <v-avatar class="edit_posts" size="36">
-                <v-icon title="edit" class="white--text headline">
-                  mdi mdi-lead-pencil
-                </v-icon>
-              </v-avatar>
-              <v-avatar class="delete_posts" color="red accent-3" size="36">
-                <v-icon title="delete" class="white--text headline">
-                  mdi mdi-delete-forever
-                </v-icon>
-              </v-avatar>
             </div>
           </div>
         </div>
       </div>
       <div class="col-sm-12 pl-7 pr-7">
         <div class="row">
-          <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4 translator">
-            <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
-              <div class="card p-0 cards bid_cards">
-                <div class="card-body p-4">
-                  <b class="font-weight-normal"> Translators </b>
-                </div>
+          <div class="col-sm-6 p-0 bid_card cards bid_cards">
+            <div class="card p-0 cards bid_cards bid_cards_container">
+              <div class="card-body pl-4 pr-4 pb-0">
+                <b class="font-weight-normal"> Individual Translator </b>
               </div>
             </div>
-            <div class="card-body pt-0 pb-0">
-              <div class="row cards" v-for="(element) in 10" :key="element">
-                <div class="col-sm-4 card p-3 bid_card">
-                  <div class="card-body p-0">
-                    <div class="d-flex justify-content-start align-items-center">
-                      <v-avatar
-                        color="indigo"
-                        size="36"
-                      >
-                        <img
-                          src="https://cdn.vuetifyjs.com/images/john.jpg"
-                          alt="John"
-                        >
-                      </v-avatar>
-                      <b class="ml-2 font-weight-normal">Bill Gates</b>
-                    </div>
+            <hr>
+            <div class="card p-0 organization bid_cards_container">
+              <!-- <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
+                <div class="card p-0 cards bid_cards">
+                  <div class="card-body p-4">
+                    <b class="font-weight-normal"> Organization </b>
                   </div>
                 </div>
-                <div class="col-sm-8 card p-3 bid_card">
-                  <div class="card-body p-0 d-flex align-items-center justify-content-start">
-                    <div class="location_bids">
-                      <b class=" mr-2">Location: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">Philippines, </b></b>
+              </div> -->
+              <div class="card-body pt-0 pb-0">
+                <div class="row cards" v-for="(element) in 10" :key="element">
+                  <div class="col-sm-4 card p-3 bid_card">
+                    <div class="card-body p-0">
+                      <div class="d-flex justify-content-start align-items-center">
+                        <v-avatar
+                          color="indigo"
+                          size="36"
+                        >
+                          <img
+                            src="https://cdn.vuetifyjs.com/images/john.jpg"
+                            alt="John"
+                          >
+                        </v-avatar>
+                        <b class="ml-2 font-weight-normal">Bill Gates</b>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-8 card p-3 bid_card">
+                    <div class="card-body p-0 d-flex align-items-center justify-content-start">
+                      <div class="location_bids">
+                        <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">$100.00 </b></b>
+                        <b class="skills font-weight-normal bidAction">Accept</b>
+                        <b class="skills font-weight-normal Decline bidAction">Decline</b>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="card bid_cards p-0 mb-4 col-sm-6 pt-4 pb-4 organization">
-            <div class="card-header bid_cards p-5 pb-0 pt-0 bid_cards_container">
-              <div class="card p-0 cards bid_cards">
-                <div class="card-body p-4">
-                  <b class="font-weight-normal"> Organization </b>
-                </div>
+          <div class="col-sm-6 p-0 bid_card cards bid_cards">
+            <div class="card p-0 cards bid_cards bid_cards_container">
+              <div class="card-body pl-4 pr-4 pb-0">
+                <b class="font-weight-normal"> Organization </b>
               </div>
             </div>
-            <div class="card-body pt-0 pb-0">
-              <div class="row cards" v-for="(element) in 5" :key="element">
-                <div class="col-sm-4 card p-3 bid_card">
-                  <div class="card-body p-0">
-                    <div class="d-flex justify-content-start align-items-center">
-                      <v-avatar
-                        color="indigo"
-                        size="36"
-                      >
-                        <img
-                          src="https://cdn.vuetifyjs.com/images/john.jpg"
-                          alt="John"
+            <hr>
+            <div class="card p-0 organization bid_cards_container">
+              <div class="card-body pt-0 pb-0">
+                <div class="row cards" v-for="(element) in 5" :key="element">
+                  <div class="col-sm-4 card p-3 bid_card">
+                    <div class="card-body p-0">
+                      <div class="d-flex justify-content-start align-items-center">
+                        <v-avatar
+                          color="indigo"
+                          size="36"
                         >
-                      </v-avatar>
-                      <b class="ml-2 font-weight-normal">Bill Gates</b>
+                          <img
+                            src="https://cdn.vuetifyjs.com/images/john.jpg"
+                            alt="John"
+                          >
+                        </v-avatar>
+                        <b class="ml-2 font-weight-normal">Bill Gates</b>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-8 card p-3 bid_card">
-                  <div class="card-body p-0 d-flex align-items-center justify-content-start">
-                    <div class="location_bids">
-                      <b class=" mr-2">Location: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">Philippines, </b></b>
+                  <div class="col-sm-8 card p-3 bid_card">
+                    <div class="card-body p-0 d-flex align-items-center justify-content-start">
+                      <div class="location_bids">
+                        <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">$100.00 </b></b>
+                        <b class="skills font-weight-normal bidAction">Accept</b>
+                        <b class="skills font-weight-normal Decline bidAction">Decline</b>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -188,7 +189,7 @@
             <div class="col-sm-12 skillsPadding">
               <div class="row">
                 <b
-                  class="skills"
+                  class="skills font-weight-normal"
                   v-for="(skill, index) in data[0].skills"
                   :key="index"
                 >{{skill}}</b>
@@ -233,7 +234,7 @@
             <div class="col-sm-12 skillsPadding">
               <div class="row">
                 <b class="mr-2">Category :</b>
-                <b class="skills" v-for="skill in 1" :key="skill">Arts Crafts</b>
+                <b class="skills font-weight-normal" v-for="skill in 1" :key="skill">Arts Crafts</b>
               </div>
             </div>
           </div>
@@ -277,20 +278,6 @@ export default {
     }
   },
   methods: {
-    showViewMore(e) {
-      let target = e.target.children[2].children[0].children
-      target[4].classList.remove('hide_posts_icons')
-      target[4].classList.add('show_posts_icons')
-      target[5].classList.remove('hide_posts_icons')
-      target[5].classList.add('show_posts_icons')
-    },
-    hideViewMore(e) {
-      let target = e.target.children[2].children[0].children
-      target[4].classList.add('hide_posts_icons')
-      target[4].classList.remove('show_posts_icons')
-      target[5].classList.add('hide_posts_icons')
-      target[5].classList.remove('show_posts_icons')
-    },
     viewMore(ViewEvent) {
       if (ViewEvent) {
         this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
@@ -311,6 +298,13 @@ export default {
 </script>
 
 <style scoped>
+.bidAction{
+  cursor: pointer;
+}
+.Decline{
+  background:#f2470f !important;
+  border: 1px solid #f2470f !important;
+}
 .location_bids{
   white-space: nowrap; 
   overflow: hidden !important;
@@ -554,7 +548,6 @@ export default {
 }
 .translator::-webkit-scrollbar-track {
   background: rgb(240, 237, 235);
-  margin-bottom: 10px;
 }
 .translator::-webkit-scrollbar-thumb {
   background-color: #c7cbcc;
@@ -567,11 +560,9 @@ export default {
 }
 .organization::-webkit-scrollbar {
   width: 7px;
-  background-color: #F5F5F5;
 }
 .organization::-webkit-scrollbar-track {
   background: rgb(240, 237, 235);
-  margin-bottom: 10px;
 }
 .organization::-webkit-scrollbar-thumb {
   background-color: #c7cbcc;
