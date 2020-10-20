@@ -17,13 +17,14 @@
                         <b class="priceLabel">Price: </b>
                         <b><span v-if="data.fixedPrice !== null">${{data.fixedPrice}}</span><span v-else>${{data.fromPrice}} - ${{data.toPrice}}</span></b>
                         <p class="card-text descriptionText">Description: {{ data.description }}</p>
-                        <div class="col-sm-12 skillsPadding">
+                        <div class="col-sm-12 skillsPadding"><br>
                             <div class="row">
-                                <b class="skills">
-                                    {{data.languageTo}}</b>
+                                Current Language of document: 
+                                <b class="skills" v-for="(language, index) in data.languageFrom" :key="index">
+                                    {{language}}</b>
                             </div>
                         </div>
-                        <p class="card-text locationbid mt-2">Bids: <b>0</b></p>
+                        <p class="card-text locationbid mt-2">Bids: <b>{{data.bids}}</b></p>
                         <p class="locationbid mb-2">
                             Location:
                             <v-icon class="locationIcon">mdi-map-marker</v-icon>
@@ -171,8 +172,13 @@ export default {
         ApiService.post("getAllJobs", {
             id: this.userID
         }).then(res => {
-            console.log(res);
+            // console.log(res);
+            res.data.map(el => {
+                let tempRes = el.languageFrom.replace(/,/g,' ')
+                el.languageFrom = tempRes.trim().split(' ')
+            })
             this.feedData = res.data
+            console.log(res.data);
         })
 
         if (window.innerWidth < 750) {
@@ -217,16 +223,19 @@ export default {
                 "transition: .5s; right: -100% !important;";
         },
         viewMore(ViewEvent, data) {
-            console.log(data)
-            ApiService.get("getJob", data).then(res => {
-                console.log(res);
-                this.feedDetails = res.data[0]
-                console.log("feedDetails", this.feedDetails);
-            })
             if (ViewEvent) {
                 this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
                 this.$refs["moreInfo"].style =
                     "transition: .5s !important; left: 40% !important";
+
+                console.log(data)
+                ApiService.post("getJob", {
+                    id: data
+                }).then(res => {
+                    console.log(res);
+                    this.feedDetails = res.data[0]
+                    console.log("feedDetails", this.feedDetails);
+                })
                 if (window.innerWidth < 750) {
                     this.$refs["moreInfo"].style =
                         "width: 80% !important; transition: .5s !important; left: 20% !important";

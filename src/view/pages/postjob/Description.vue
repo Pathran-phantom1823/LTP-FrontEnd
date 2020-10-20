@@ -29,12 +29,14 @@
           <b-row>
             <b-col sm="6">
               <label for="title">
-                <strong>Languange From:*</strong>
+                <strong>Current Language used in Document:*</strong>
               </label>
               <v-select
                 v-model="languageFrom"
                 :items="languages"
                 label="Select"
+                multiple
+                chips
                 outlined
                 height="20"
               ></v-select>
@@ -81,7 +83,7 @@ export default {
       dialog: false,
       IsNext: false,
       description: null,
-      languageFrom: null,
+      languageFrom: [],
       languageTo: [],
       file: [],
       data: [],
@@ -110,7 +112,7 @@ export default {
     next() {
       if (
         this.description === null ||
-        this.languageFrom === null ||
+        this.languageFrom.length === 0 ||
         this.languageTo.length === 0
       ) {
         this.snackbar = true

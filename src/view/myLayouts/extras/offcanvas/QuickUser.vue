@@ -52,7 +52,7 @@
                                     </span>
                                 </span>
                                 <span class="navi-text text-muted text-hover-primary">
-                                    jm@softplus.com
+                                    {{email}}
                                 </span>
                             </span>
                         </a>
@@ -145,6 +145,7 @@ export default {
             userID: null,
             currentUser: null,
             user: null,
+            email: null,
         };
     },
     mounted() {
@@ -157,8 +158,9 @@ export default {
             id: this.userID
         }).then(res => {
             // console.log(res.data.substr(0,2));
-            this.currentUser = res.data
-            this.user = res.data.substr(0,2).toUpperCase()
+            this.currentUser = res.data[0]
+            this.user = res.data[0].substr(0,2).toUpperCase()
+            this.email = res.data[1]
         })
 
     },

@@ -116,7 +116,7 @@
                             <div class="col-sm-12 skillsPadding">
                                 <div class="row">
                                     <b class="mr-2 font-weight-normal">Category :</b>
-                                    <b class="skills">{{data.subject}}</b>
+                                    <b class="skills font-weight-normal">{{data.subject}}</b>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,8 @@
                             </p>
                             <div class="col-sm-12 skillsPadding">
                                 <div class="row">
-                                    <b class="skills" v-for="(skill, index) in data.skills" :key="index">{{skill}}</b>
+                                    Current Language of document: 
+                                    <b class="skills" v-for="(language, index) in data.languageFrom" :key="index">{{language}}</b>
                                 </div>
                             </div>
                             <p class="card-text mb-0 mt-3">
@@ -317,6 +318,10 @@ export default {
             savedById: userID
         }).then(res => {
             // console.log(res.data);
+             res.data.map(el => {
+                let tempres = el.languageFrom.replace(/,/g, ' ')
+                el.languageFrom = tempres.trim().split(' ')
+            })
             this.data = res.data
         })
 
