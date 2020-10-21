@@ -184,7 +184,7 @@ export default {
                         })
                         .then(() => {
                             this.$router.push({
-                                name: "myDashboard"
+                                name: "login"
                             })
                             this.$store.commit('setplan', 'organization')
                         });
@@ -199,7 +199,7 @@ export default {
                         })
                         .then(() => {
                             this.$router.push({
-                                name: "myDashboard"
+                                name: "login"
                             })
                             this.$store.commit('setplan', 'user_standard')
                         });
@@ -214,7 +214,7 @@ export default {
                         })
                         .then(() => {
                             this.$router.push({
-                                name: "myDashboard"
+                                name: "login"
                             })
                             this.$store.commit('setplan', 'user_free')
                         });

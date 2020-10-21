@@ -49,12 +49,12 @@
         </v-chip>
     </template> -->
     <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">
-            mdi-pencil
-        </v-icon>
-        <v-icon small @click="deleteItem(item)">
-            mdi-delete
-        </v-icon>
+        <v-btn small color="info" class="mr-2" @click="editItem(item)">
+            edit
+        </v-btn>
+        <v-btn small color="orange" @click="deleteItem(item)">
+            delete
+        </v-btn>
     </template>
     <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">
@@ -82,10 +82,10 @@ export default {
                 text: 'Useraname',
                 value: 'username'
             },
-            {
-                text: 'Password',
-                value: 'password'
-            },
+            // {
+            //     text: 'Password',
+            //     value: 'password'
+            // },
             // {
             //     text: 'Status',
             //     value: 'status',
@@ -104,12 +104,12 @@ export default {
         editedItem: {
             username: '',
             email: '',
-            password: '',
+            // password: '',
         },
         defaultItem: {
             username: '',
             email: 0,
-            password: 0,
+            // password: 0,
         },
     }),
 
