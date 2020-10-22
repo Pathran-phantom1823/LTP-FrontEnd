@@ -17,8 +17,8 @@
         <!--begin::Form-->
         <b-form class="form" @submit.stop.prevent="onSubmit">
 
-            <div role="alert" v-if="errors !== undefined" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
-                <div class="alert-text" v-for="(error, i) in errors" :key="i">{{ error }}</div>
+            <div role="alert" v-if="errors === null" class="alert fade alert-danger">
+                <div class="alert-text">{{ error }}</div>
             </div>
 
             <b-form-group id="example-input-group-1" label label-for="example-input-1">
@@ -29,7 +29,7 @@
 
             <b-form-group id="example-input-group-2" label label-for="example-input-2">
                 <b-input-group>
-                    <b-form-input class="form-control form-control-solid h-auto py-5 px-6" :type="showPass === false? 'text' : 'password'" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback"></b-form-input>
+                    <b-form-input class="form-control form-control-solid h-auto py-5 px-6" :type="showPass === false ? 'text' : 'password'" id="example-input-2" name="example-input-2" v-model="$v.form.password.$model" :state="validateState('password')" aria-describedby="input-2-live-feedback"></b-form-input>
                     <b-input-group-append>
                         <b-button @click="showPass = !showPass"><i :class="showPass === false ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></b-button>
                     </b-input-group-append>
@@ -64,9 +64,9 @@
 </style>
 
 <script>
-import {
-    mapState
-} from "vuex";
+// import {
+//     mapState
+// } from "vuex";
 import {
     LOGIN,
     LOGOUT
@@ -83,6 +83,7 @@ import {
 export default {
     mixins: [validationMixin],
     name: "login",
+    errors: null,
     data() {
         return {
             // Remove this dummy login info
@@ -90,7 +91,7 @@ export default {
                 username: "admin@demo.com",
                 password: "demo",
             },
-            showPass: false
+            showPass: true
         };
     },
     validations: {
@@ -150,7 +151,9 @@ export default {
                     // go to which page after successfully login
                     .then(() => this.$router.push({
                         name: "dashboard"
-                    }));
+                    })).catch(() => {
+                        this.errors = "Network Problem Please Reload the page"
+                    });
 
                 submitButton.classList.remove(
                     "spinner",
@@ -160,10 +163,10 @@ export default {
             }, 2000);
         },
     },
-    computed: {
-        ...mapState({
-            errors: (state) => state.auth.errors,
-        }),
-    },
+    // computed: {
+    //     ...mapState({
+    //         errors: (state) => state.auth.errors,
+    //     }),
+    // },
 };
 </script>

@@ -65,7 +65,7 @@ export default new Router({
                         import ("@/view/pages/UserProfile.vue")
                 },
                 {
-                    path: "/user/review_bids",
+                    path: "/user/review_bids/:id",
                     name: "reviewbids",
                     component: () =>
                         import ("@/view/pages/ReviewBids.vue")
