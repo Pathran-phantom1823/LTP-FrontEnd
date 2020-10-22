@@ -62,11 +62,6 @@ export default {
             name: "Dashboard",
             link: "/organization/dashboard"
           },
-          {
-            icon: "flaticon2-expand",
-            name: "Instant Quote",
-            link: "/organization/quotation"
-          },
           'Account Management',
           {
             icon: "fa fa-user-plus",
@@ -83,11 +78,6 @@ export default {
             icon: "fa fa-language",
             name: "View Jobs",
             link: "/organization/view_jobs"
-          },
-          {
-            icon: "fas fa-upload",
-            name: "Post Job",
-            link: "/organization/post_job"
           },
           {
             icon: "fas fa-tools",

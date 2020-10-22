@@ -219,6 +219,20 @@ export default {
                 this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
                 this.$refs["moreInfo"].style =
                     "transition: .5s !important; left: 20% !important";
+
+                // ApiService.post("getJob", {
+                //     id: data
+                // }).then(res => {
+                //     console.log(res);
+                //     this.feedDetails = res.data[0]
+                //     console.log("feedDetails", this.feedDetails);
+                // })
+                
+                if (window.innerWidth < 750) {
+                    this.$refs["moreInfo"].style =
+                        "width: 80% !important; transition: .5s !important; left: 20% !important";
+                }
+
                 if (window.innerWidth < 750) {
                     this.$refs["moreInfo"].style =
                         "width: 90% !important; transition: .5s !important; left: 10% !important";
@@ -256,9 +270,21 @@ export default {
             this.navEvent = e.target;
 
             if (value === "Active Contracts") {
-              this.data = []
+                console.log(value)
+                const id = localStorage.getItem('value')
+                const userID = id.substr(id.lastIndexOf('*') + 1)
+                ApiService.post("getacceptedjobs", {
+                    savedById: userID
+                }).then(res => {
+                    console.log(res.data);
+                    res.data.map(el => {
+                        let tempres = el.languageFrom.replace(/,/g, ' ')
+                        el.languageFrom = tempres.trim().split(' ')
+                    })
+                    this.data = res.data
+                })
             } else if (value === "Posted Jobs") {
-
+                console.log(value)
                 const id = localStorage.getItem('value')
                 const userID = id.substr(id.lastIndexOf('*') + 1)
                 ApiService.post("get-my-jobs", {
@@ -273,6 +299,7 @@ export default {
 
                 })
             } else if (value === "Save Jobs") {
+                console.log(value)
                 const id = localStorage.getItem('value')
                 const userID = id.substr(id.lastIndexOf('*') + 1)
                 ApiService.post("getsavejob", {
@@ -285,8 +312,8 @@ export default {
                     })
                     this.data = res.data
                 })
-            }else{
-              this.data = []
+            } else {
+                this.data = []
             }
         },
         redirect(url) {

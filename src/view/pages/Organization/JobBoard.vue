@@ -189,6 +189,7 @@
             </p>
             <div class="col-sm-12 skillsPadding">
               <div class="row">
+                  <b>Translation Languages: </b>
                 <b
                   class="skills"
                 >{{jobsDetails.languageTo}}</b>
@@ -227,15 +228,15 @@
     </div>
           <div class="card-body ViewMoreBody">
             <p class="card-text mb-3">
-              <b>Date Posted:</b> 9/24/2020
+              <b>Date Posted:</b>{{jobsDetails.datePosted}}
             </p>
             <p class="card-text mb-3">
-              <b>Date Needed:</b> 9/24/2020
+              <b>Date Needed:</b>{{jobsDetails.fromDate}} - {{jobsDetails.toDate}}
             </p>
             <div class="col-sm-12 skillsPadding">
               <div class="row">
                 <b class="mr-2">Category :</b>
-                <b class="skills" v-for="skill in 1" :key="skill">Arts Crafts</b>
+                <b class="skills">{{jobsDetails.subject}}</b>
               </div>
             </div>
           </div>
@@ -387,7 +388,7 @@ export default {
         },
         viewMore(ViewEvent, data) {
             if (ViewEvent) {
-                ApiService.get("getJob", data).then(res => {
+                ApiService.post("getJob", {id: data}).then(res => {
                     console.log(res);
                     this.jobsDetails = res.data[0]
                     console.log("feedDetails", this.feedDetails);

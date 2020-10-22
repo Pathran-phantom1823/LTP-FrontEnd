@@ -82,13 +82,14 @@ const actions = {
   [VERIFY_AUTH](context) {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      // console.log(state.userId)
-      // ApiService.get("verify")
+      // const id = localStorage.getItem('value')
+      // const userID = id.substr(id.lastIndexOf('*') + 1)
+      // ApiService.post("verify", {id: userID})
       //   .then(({ data }) => {
-      //     context.commit(SET_AUTH, data);
+      //     console.log(data)
       //   })
       //   .catch(({ response }) => {
-      //     context.commit(SET_ERROR, response.data.errors);
+      //     console.log(response)
       //   }); 
     } else {
       context.commit(PURGE_AUTH);
