@@ -18,7 +18,7 @@
         <b-form class="form" @submit.stop.prevent="onSubmit">
 
             <div role="alert" v-if="errors === null" class="alert fade alert-danger">
-                <div class="alert-text">{{ error }}</div>
+                <div class="alert-text">{{ errors }}</div>
             </div>
 
             <b-form-group id="example-input-group-1" label label-for="example-input-1">
@@ -83,9 +83,9 @@ import {
 export default {
     mixins: [validationMixin],
     name: "login",
-    errors: null,
     data() {
         return {
+            errors: null,
             // Remove this dummy login info
             form: {
                 username: "admin@demo.com",
