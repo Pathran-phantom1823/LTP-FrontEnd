@@ -14,7 +14,7 @@
                 </v-card-subtitle>
             </b-card>
             <hr />
-            <b-card style="overflow-y:auto">
+            <!-- <b-card style="overflow-y:auto">
                 <div v-for="(comment, index) in getComments" :key="index" max-width="200">
                     <b-card no-body border-variant="warning">
                         <b-row>
@@ -35,34 +35,59 @@
                             <b-col sm="2">
                                 <v-list-item two-line>
                                     <v-list-item-avatar>
-                                        <v-btn icon  @click="changeLikeColor($event,comment.id)">
-                                          <i :class="liked === true  ? 'mdi mdi-thumb-up' : 'mdi mdi-thumb-up-outline'" id="btnLike"></i>
+                                        <v-btn icon @click="changeLikeColor($event,comment.id)">
+                                            <i :class="liked === true  ? 'mdi mdi-thumb-up' : 'mdi mdi-thumb-up-outline'" id="btnLike"></i>
                                         </v-btn>
                                     </v-list-item-avatar>
                                     <v-list-item-content v-if="comment.likes !== 0">
                                         <v-list-item-title>{{ comment.likes }}</v-list-item-title>
-                                        <!-- <v-list-item-subtitle>{{comment.comment}}</v-list-item-subtitle> -->
                                     </v-list-item-content>
                                 </v-list-item>
-                                <!-- <p class="likeNumber">{{ comment.likes }}</p> -->
                             </b-col>
                         </b-row>
-                        <!-- <b class="ml-12 text--primary font-weight-bold">
-                    {{ comment.username }} </b>
-                <p class="ml-12 text--primary font-weight-light">
-                    {{ comment.comment }}
-                </p>
-                <div class="btnLike">
-                    <i class="mdi mdi-thumb-up-outline" @click="changeLikeColor"></i>
-                    <p class="likeNumber">{{ comment.likes }}</p>
-                </div> -->
                     </b-card>
                     <br />
                 </div>
-            </b-card>
+            </b-card><br> -->
+            <v-list two-line>
+                <v-list-item-group  multiple>
+                    <div v-for="comment in getComments" :key="comment.id">
+                        <v-card>
+                            <v-list-item>
+                                <template>
+                                    <v-list-item-avatar>
+                                        <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"></v-img>
+                                    </v-list-item-avatar>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            <h5>{{comment.username}}</h5>
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle class="text--primary" v-text="comment.comment"></v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <v-list-item-action-text>{{comment.likes }}</v-list-item-action-text>
+
+                                        <v-icon v-if="!liked" color="grey lighten-1">
+                                            mdi-thumb-up-outline
+                                        </v-icon>
+
+                                        <v-icon v-else color="yellow darken-3">
+                                            mdi-thumb-up
+                                        </v-icon>
+                                    </v-list-item-action>
+                                </template>
+                            </v-list-item>
+                        </v-card><br>
+                    </div>
+                </v-list-item-group>
+            </v-list>
+            <br>
             <center>
-                <v-text-field outlined label="Reply" class="searchBox" append-icon="mdi-message-text" dense clearable rounded color="blue lighten-1" v-model="comment"></v-text-field>
-                <v-btn @click="sendComment(forumDetails.transactionId)">Send</v-btn>
+                <span style="color:red">{{error}}</span>
+                <v-text-field v-model="comment" append-outer-icon="mdi-send" filled clear-icon="mdi-close-circle" clearable rounded label="Message" type="text" @click:append-outer="sendComment(forumDetails.transactionId)"></v-text-field>
+                <!-- <v-text-field outlined label="Reply" class="searchBox" append-icon="mdi-message-text" dense clearable rounded color="blue lighten-1" v-model="comment"></v-text-field>
+                <v-btn @click="sendComment(forumDetails.transactionId)">Send</v-btn> -->
             </center>
         </v-card-text>
     </v-card>
@@ -80,7 +105,8 @@ export default {
             forumDetails: [],
             comments: [],
             liked: false,
-            userID:null,
+            userID: null,
+            error: null
         };
     },
     computed: {
@@ -90,7 +116,7 @@ export default {
     },
     mounted() {
         let id = this.$route.params.id
-         
+
         console.log(id);
         ApiService.post("getForumDetails", {
             postId: id
@@ -102,22 +128,23 @@ export default {
 
     },
     methods: {
-        changeLikeColor(e,commentId) {
-          const id = localStorage.getItem('value')
-          this.userID = id.substr(id.lastIndexOf('*') + 1)
-          ApiService.post("like", {
-            commentId: commentId,
-            likeById: this.userID
-          })
+        changeLikeColor(e, commentId) {
+            const id = localStorage.getItem('value')
+            this.userID = id.substr(id.lastIndexOf('*') + 1)
+            ApiService.post("like", {
+                commentId: commentId,
+                likeById: this.userID
+            })
             if (e.target.className === "mdi mdi-thumb-up-outline") {
                 e.target.className = "mdi mdi-thumb-up";
-                
+
             } else {
                 e.target.className = "mdi mdi-thumb-up-outline";
             }
         },
         sendComment(transactionId) {
             // console.log(transactionId)
+            if(this.comment !== null){
             const id = localStorage.getItem('value')
             const userID = id.substr(id.lastIndexOf('*') + 1)
             ApiService.post("saveComment", {
@@ -125,8 +152,12 @@ export default {
                 commentedById: userID,
                 comment: this.comment
             }).then(() => {
+                this.error = null
                 this.retrieveComment();
             })
+            }else{
+                this.error = "Field is empty"
+            }
         },
         retrieveComment() {
             let id = this.$route.params.id
@@ -136,13 +167,13 @@ export default {
                 postId: id
             }).then(res => {
                 console.log(res.data)
-                this.comments = res.data      
-                res.data.forEach(liked=> {
-                  if(liked.likeById === null){
-                    this.liked = false;
-                  }else{
-                    this.liked = (this.userID.toString() === liked.likeById.toString()) ? true : false;
-                  }
+                this.comments = res.data
+                res.data.forEach(liked => {
+                    if (liked.likeById === null) {
+                        this.liked = false;
+                    } else {
+                        this.liked = (this.userID.toString() === liked.likeById.toString()) ? true : false;
+                    }
                 });
                 // console.log("res", this.liked);
             })
@@ -164,6 +195,7 @@ export default {
     color: #f2470f;
     font-size: 30px;
 }
+
 /* 
 .likeNumber {
     margin-top: -20px;
