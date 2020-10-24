@@ -226,7 +226,7 @@ export default {
 
         // Validation before going to next page
         this.wizard.on("beforeNext", function (wizardObj) {
-            console.log(this.projectTitle);
+            // console.log(this.projectTitle);
             // validate the form and use below function to stop the wizard's step
             wizardObj.stop();
         });
@@ -254,7 +254,7 @@ export default {
             }
             this.languageFrom = data.languageFrom;
             this.languageTo = data.languageTo;
-            console.log('file', this.file)
+            // console.log('file', this.file)
             // console.log(this.languageTo.toString());
         },
         getVisibility(data) {
@@ -304,8 +304,8 @@ export default {
             }
             formData.append("postDetails", JSON.stringify(postDetails))
             formData.append("file", this.file)
-            ApiService.post('create', formData).then(res => {
-                console.log("response", res)
+            ApiService.post('create', formData).then(() => {
+                // console.log("response", res)
             }).then(() => {
                 e.preventDefault();
                 Swal.fire({

@@ -104,7 +104,7 @@
               >
                 <v-icon title="review bids">mdi mdi-eye</v-icon>View Bids
               </p>
-              <v-avatar class="view_details" size="36" @click="viewMore(true)">
+              <v-avatar class="view_details" size="36" @click="viewMore(true, data.id)">
                 <v-icon title="View Details" class="white--text headline">mdi mdi-eye</v-icon>
               </v-avatar>
               <v-avatar class="edit_posts" size="36">
@@ -120,85 +120,56 @@
     </div>
 
     <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
-      <div ref="moreInfo" class="moreInfo">
-        <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
-        <div class="card ViewMoreTitle mb-3">
-          <b>{{'Job Title'}}</b>
-        </div>
-        <div class="card ViewMoreCard pt-3">
-          <!-- <div class="card-header ViewMoreHeader">
-              <b>{{feedData[0].title}}</b>
-          </div>-->
-
-          <div class="card-body ViewMoreBody">
-            <p class="card-text mb-3">
-              <b>Price:</b>
-              {{'$100.00'}}
-            </p>
-            <p class="card-text">
-              <b>Description :</b>Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents
-              Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents
-              Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.Translate all agricultural documents
-            </p>
-            <div class="col-sm-12 skillsPadding">
-              <div class="row">
-                <b
-                  class="skills"
-                  v-for="(skill, index) in 2"
-                  :key="index"
-                >{{'skill'}}</b>
-              </div>
+        <div ref="moreInfo" class="moreInfo">
+            <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
+            <div class="card ViewMoreTitle mb-3">
+                <b>{{jobDetails.title}}</b>
             </div>
-          </div>
-          <div class="card-footer ViewMoreFooter">
-            <p class="locationbid">
-              <b>Bids:</b> 0
-            </p>
-            <p class="locationbid">
-              <b>Location:</b>
-              <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
-            </p>
-          </div>
-        </div>
-        <div class="card ViewMoreCard mt-2">
-          <div class="card-header ViewMoreHeader">
-            <b class="mb-5 font-weight-normal">Posted by:</b>
-            <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
-              <v-avatar>
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
-                  alt="John"
-                >
-              </v-avatar>
-              <div class="ml-2">
-                <p class="card-text">
-                  <b>Steve Jobs</b>
-                </p>
-              </div>
+            <div class="card ViewMoreCard pt-3">
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3">
+                        <span v-if="jobDetails.fixedPrice !== null"><b>Price: </b> ${{jobDetails.fixedPrice }}</span>
+                        <span v-else><b>Price: </b> ${{jobDetails.fromPrice}} - ${{jobDetails.toPrice}}</span>
+                    </p>
+                    <p class="card-text">
+                        <b> Description : </b>{{jobDetails.description}}
+                    </p>
+                </div>
+                <div class="card-footer ViewMoreFooter">
+                    <p class="locationbid"><b>Language Tranlation:</b> {{jobDetails.languageTo}}</p>
+                    <p class="locationbid"><b>Bids:</b>{{jobDetails.bids}}</p>
+                    <p class="locationbid">
+                        <b>Location:</b>
+                        <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                        Philippines
+                    </p>
+                </div>
             </div>
-
-            <b>
-              Posted by:
-              <b class="text-primary">Doom Bringer</b>
-            </b>
-          </div>
-          <div class="card-body ViewMoreBody">
-            <p class="card-text mb-3">
-              <b>Date Posted:</b> 9/24/2020
-            </p>
-            <p class="card-text mb-3">
-              <b>Date Needed:</b> 9/24/2020
-            </p>
-            <div class="col-sm-12 skillsPadding">
-              <div class="row">
-                <b class="mr-2">Category :</b>
-                <b class="skills" v-for="skill in 1" :key="skill">Arts Crafts</b>
-              </div>
+            <div class="card ViewMoreCard mt-2">
+                <div class="card-header ViewMoreHeader">
+                    <b class="mb-5 font-weight-normal">Posted by:</b>
+                    <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
+                        <v-avatar>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                        </v-avatar>
+                        <div class="ml-2">
+                            <p class="card-text">
+                                <b>{{jobDetails.username}}</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3"><b>Date Posted: </b>{{jobDetails.datePosted}}</p>
+                    <p class="card-text mb-3"><b>Date Needed: </b>{{jobDetails.fromDate}} - {{jobDetails.toDate}}</p>
+                    <div class="col-sm-12 skillsPadding">
+                        <div class="row">
+                            <b class="mr-2"> Category :</b><b class="skills">{{jobDetails.subject}}</b>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="card-footer ViewMoreFooter"></div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -216,7 +187,8 @@ export default {
       ],
       data: [],
       navEvent: "",
-      iconDisplay: ""
+      iconDisplay: "",
+      jobDetails: []
     };
   },
   components: {},
@@ -229,6 +201,9 @@ export default {
     },
     returnData() {
       return this.data;
+    },
+    returnJobDetail(){
+      return this.jobDetails
     }
   },
   methods: {
@@ -256,19 +231,18 @@ export default {
         target[4].style = "transition: .5s; right: -100% !important;";
       }
     },
-    viewMore(ViewEvent) {
+    viewMore(ViewEvent, data) {
       if (ViewEvent) {
         this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
         this.$refs["moreInfo"].style =
           "transition: .5s !important; left: 20% !important";
 
-        // ApiService.post("getJob", {
-        //     id: data
-        // }).then(res => {
-        //     console.log(res);
-        //     this.feedDetails = res.data[0]
-        //     console.log("feedDetails", this.feedDetails);
-        // })
+        ApiService.post("getJob", {
+            id: data
+        }).then(res => {
+            console.log(res);
+            this.jobDetails = res.data[0]
+        })
 
         if (window.innerWidth < 750) {
           this.$refs["moreInfo"].style =

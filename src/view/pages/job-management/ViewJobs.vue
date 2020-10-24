@@ -72,7 +72,7 @@
                 </div>
                 <div class="card-footer ViewMoreFooter">
                     <p class="locationbid"><b>Language Tranlation:</b> {{feedDetails.languageTo}}</p>
-                    <p class="locationbid"><b>Bids:</b> 0</p>
+                    <p class="locationbid"><b>Bids:</b>{{feedDetails.bids}}</p>
                     <p class="locationbid">
                         <b>Location:</b>
                         <v-icon class="locationIcon">mdi-map-marker</v-icon>
@@ -96,7 +96,7 @@
                     <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
                 </div>
                 <div class="card-body ViewMoreBody">
-                    <p class="card-text mb-3"><b>Date Posted: </b> 9/24/2020</p>
+                    <p class="card-text mb-3"><b>Date Posted: </b>{{feedDetails.datePosted}}</p>
                     <p class="card-text mb-3"><b>Date Needed: </b>{{feedDetails.fromDate}} - {{feedDetails.toDate}}</p>
                     <div class="col-sm-12 skillsPadding">
                         <div class="row">
