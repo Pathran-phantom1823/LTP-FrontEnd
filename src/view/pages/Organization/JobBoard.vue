@@ -6,7 +6,7 @@
             <hr>
             <div class="projects_container">
                 <div class="card project_card" v-for="jobs in returnAcceptedJobs" :key="jobs.id" @mouseenter="newJobsActionShow" @mouseleave="newJobsActionHide">
-                    <div class="card-body p-4">
+                    <div class="card-body p-4" v-if="jobs.username !== null">
                         <div class="row">
                             <div class="col-sm-5 d-flex justify-content-start">
                                 <v-avatar>
@@ -130,7 +130,7 @@
                             </p>
                             <div class="col-sm-12 skillsPadding">
                                 <div class="row">
-                                    Current Language of document: 
+                                    Current Language of document:
                                     <b class="skills" v-for="(language, index) in data.languageFrom" :key="index">{{language}}</b>
                                 </div>
                             </div>
@@ -168,81 +168,84 @@
     </div>
 
     <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
-      <div ref="moreInfo" class="moreInfo">
-        <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
-        <div class="card ViewMoreTitle mb-3">
-          <b>{{jobsDetails.title}}</b>
-        </div>
-        <div class="card ViewMoreCard pt-3">
-    <!-- <div class="card-header ViewMoreHeader">
+        <div ref="moreInfo" class="moreInfo">
+            <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
+            <div class="card ViewMoreTitle mb-3">
+                <b>{{jobsDetails.title}}</b>
+            </div>
+            <div class="card ViewMoreCard pt-3">
+                <!-- <div class="card-header ViewMoreHeader">
               <b>{{feedData[0].title}}</b>
           </div>-->
 
-    <div class="card-body ViewMoreBody">
-            <p class="card-text mb-3">
-              <b>Price:</b>
-              <span v-if="jobsDetails.fixedPrice !== null">${{jobsDetails.fixedPrice}}</span>
-              <span v-else>${{jobsDetails.fromPrice}} - {{jobsDetails.toPrice}}</span>
-            </p>
-            <p class="card-text">
-              <b>Description :</b>{{jobsDetails.description}}
-            </p>
-            <div class="col-sm-12 skillsPadding">
-              <div class="row">
-                  <b>Translation Languages: </b>
-                <b
-                  class="skills"
-                >{{jobsDetails.languageTo}}</b>
-              </div>
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3">
+                        <b>Price:</b>
+                        <span v-if="jobsDetails.fixedPrice !== null">${{jobsDetails.fixedPrice}}</span>
+                        <span v-else>${{jobsDetails.fromPrice}} - {{jobsDetails.toPrice}}</span>
+                    </p>
+                    <p class="card-text">
+                        <b>Description :</b>{{jobsDetails.description}}
+                    </p>
+                    <div class="col-sm-12 skillsPadding">
+                        <!-- <div class="row">
+                            <v-chip class="ma-2" color="info" outlined pill>
+                                {{jobsDetails.file}}
+                               <v-icon right>
+                                    mdi-folder-download
+                                </v-icon>
+                            </v-chip>
+                        </div>,<br> -->
+                        <div class="row">
+                            <b>Translation Languages: </b>
+                            <b class="skills">{{jobsDetails.languageTo}}</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ViewMoreFooter">
+                    <p class="locationbid">
+                        <b>Bids:</b> 0
+                    </p>
+                    <p class="locationbid">
+                        <b>Location:</b>
+                        <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+                    </p>
+                </div>
             </div>
-          </div>
-          <div class="card-footer ViewMoreFooter">
-            <p class="locationbid">
-              <b>Bids:</b> 0
-            </p>
-            <p class="locationbid">
-              <b>Location:</b>
-              <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
-            </p>
-          </div>
-        </div>
-        <div class="card ViewMoreCard mt-2">
-          <div class="card-header ViewMoreHeader">
-            <b class="mb-5 font-weight-normal">Posted by:</b>
-            <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
-              <v-avatar>
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
-                  alt="John"
-                >
-              </v-avatar>
-              <div class="ml-2">
-                <p class="card-text">
-                  <b>{{jobsDetails.username}}</b>
-                </p>
-              </div>
-            </div>
+            <div class="card ViewMoreCard mt-2">
+                <div class="card-header ViewMoreHeader">
+                    <b class="mb-5 font-weight-normal">Posted by:</b>
+                    <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
+                        <v-avatar>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John">
+                        </v-avatar>
+                        <div class="ml-2">
+                            <p class="card-text">
+                                <b>{{jobsDetails.username}}</b>
+                            </p>
+                        </div>
+                    </div>
 
-    <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
+                    <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
 
-    </div>
-          <div class="card-body ViewMoreBody">
-            <p class="card-text mb-3">
-              <b>Date Posted:</b>{{jobsDetails.datePosted}}
-            </p>
-            <p class="card-text mb-3">
-              <b>Date Needed:</b>{{jobsDetails.fromDate}} - {{jobsDetails.toDate}}
-            </p>
-            <div class="col-sm-12 skillsPadding">
-              <div class="row">
-                <b class="mr-2">Category :</b>
-                <b class="skills">{{jobsDetails.subject}}</b>
-              </div>
+                </div>
+                <div class="card-body ViewMoreBody">
+                    <p class="card-text mb-3">
+                        <b>Date Posted:</b>{{jobsDetails.datePosted}}
+                    </p>
+                    <p class="card-text mb-3">
+                        <b>Date Needed:</b>{{jobsDetails.fromDate}} - {{jobsDetails.toDate}}
+                    </p>
+                    <div class="col-sm-12 skillsPadding">
+                        <div class="row">
+                            <b class="mr-2">Category :</b>
+                            <b class="skills">{{jobsDetails.subject}}</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ViewMoreFooter"></div>
             </div>
-          </div>
-          <div class="card-footer ViewMoreFooter"></div>
         </div>
-      </div>
     </div>
 </div>
 </template>
@@ -260,6 +263,7 @@ export default {
             data: [],
             acceptedJobs: [],
             jobsDetails: [],
+            showNewJobs: false,
             navEvent: "",
             search: '',
             headers: [{
@@ -312,14 +316,13 @@ export default {
     components: {},
     mounted() {
         this.$refs["nav0"][0].click();
-
         const id = localStorage.getItem('value')
         const userID = id.substr(id.lastIndexOf('*') + 1)
         ApiService.post("getsavejob", {
             savedById: userID
         }).then(res => {
             // console.log(res.data);
-             res.data.map(el => {
+            res.data.map(el => {
                 let tempres = el.languageFrom.replace(/,/g, ' ')
                 el.languageFrom = tempres.trim().split(' ')
             })
@@ -329,9 +332,9 @@ export default {
         ApiService.post("getacceptedjobs", {
             savedById: userID
         }).then(res => {
-            console.log(res.data);
             this.acceptedJobs = res.data
         })
+        // console.log("lenghtz", this.empty)
     },
     computed: {
         returnNavEvent() {
@@ -342,7 +345,7 @@ export default {
         },
         returnAcceptedJobs() {
             return this.acceptedJobs
-        }
+        },
     },
     methods: {
         newJobsActionShow(e) {
@@ -388,7 +391,9 @@ export default {
         },
         viewMore(ViewEvent, data) {
             if (ViewEvent) {
-                ApiService.post("getJob", {id: data}).then(res => {
+                ApiService.post("getJob", {
+                    id: data
+                }).then(res => {
                     console.log(res);
                     this.jobsDetails = res.data[0]
                     console.log("feedDetails", this.feedDetails);

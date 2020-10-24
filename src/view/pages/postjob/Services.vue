@@ -213,7 +213,7 @@ export default {
     };
   },
   mounted() {
-    console.log("form", this.titleForm.length !== 0);
+    // console.log("form", this.titleForm.length !== 0);
   },
   computed: {
     progress() {

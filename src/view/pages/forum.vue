@@ -60,12 +60,12 @@
         </b-modal>
       </div>
     </div>
-    <div class="card FeedCard" v-for="(data, index) in forumData" :key="index">
+    <div class="card FeedCard" v-for="(data, index) in returnGetForum" :key="index">
       <div class="card-body dataBody">
         <b class="emphasizeWords">Topic: </b>
         <b
           class="emphasizeWords navItems"
-          @click="redirect('/user/forumdetails')"
+          @click="redirect('/user/forumdetails/' + data.postId)"
           >{{ data.topic }}</b
         >
         <p style="font-weight:bold;">
@@ -123,6 +123,11 @@ export default {
         // },
       ],
     };
+  },
+  computed: {
+    returnGetForum(){
+      return this.forumData
+    }
   },
   mounted(){
     ApiService.get("getPost").then(res => {

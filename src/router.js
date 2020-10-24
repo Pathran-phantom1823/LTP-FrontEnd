@@ -77,7 +77,7 @@ export default new Router({
                         import ("@/view/pages/forum.vue")
                 },
                 {
-                    path: "/user/forumdetails",
+                    path: "/user/forumdetails/:id",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forumDetails.vue")

@@ -138,7 +138,7 @@ export default {
       });
     },
     next() {
-      console.log(this.category);
+      // console.log(this.category);
       if (this.title === null || this.category === null || this.subject === null) {
         this.snackbar = true;
       } else {

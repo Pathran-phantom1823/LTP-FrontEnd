@@ -116,10 +116,10 @@ export default {
     handleAddQuestion() {
       this.questions.push(this.questionInput);
       this.questionInput = null;
-      console.log(this.questions);
+      // console.log(this.questions);
     },
     deleted(data) {
-      console.log(this.questions.indexOf(data));
+      // console.log(this.questions.indexOf(data));
       this.questions.splice(this.questions.indexOf(data), 1);
     },
     next() {
