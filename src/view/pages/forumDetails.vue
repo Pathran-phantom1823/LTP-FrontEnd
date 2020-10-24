@@ -107,7 +107,7 @@ export default {
           this.userID = id.substr(id.lastIndexOf('*') + 1)
           ApiService.post("like", {
             commentId: commentId,
-            likeById:this.userID
+            likeById: this.userID
           })
             if (e.target.className === "mdi mdi-thumb-up-outline") {
                 e.target.className = "mdi mdi-thumb-up";
