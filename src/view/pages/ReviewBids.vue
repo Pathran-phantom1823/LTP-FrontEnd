@@ -260,13 +260,13 @@ export default {
         ApiService.post("getJob", {
             id: id
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             this.data = res.data[0]
             console.log("feedDetails", this.data);
         })
 
         ApiService.post("getBids", {id: id}).then(res => {
-          console.log(res);
+        //   console.log(res);
           this.bidders = res.data
         })
 

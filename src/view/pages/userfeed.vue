@@ -191,7 +191,7 @@ export default {
                 el.languageFrom = tempRes.trim().split(' ')
             })
             this.feedData = res.data
-            console.log(res.data);
+            // console.log(res.data);
         })
         if (window.innerWidth < 750) {
             this.$refs["sidebar"].style = "right: 100% !important;";
@@ -224,7 +224,7 @@ export default {
                 ApiService.post("getJob", {
                     id: data
                 }).then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.feedDetails = res.data[0]
                     console.log("feedDetails", this.feedDetails);
                 })

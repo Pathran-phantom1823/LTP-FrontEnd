@@ -178,7 +178,7 @@ export default {
                 el.languageFrom = tempRes.trim().split(' ')
             })
             this.feedData = res.data
-            console.log(res.data);
+            // console.log(res.data);
         })
 
         if (window.innerWidth < 750) {
@@ -228,11 +228,11 @@ export default {
                 this.$refs["moreInfo"].style =
                     "transition: .5s !important; left: 40% !important";
 
-                console.log(data)
+                // console.log(data)
                 ApiService.post("getJob", {
                     id: data
                 }).then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.feedDetails = res.data[0]
                     console.log("feedDetails", this.feedDetails);
                 })
@@ -288,8 +288,8 @@ export default {
             ApiService.post("apply-job", {
                 applicantId: this.userID,
                 jobId: jobId,
-            }).then(res => {
-                console.log(res)
+            }).then(() => {
+                // console.log(res)
                 Swal.fire({
                     title: "",
                     text: "Application Done, Please wait until the owner accepts your application",

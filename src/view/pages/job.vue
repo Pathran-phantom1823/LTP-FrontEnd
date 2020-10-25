@@ -240,7 +240,7 @@ export default {
         ApiService.post("getJob", {
             id: data
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             this.jobDetails = res.data[0]
         })
 
@@ -286,13 +286,13 @@ export default {
       this.navEvent = e.target;
 
       if (value === "Active Contracts") {
-        console.log(value);
+        // console.log(value);
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("getacceptedjobs", {
           savedById: userID
         }).then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           res.data.map(el => {
             let tempres = el.languageFrom.replace(/,/g, " ");
             el.languageFrom = tempres.trim().split(" ");
@@ -314,7 +314,7 @@ export default {
           // console.log(this.data)
         });
       } else if (value === "Save Jobs") {
-        console.log(value);
+        // console.log(value);
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("getsavejob", {

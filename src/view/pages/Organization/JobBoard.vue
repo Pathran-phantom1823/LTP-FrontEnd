@@ -452,7 +452,7 @@ export default {
         ApiService.post("getJobHistory", {
             orgId: userID,
         }).then((res) => {
-          console.log("history", res.data);
+        //   console.log("history", res.data);
             this.project = res.data;
         });
     },
@@ -505,8 +505,8 @@ export default {
                             orgId: userID,
                             workedBy: memberId,
                             postedBy: postedById,
-                        }).then((res) => {
-                            console.log(res);
+                        }).then(() => {
+                            // console.log(res);
                             swalWithBootstrapButtons.fire(
                                 "Successfully Assigned!",
                                 "",
@@ -578,9 +578,9 @@ export default {
                 ApiService.post("getJob", {
                     id: data,
                 }).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.jobsDetails = res.data[0];
-                    console.log("feedDetails", this.feedDetails);
+                    // console.log("feedDetails", this.feedDetails);
                 });
                 this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
                 this.$refs["moreInfo"].style =
@@ -600,7 +600,7 @@ export default {
                 ApiService.post("getAssignedJobsDetails", {
                     id: data,
                 }).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.assignedJobsDetails = res.data[0];
                     console.log("feedDetails", this.feedDetails);
                 });
@@ -623,7 +623,7 @@ export default {
             ApiService.post("getmembers", {
                 id: userID,
             }).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.members = res.data;
             });
         },
