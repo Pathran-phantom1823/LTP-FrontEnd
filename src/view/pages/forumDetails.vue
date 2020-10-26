@@ -14,43 +14,8 @@
                 </v-card-subtitle>
             </b-card>
             <hr />
-            <!-- <b-card style="overflow-y:auto">
-                <div v-for="(comment, index) in getComments" :key="index" max-width="200">
-                    <b-card no-body border-variant="warning">
-                        <b-row>
-                            <b-col sm="10">
-                                <v-list-item two-line>
-                                    <v-list-item-avatar>
-                                        <v-avatar>
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John">
-                                        </v-avatar>
-                                    </v-list-item-avatar>
-
-                                    <v-list-item-content>
-                                        <v-list-item-title>{{comment.username}}</v-list-item-title>
-                                        <v-list-item-subtitle>{{comment.comment}}</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </b-col>
-                            <b-col sm="2">
-                                <v-list-item two-line>
-                                    <v-list-item-avatar>
-                                        <v-btn icon @click="changeLikeColor($event,comment.id)">
-                                            <i :class="liked === true  ? 'mdi mdi-thumb-up' : 'mdi mdi-thumb-up-outline'" id="btnLike"></i>
-                                        </v-btn>
-                                    </v-list-item-avatar>
-                                    <v-list-item-content v-if="comment.likes !== 0">
-                                        <v-list-item-title>{{ comment.likes }}</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </b-col>
-                        </b-row>
-                    </b-card>
-                    <br />
-                </div>
-            </b-card><br> -->
             <v-list two-line>
-                <v-list-item-group  multiple>
+                <v-list-item-group multiple>
                     <div v-for="comment in getComments" :key="comment.id">
                         <v-card>
                             <v-list-item>
@@ -68,12 +33,8 @@
                                     <v-list-item-action>
                                         <v-list-item-action-text>{{comment.likes }}</v-list-item-action-text>
 
-                                        <v-icon v-if="!liked" color="grey lighten-1">
-                                            mdi-thumb-up-outline
-                                        </v-icon>
-
-                                        <v-icon v-else color="yellow darken-3">
-                                            mdi-thumb-up
+                                        <v-icon color="yellow darken-3" @click="changeLikeColor($event,comment.id)">
+                                            {{comment.status !== 'like' || comment.username !== currentUser ? 'mdi-thumb-up-outline' : 'mdi-thumb-up'}}
                                         </v-icon>
                                     </v-list-item-action>
                                 </template>
@@ -106,13 +67,17 @@ export default {
             comments: [],
             liked: false,
             userID: null,
-            error: null
+            error: null,
+            currentUser: null
         };
     },
     computed: {
         getComments() {
             return this.comments
         },
+        isLike() {
+            return this.liked
+        }
     },
     mounted() {
         let id = this.$route.params.id
@@ -121,9 +86,11 @@ export default {
         ApiService.post("getForumDetails", {
             postId: id
         }).then(res => {
-            console.log("data", res.data)
+            // console.log("data", res.data)
             this.forumDetails = res.data[0]
             this.retrieveComment()
+            this.retrieveLikes(),
+            this.retrieveCurrentUser()
         })
 
     },
@@ -131,31 +98,31 @@ export default {
         changeLikeColor(e, commentId) {
             const id = localStorage.getItem('value')
             this.userID = id.substr(id.lastIndexOf('*') + 1)
+            // let status = null;
             ApiService.post("like", {
                 commentId: commentId,
-                likeById: this.userID
+                likeById: this.userID,
+                status: "like"
+            }).then(() => {
+                this.liked = !this.liked
+                this.retrieveComment()
             })
-            if (e.target.className === "mdi mdi-thumb-up-outline") {
-                e.target.className = "mdi mdi-thumb-up";
-
-            } else {
-                e.target.className = "mdi mdi-thumb-up-outline";
-            }
         },
         sendComment(transactionId) {
             // console.log(transactionId)
-            if(this.comment !== null){
-            const id = localStorage.getItem('value')
-            const userID = id.substr(id.lastIndexOf('*') + 1)
-            ApiService.post("saveComment", {
-                postId: transactionId,
-                commentedById: userID,
-                comment: this.comment
-            }).then(() => {
-                this.error = null
-                this.retrieveComment();
-            })
-            }else{
+            if (this.comment !== null) {
+                const id = localStorage.getItem('value')
+                const userID = id.substr(id.lastIndexOf('*') + 1)
+                ApiService.post("saveComment", {
+                    postId: transactionId,
+                    commentedById: userID,
+                    comment: this.comment
+                }).then(() => {
+                    this.error = null
+                    this.retrieveComment();
+                    this.retrieveLikes();
+                })
+            } else {
                 this.error = "Field is empty"
             }
         },
@@ -168,14 +135,33 @@ export default {
             }).then(res => {
                 console.log(res.data)
                 this.comments = res.data
-                res.data.forEach(liked => {
-                    if (liked.likeById === null) {
-                        this.liked = false;
-                    } else {
-                        this.liked = (this.userID.toString() === liked.likeById.toString()) ? true : false;
-                    }
-                });
                 // console.log("res", this.liked);
+            })
+        },
+        retrieveLikes() {
+            ApiService.get("getLikes").then(res => {
+                // console.log("likes", res);
+                res.data.map(el => {
+                    this.comments.map(com => {
+                        console.log();
+                        if(el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()){
+                            this.liked = true
+                            // console.log(true);
+                        }else{
+                            this.false
+                            // console.log(false);
+                        }
+                    })
+                })
+            })
+        },
+        retrieveCurrentUser() {
+            const id = localStorage.getItem('value')
+            this.userID = id.substr(id.lastIndexOf('*') + 1)
+            ApiService.post("getCurrentUser", {
+                id: this.userID
+            }).then(res => {
+                this.currentUser = res.data[0]
             })
         }
     }

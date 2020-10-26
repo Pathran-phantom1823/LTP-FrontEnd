@@ -50,18 +50,6 @@ export default {
             if (this.email === null || this.password === null || this.username === null) {
                 this.errorMessage = "Fields are required"
             } else {
-                // let formData = new FormData();
-                // let params = {
-                //     username: this.username,
-                //     email: this.email,
-                //     password: this.password,
-                // }
-                // let param2 = {
-                //     orgId: this.userID
-                // }
-                // formData.append('account', JSON.stringify(params));
-                // formData.append('org', JSON.stringify(param2));
-
                 ApiService.post('member/create', {
                     username: this.username,
                     email: this.email,

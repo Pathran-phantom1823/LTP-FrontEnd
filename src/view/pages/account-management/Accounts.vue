@@ -256,35 +256,18 @@ export default {
             this.close()
         },
 
-        // updateStatus(email){
-        //   this.desserts.map(el =>{
-        //     if(el.email === email){
-        //       if(el.status === 'assigned'){
-        //         el.status = 'not assigned'
-        //       }else{
-        //         el.status = 'assigned'
-        //       }
-        //     }
-        //   })
-        // }
         retrieve() {
             const id = localStorage.getItem('value')
             const userID = id.substr(id.lastIndexOf('*') + 1)
-            // let formData = new FormData();
-            // let params = {
-            //     id: userID
-            // }
-            // formData.append('id', JSON.stringify(params))
-            // // console.log('id',userID.toString())
             ApiService.post('getmembers', {
                 id: userID
             }).then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 res.data.map(el => {
                     this.members.push(el)
                 })
                 // this.members = res
-                console.log(this.members);
+                // console.log(this.members);
             })
         }
     },
