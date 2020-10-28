@@ -99,6 +99,11 @@ export default new Router({
                     name: "payment",
                     component: () =>
                         import ("@/view/pages/Payment.vue")
+                },
+                {
+                    path: "/user/booking",
+                    name: "booking",
+                    component: () => import ("@/view/pages/booking.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
