@@ -17,6 +17,9 @@
                     <a class="nav-link text-light navItems" @click="redirect('/user/job_board')">Jobs</a>
                 </v-btn>
                 <v-btn text>
+                    <a class="nav-link text-light navItems" @click="redirect('/user/booking')">Booking</a>
+                </v-btn>
+                <v-btn text>
                     <a class="nav-link text-light navItems" @click="redirect('/user/forum')">Forums</a>
                 </v-btn>
                 <!-- <v-btn text>
