@@ -101,10 +101,9 @@ export default new Router({
                         import ("@/view/pages/Payment.vue")
                 },
                 {
-                    path: "/user/addRoom",
-                    name: "createRoom",
-                    component: () =>
-                        import ("@/view/pages/communication/CreateRoom.vue")
+                    path: "/user/booking",
+                    name: "booking",
+                    component: () => import ("@/view/pages/booking.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
