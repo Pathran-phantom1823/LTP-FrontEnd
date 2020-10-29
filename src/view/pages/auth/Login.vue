@@ -3,7 +3,7 @@
     <!--begin::Content header-->
     <div class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10">
         <span class="font-weight-bold font-size-3 text-dark-60">Don't have an account yet?</span>
-        <router-link class="font-weight-bold font-size-3 ml-2" style="color:#0093E9" :to="{ name: 'register' }">Sign Up!</router-link>
+        <router-link class="font-weight-bold font-size-3 ml-2" style="color: #0093e9" :to="{ name: 'register' }">Sign Up!</router-link>
     </div>
     <!--end::Content header-->
 
@@ -11,12 +11,13 @@
     <v-container class="mt-20">
         <div class="text-center mb-10 mb-lg-20">
             <h3 class="font-size-h1">Sign In</h3>
-            <p class="text-muted font-weight-semi-bold">Enter your username and password</p>
+            <p class="text-muted font-weight-semi-bold">
+                Enter your username and password
+            </p>
         </div>
 
         <!--begin::Form-->
         <b-form class="form" @submit.stop.prevent="onSubmit">
-
             <div role="alert" v-if="errors === null" class="alert fade alert-danger">
                 <div class="alert-text">{{ errors }}</div>
             </div>
@@ -24,7 +25,8 @@
             <b-form-group id="example-input-group-1" label label-for="example-input-1">
                 <b-form-input class="form-control form-control-solid h-auto py-5 px-6" id="example-input-1" name="example-input-1" v-model="$v.form.username.$model" :state="validateState('username')" aria-describedby="input-1-live-feedback"></b-form-input>
 
-                <b-form-invalid-feedback id="input-1-live-feedback">username is required and a valid username address.</b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-1-live-feedback">username is required and a valid username
+                    address.</b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-group id="example-input-group-2" label label-for="example-input-2">
@@ -41,7 +43,9 @@
             <!--begin::Action-->
             <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
                 <a @click="$router.push('/forgotpass')" class="text-dark-60 text-hover-primary my-3 mr-2" id="kt_login_forgot">Forgot Password ?</a>
-                <button ref="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3">Sign In</button>
+                <button ref="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3">
+                    Sign In
+                </button>
             </div>
             <!--end::Action-->
         </b-form>
@@ -91,7 +95,7 @@ export default {
                 username: "admin@demo.com",
                 password: "demo",
             },
-            showPass: true
+            showPass: true,
         };
     },
     validations: {
@@ -140,27 +144,26 @@ export default {
             const submitButton = this.$refs["kt_login_signin_submit"];
             submitButton.classList.add("spinner", "spinner-light", "spinner-right");
 
-            // dummy delay
-            setTimeout(() => {
-                // send login request
-                this.$store
-                    .dispatch(LOGIN, {
-                        username,
-                        password
-                    })
-                    // go to which page after successfully login
-                    .then(() => this.$router.push({
+            // send login request
+            this.$store
+                .dispatch(LOGIN, {
+                    username,
+                    password,
+                })
+                // go to which page after successfully login
+                .then(() => {
+                    this.$router.push({
                         name: "dashboard"
-                    })).catch(() => {
-                        this.errors = "Network Problem Please Reload the page"
                     });
-
-                submitButton.classList.remove(
-                    "spinner",
-                    "spinner-light",
-                    "spinner-right"
-                );
-            }, 2000);
+                    submitButton.classList.remove(
+                        "spinner",
+                        "spinner-light",
+                        "spinner-right"
+                    );
+                })
+                .catch(() => {
+                    this.errors = "Network Problem Please Reload the page";
+                });
         },
     },
     // computed: {

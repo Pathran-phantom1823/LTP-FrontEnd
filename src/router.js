@@ -56,7 +56,7 @@ export default new Router({
                     path: "/user/messenger",
                     name: "messenger",
                     component: () =>
-                        import ("@/view/pages/communication/Messenger.vue")
+                        import ("@/view/pages/communication/Messenger3.vue")
                 },
                 {
                     path: "/user/userprofile",
@@ -71,7 +71,7 @@ export default new Router({
                         import ("@/view/pages/ReviewBids.vue")
                 },
                 {
-                    path: "/user/forum",
+                    path: "/user/forum/",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forum.vue")
@@ -99,6 +99,12 @@ export default new Router({
                     name: "payment",
                     component: () =>
                         import ("@/view/pages/Payment.vue")
+                },
+                {
+                    path: "/user/addRoom",
+                    name: "createRoom",
+                    component: () =>
+                        import ("@/view/pages/communication/CreateRoom.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
@@ -207,6 +213,23 @@ export default new Router({
                     }
                 }
             ]
+        },
+        {
+            path: "/agency_member",
+            redirect: "/agency_member/dashboard",
+            component: () => 
+                import("@/view/myLayouts/Layout"),
+            children: [{
+                path: "/agency_member/jobs",
+                name: "agencyMemberViewJobs",
+                component: () => import("@/view/pages/job-management/ViewJobs.vue")
+            },
+            {
+                path: "/agency_member/job_board",
+                name: "agencyMemberJobBoard",
+                component: () => import("@/view/pages/JobBoardOrgEmployee.vue") 
+            }
+        ]
         },
         {
             path: "/admin",

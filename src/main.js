@@ -8,11 +8,12 @@ import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+
 Vue.use(VueAxios, axios)
 Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false;
+
 
 // Global 3rd party plugins
 import "popper.js";
@@ -42,8 +43,6 @@ ApiService.init();
 //AnimATION
 AOS.init()
 
-// Remove this to disable mock API
-// MockService.init();
 
 router.beforeEach((to, from, next) => {
   // Ensure we checked auth before each page load.
