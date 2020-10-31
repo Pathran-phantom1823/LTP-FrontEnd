@@ -55,7 +55,7 @@ export default new Router({
                     path: "/user/messenger",
                     name: "messenger",
                     component: () =>
-                        import ("@/view/pages/communication/Messenger.vue")
+                        import ("@/view/pages/communication/Messenger3.vue")
                 },
                 {
                     path: "/user/profile",
@@ -76,7 +76,7 @@ export default new Router({
                         import ("@/view/pages/ReviewBids.vue")
                 },
                 {
-                    path: "/user/forum",
+                    path: "/user/forum/",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forum.vue")
@@ -218,6 +218,23 @@ export default new Router({
             ]
         },
         {
+            path: "/agency_member",
+            redirect: "/agency_member/dashboard",
+            component: () => 
+                import("@/view/myLayouts/Layout"),
+            children: [{
+                path: "/agency_member/jobs",
+                name: "agencyMemberViewJobs",
+                component: () => import("@/view/pages/job-management/ViewJobs.vue")
+            },
+            {
+                path: "/agency_member/job_board",
+                name: "agencyMemberJobBoard",
+                component: () => import("@/view/pages/JobBoardOrgEmployee.vue") 
+            }
+        ]
+        },
+        {
             path: "/admin",
             redirect: "/admin/Dashboard",
             component: () =>
@@ -300,7 +317,13 @@ export default new Router({
                     path: "/forgotpass",
                     component: () =>
                         import ("@/view/pages/auth/ForgotPass")
-                }
+                },
+                {
+                    path: "/new_password/:code?",
+                    name: "newPassword",
+                    component: () => 
+                        import ("@/view/pages/auth/ForgotPasswordForm.vue")
+                },
             ]
         }
     ]

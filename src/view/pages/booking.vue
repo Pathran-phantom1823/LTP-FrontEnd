@@ -18,11 +18,33 @@
                 <div class="filter">
                   <div class="row">
                     <div class="filterHeader">
-                      <p> Filter </p>
+                      <p>Filter</p>
                     </div>
                   </div>
                   <p class="mb-0 bookingFilter mt-4">Day</p>
-                  <v-select :items="days" label="Day" prepend-icon="mdi mdi-calendar" dense></v-select>
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="date"
+                        label="Picker without buttons"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="date"
+                      @input="menu2 = false"
+                    ></v-date-picker>
+                  </v-menu>
                   <p class="mb-0 bookingFilter">From</p>
                   <v-menu
                     ref="menu"
@@ -84,33 +106,66 @@
                 </div>
               </div>
               <div class="col-sm-8 co_booking translators_container">
-                <div class="card" v-for="i in 8" :key="i">
+                <div
+                  class="card"
+                  v-for="users in getTranslators"
+                  :key="users.id"
+                >
                   <div class="card-body p-4">
                     <div class="translatorInfo">
                       <div class="bookingavatar">
-                        <v-avatar
-                          size="36"
-                        >
+                        <v-avatar size="36">
                           <img
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
                             alt="John"
-                          >
+                          />
                         </v-avatar>
                       </div>
                       <div class="booking_info">
                         <div class="ml-2 translator">
                           <p class="mb-0">
-                            <b class="font-weight-normal">Steve Jobs P.</b>
+                            <b class="font-weight-normal">{{
+                              users.username
+                            }}</b>
                           </p>
                         </div>
                       </div>
                       <div class="action">
-                        <v-btn x-small color="primary" dark class="bookButton">N e g o t i a t e</v-btn>
+                        <v-btn
+                          x-small
+                          color="primary"
+                          dark
+                          class="bookButton"
+                          @click="addRoom(users.id)"
+                          >N e g o t i a t e</v-btn
+                        >
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <v-dialog v-model="dialog" max-width="600">
+                <v-card>
+                  <v-card-title class="headline"> Post New Forum </v-card-title>
+
+                  <v-card-text>
+                    <label for="textarea-small">Room Name:</label>
+                    <b-input
+                      v-model="roomName"
+                      id="inline-form-input-name"
+                      class="mb-12 mr-sm-12 mb-sm-0"
+                    ></b-input
+                    ><br />
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn @click="dialog = false"> Cancel </v-btn>
+
+                    <v-btn color="info" @click="post"> Create </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </div>
           </div>
         </div>
@@ -120,32 +175,89 @@
 </template>
 
 <script>
+import ApiService from "@/core/services/api.service";
+import Swal from "sweetalert2";
+
 export default {
   data() {
     return {
-      days: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      dialog: false,
+      roomName: null,
+      date: null,
+      menu: false,
       from: null,
       from_menu: false,
       to: null,
-      to_menu: false
+      to_menu: false,
+      translators: [],
+      chosenTranslatorId: null,
+      userID: null,
     };
-  }
+  },
+  computed: {
+    getTranslators() {
+      return this.translators;
+    },
+  },
+  mounted() {
+    const id = localStorage.getItem("value");
+    this.userID = id.substr(id.lastIndexOf("*") + 1);
+    this.retrieveUser();
+  },
+  methods: {
+    retrieveUser() {
+      ApiService.get("getUsers").then((res) => {
+        this.translators = res.data;
+        //   console.log(this.contacts);
+      });
+    },
+    addRoom(userId) {
+      this.translators.map((el) => {
+        if (el.id === userId) {
+          this.dialog = true;
+          this.chosenTranslatorId = el.id;
+        }
+      });
+    },
+    post() {
+      let tempTopic = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).replace('0.', '')
+      ApiService.post("createRoom", {
+        name: this.roomName,
+        topic: tempTopic,
+        ownerId: this.userID,
+        memberId: this.chosenTranslatorId,
+        date: this.date,
+        fromTime: this.from,
+        toTime: this.to
+      })
+        .then((res) => {
+          Swal.fire({
+            title: "",
+            text: `${res.message}`,
+            icon: "success",
+            confirmButtonClass: "btn btn-secondary",
+          });
+          this.dialog = false;
+          this.roomName = "";
+        })
+        .catch((err) => {
+          Swal.fire({
+            title: "",
+            text: `${err.message}`,
+            icon: "error",
+            confirmButtonClass: "btn btn-secondary",
+          });
+        });
+    },
+  },
 };
 </script>
 
 <style scoped>
-.booking_info{
+.booking_info {
   width: 30%;
 }
-.action{
+.action {
   width: 40%;
   display: flex;
   justify-content: center;
@@ -162,13 +274,13 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.filter{
+.filter {
   padding: 15px;
   border: 1px solid rgb(221, 221, 221);
   border-radius: 0px;
   height: 600px;
 }
-.filterHeader{
+.filterHeader {
   border-bottom: 1px solid rgb(221, 221, 221);
   width: 100%;
   padding: 15px;
@@ -182,16 +294,16 @@ export default {
   align-items: center;
   justify-content: flex-start;
 }
-.co_booking{
+.co_booking {
   height: 600px;
 }
-.booking_title{
+.booking_title {
   font-size: 35px;
 }
-.card{
+.card {
   border: 1px solid rgb(221, 221, 221);
 }
-.translators_container{
+.translators_container {
   overflow-y: scroll;
 }
 .translators_container::-webkit-scrollbar {
