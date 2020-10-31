@@ -4,8 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-    routes: [
-        {
+    routes: [{
             path: "/",
             name: "banner",
             component: () =>
@@ -59,10 +58,16 @@ export default new Router({
                         import ("@/view/pages/communication/Messenger.vue")
                 },
                 {
-                    path: "/user/userprofile",
+                    path: "/user/profile",
                     name: "profile",
                     component: () =>
                         import ("@/view/pages/UserProfile.vue")
+                },
+                {
+                    path: "/user/drap",
+                    name: "drap",
+                    component: () =>
+                        import ("@/view/pages/DragDrop.vue")
                 },
                 {
                     path: "/user/review_bids/:id",
@@ -83,7 +88,7 @@ export default new Router({
                         import ("@/view/pages/forumDetails.vue")
                 },
                 {
-                    path: "/user/orgprofile",
+                    path: "/user/orgprofile/:id",
                     name: "orgprofile",
                     component: () =>
                         import ("@/view/pages/OrgProfile.vue")
@@ -108,8 +113,7 @@ export default new Router({
             redirect: "/organization/dashboard",
             component: () =>
                 import ("@/view/myLayouts/Layout"),
-                children: [
-                {
+            children: [{
                     path: "/organization/dashboard",
                     name: "dashboard",
                     component: () =>

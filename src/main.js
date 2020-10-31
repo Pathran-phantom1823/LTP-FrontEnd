@@ -1,4 +1,5 @@
 import Vue from "vue";
+import 'vuetify/dist/vuetify.min.css';
 import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
@@ -8,7 +9,7 @@ import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+
 Vue.use(VueAxios, axios)
 Vue.prototype.$axios = axios
 
@@ -46,25 +47,25 @@ AOS.init()
 // MockService.init();
 
 router.beforeEach((to, from, next) => {
-  // Ensure we checked auth before each page load.
-  Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
+    // Ensure we checked auth before each page load.
+    Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
 
-  // reset config to initial state
-  store.dispatch(RESET_LAYOUT_CONFIG);
+    // reset config to initial state
+    store.dispatch(RESET_LAYOUT_CONFIG);
 
-  // Scroll page to top on every route change
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 100);
+    // Scroll page to top on every route change
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100);
 });
 
 new Vue({
-  created: function() {
-    AOS.init()
-},
-  router,
-  store,
-  i18n,
-  vuetify,
-  render: h => h(App)
+    created: function() {
+        AOS.init()
+    },
+    router,
+    store,
+    i18n,
+    vuetify,
+    render: h => h(App)
 }).$mount("#app");
