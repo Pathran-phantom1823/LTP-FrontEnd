@@ -11,7 +11,8 @@
             </div>
           </v-banner>
           <v-container>
-            <div v-for="chat in messages.messages" :key="chat.username ">
+            <div v-for="(chat, index) in chats.messages" :key="index ">
+              <center><v-btn v-if="chats.messages.length === 1" @click="retrieveMessages()">View Previous Messages</v-btn></center>
               <!-- <div
                 class="chat-status text-center"
                 v-if="chat.type === 'join' || chat.type === 'exit'"
@@ -22,11 +23,11 @@
               <div>
                 <div
                   class="d-flex justify-content-end mb-4"
-                  v-if="chat.username === username"
+                  v-if="chat.senderId.toString() === userID"
                 >
                   <div>
                     <div class="msg_cotainer_send">
-                      {{ chat.content }}
+                      {{ chat.message }}
                     </div>
                     <!-- <span>{{ chat.sendDate }}</span> -->
                   </div>
@@ -46,7 +47,7 @@
                 </div>
                 <div
                   class="d-flex justify-content-start mb-4"
-                  v-if="chat.username !== username"
+                  v-if="chat.senderId.toString() !== userID"
                 >
                   <div class="img_cont_msg">
                     <v-tooltip bottom>
@@ -62,7 +63,7 @@
                     </v-tooltip>
                   </div>
                   <div>
-                    <div class="msg_cotainer">{{ chat.content }} <br /></div>
+                    <div class="msg_cotainer">{{ chat.message }} <br /></div>
                     <!-- <span>{{ chat.sendDate }}</span> -->
                   </div>
                 </div>
@@ -94,7 +95,7 @@
               <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title class="title">
-                    <h3>Room Members</h3>
+                    <h3>Created Rooms</h3>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -102,14 +103,14 @@
             <v-divider></v-divider>
             <v-list shaped>
               <v-list-item-group v-model="selectedItem" color="primary">
-                <v-list-item v-for="(item, i) in 2" :key="i">
+                <v-list-item v-for="room in rooms" :key="room.id">
                   <v-list-item-icon>
                     <v-icon>mdi-account-circle</v-icon>
                   </v-list-item-icon>
 
-                  <v-list-item-content>
+                  <v-list-item-content @click="roomConnect(room.id)">
                     <v-list-item-title>
-                      <h3>User {{ i }}</h3>
+                      <h3>{{ room.name }}</h3>
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -123,7 +124,7 @@
 </template>
 
 <script>
-import ApiService from "@/core/services/api.service";
+import ApiService from "@/core/services/api.service"; 
 import webSocketService from "@/core/services/websocketService.js";
 
 export default {
@@ -139,7 +140,7 @@ export default {
       contacts: [],
       receiveMessages: [],
       connected: false,
-      // items: [],
+      rooms: [],
       tempMessage: [],
       contactName: null,
       permanent: false,
@@ -169,20 +170,45 @@ export default {
     showMessages(id, username) {
       this.contactName = username;
       this.toID = id;
-      console.log(id);
+      // console.log(id);
     },
-    sendMessage(){
+    sendMessage(){ 
         let message = {
-            content: this.data.message,
-            username: this.currentUser
+            message: this.data.message,
+            roomId: this.roomid,
+            senderId: this.userID,
         }
         webSocketService.sendMessage(message)
-        this.data.message = '';   
+        this.data.message = ''; 
+        // this.retrieveMessages() 
+        // this.messages.messages.map(el => {
+        //   console.log(el)
+        // })
+        
     },
+    retrieveRooms(){
+      console.log(this.userID)
+      ApiService.post("getMyRooms", {id: this.userID}).then((res) => {
+        // console.log(res.data);
+        this.rooms = res.data
+      })
+    },
+    roomConnect(roomId){
+      this.roomid = roomId
+      ApiService.post("getRoomById", {id: roomId}).then((res) => {
+        this.messages.messages = res.data[0]
+        webSocketService.onConnect(res.data[1])
+      })
+    },
+    retrieveMessages(){
+      ApiService.post("getRoomById", {id: this.roomid}).then((res) => {
+        this.messages.messages = res.data[0]
+      })
+    }
   },
   mounted() {
     // let date = new Date();
-    webSocketService.onConnect()
+    // console.log(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).replace('0.', ''));
     this.tempMessage = this.messages;
     ApiService.get("getUsers").then((res) => {
       this.contacts = res.data;
@@ -197,6 +223,8 @@ export default {
       this.currentUser = res.data[0];
       this.username = res.data[0];
     });
+
+    this.retrieveRooms()
     
     
     // this.websocket = new WebSocket("ws://localhost:8003/api/chat");

@@ -313,7 +313,13 @@ export default new Router({
                     path: "/forgotpass",
                     component: () =>
                         import ("@/view/pages/auth/ForgotPass")
-                }
+                },
+                {
+                    path: "/new_password/:code?",
+                    name: "newPassword",
+                    component: () => 
+                        import ("@/view/pages/auth/ForgotPasswordForm.vue")
+                },
             ]
         }
     ]
