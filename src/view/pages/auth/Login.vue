@@ -27,7 +27,7 @@
 
       <div
         role="alert"
-        v-bind:class="{ show: errors.length > 0}"
+        v-if="getErrors"
         class="alert fade alert-danger"
       >
         <div class="alert-text">

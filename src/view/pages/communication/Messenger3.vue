@@ -246,7 +246,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .chat {
   margin-top: auto;
   margin-bottom: auto;
