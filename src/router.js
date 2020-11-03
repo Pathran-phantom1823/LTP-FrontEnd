@@ -113,6 +113,8 @@ export default new Router({
                 // ADD ROUTES HERE FOR USERS
             ]
         },
+
+
         {
             path: "/organization",
             redirect: "/organization/dashboard",
@@ -306,6 +308,110 @@ export default new Router({
                         ]
                     }
                 }
+            ]
+        },
+        {
+            path: '/superAdmin',
+            redirect: '/superAdmin/Dashboard',
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+            children: [{
+                    path: "/superAdmin/Dashboard",
+                    name: "superAdminDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Dashboard' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/report",
+                    name: "report",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Report.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Report' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/quotation",
+                    name: "quotation",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Quotation.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Quotation' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/account",
+                    name: "account",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Account.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Agents' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/profile",
+                    name: "profile",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Profile.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Profile' }
+                        ]
+                    }
+                },
+            ]
+        },
+
+        //agency member here
+        {
+            path: '/agencyMember',
+            redirect: '/agencyMember/Dashboard',
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+            children: [{
+                    path: "/agencyMember/Dashboard",
+                    name: "agencyMemberDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Dashboard' }
+                        ]
+                    }
+                },
+                {
+                    path: "/agencyMember/profile",
+                    name: "profile",
+                    component: () =>
+                        import ("@/view/pages/UserProfile.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Profile' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/viewJobs",
+                    name: "viewJobs",
+                    component: () =>
+                        import ("@/view/pages/job-management/ViewJobs.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Quotation' }
+                        ]
+                    }
+                },
             ]
         },
         {
