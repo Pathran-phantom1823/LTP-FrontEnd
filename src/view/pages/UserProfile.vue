@@ -60,14 +60,14 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Enter Firstname</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="firstname" placeholder="Firstname" />
+                                        <input v-model="firstName" type="text" class="form-control form-control-solid form-control-lg" name="firstname" placeholder="Firstname" />
                                         <span class="form-text text-muted">Please enter your firstname</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Enter Lastname</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="lastname" placeholder="Lastname" />
+                                        <input v-model="lastName" type="text" class="form-control form-control-solid form-control-lg" name="lastname" placeholder="Lastname" />
                                         <span class="form-text text-muted">Please enter your Lastname</span>
                                     </div>
                                 </div>
@@ -76,14 +76,14 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Enter Middlename</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" required name="middlename" placeholder="Middlename" />
+                                        <input v-model="middleName" type="text" class="form-control form-control-solid form-control-lg" required name="middlename" placeholder="Middlename" />
                                         <span class="form-text text-muted">Please enter your Middlename</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-3">
                                     <div class="form-group">
                                         <label>Enter Age</label><span style="color:red">*</span>
-                                        <input type="number" class="form-control form-control-solid form-control-lg" name="age" placeholder="Age" />
+                                        <input v-model="age" type="number" class="form-control form-control-solid form-control-lg" name="age" placeholder="Age" />
                                         <span class="form-text text-muted">Please enter your age</span>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                              <div class="col-xl-3">
                                     <div class="form-group">
                                         <label>Enter Birthdate</label><span style="color:red">*</span>
-                                        <input type="date" class="form-control form-control-solid form-control-lg" name="birthdate" placeholder="Birthdate" />
+                                        <input v-model="birthdate" type="date" class="form-control form-control-solid form-control-lg" name="birthdate" placeholder="Birthdate" />
                                         <span class="form-text text-muted">Please enter your Birthdate</span>
                                     </div>
                                 </div>
@@ -99,19 +99,11 @@
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label>Email</label><span style="color:red">*</span>
-                                        <input type="email" class="form-control form-control-solid form-control-lg" name="email" placeholder="Email" />
-                                        <span class="form-text text-muted">Please enter your Email</span>
-                                    </div>
-                                </div>
-                               
-                                <div class="col-xl-6">
-                                    <div class="form-group">
                                         <label>Gender</label><span style="color:red">*</span>
-                                        <select name="gender" class="form-control form-control-solid form-control-lg">
+                                        <select v-model="gender" name="gender"  class="form-control form-control-solid form-control-lg">
                                             <option value="">Select</option>
-                                            <option value="F">Female</option>
-                                            <option value="M">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
                                         </select>
                                     </div>
                                 </div>
@@ -120,14 +112,14 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Phone Number</label><span style="color:red">*</span>
-                                        <input type="tel"  class="form-control form-control-solid form-control-lg" name="phone" placeholder="+(650)251-53-21" />
+                                        <input v-model="phoneNumber" type="tel"  class="form-control form-control-solid form-control-lg" name="phone" placeholder="+(650)251-53-21" />
                                         <span class="form-text text-muted">Please Enter your Phone Number</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Your Pricing</label><span style="color:red">*</span>
-                                        <input type="float"  class="form-control form-control-solid form-control-lg" name="pricing" placeholder="$200.05" />
+                                        <input v-model="pricing" type="float"  class="form-control form-control-solid form-control-lg" name="pricing" placeholder="$200.05" />
                                         <span class="form-text text-muted">How much do client/s pay you?</span>
                                     </div>
                                 </div>
@@ -141,14 +133,14 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Postcode</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="postcode" placeholder="Postcode" />
+                                        <input v-model="postal" type="text" class="form-control form-control-solid form-control-lg" name="postcode" placeholder="Postcode" />
                                         <span class="form-text text-muted">Please enter your Postcode.</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>City</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" />
+                                        <input v-model="city" type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" />
                                         <span class="form-text text-muted">Please enter your City.</span>
                                     </div>
                                 </div>
@@ -157,14 +149,14 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>State</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="State" />
+                                        <input v-model="state" type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="State" />
                                         <span class="form-text text-muted">Please enter your State.</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Country</label><span style="color:red">*</span>
-                                        <select name="country" class="form-control form-control-solid form-control-lg">
+                                        <select name="country" v-model="country" class="form-control form-control-solid form-control-lg">
                                             <option value="">Select</option>
                                             <option v-for="(country, index) in countries" :key="index" :value="country.initial">{{country.name}}</option>
                                         </select>
@@ -178,21 +170,21 @@
                              <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>School</label><span style="color:red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="school/university" placeholder="School/University" />
+                                        <input v-model="schoolName" type="text" class="form-control form-control-solid form-control-lg" name="school/university" placeholder="School/University" />
                                         <span class="form-text text-muted">Please enter the name of your school.</span>
                                     </div>
                                 </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label>School address</label><span style="color:red">*</span>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="schooladdress" placeholder="School address" />
+                                    <input v-model="schoolAddress" type="text" class="form-control form-control-solid form-control-lg" name="schooladdress" placeholder="School address" />
                                     <span class="form-text text-muted">Please enter the name of your school address.</span>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label>School Year</label><span style="color:red">*</span>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="schoolyear" placeholder="2018-2020" />
+                                    <input v-model="schoolYear" type="text" class="form-control form-control-solid form-control-lg" name="schoolyear" placeholder="2018-2020" />
                                     <span class="form-text text-muted">Please enter the name of your school year.</span>
                                 </div>
                             </div>
@@ -206,7 +198,7 @@
                             </h4>
                             <div class="form-group">
                                 <label>Languages</label><span style="color:red">*</span>
-                                <v-select multiple chips filled :items="languages" name="languages" dense>
+                                <v-select v-model="skills" multiple chips filled :items="languages" name="languages" dense>
                                 </v-select>
                             </div>
                         </div>
@@ -218,14 +210,14 @@
                             </h4>
                             <div class="form-group">
                                 <label>Services</label><span style="color:red">*</span>
-                                <v-select multiple chips filled :items="services" name="services" dense>
+                                <v-select v-model="services" multiple chips filled :items="services" name="services" dense>
                                 </v-select>
                             </div>
                         </div>
                         <!--end: Wizard Step 3-->
                         <div class="pb-5" data-wizard-type="step-content">
                             <!-- <Rating/> -->
-                            <Calendar/>
+                            <Calendar @date="getDate"/>
                         </div>
                         <!--begin: Wizard Actions -->
                         <div class="d-flex justify-content-between border-top pt-10">
@@ -288,19 +280,12 @@ export default {
             }
         ]);
 
-        // Initialize form wizard
         const wizard = new KTWizard("kt_wizard_v1", {
             startStep: 1, // initial active step number
             clickableSteps: true // allow step clicking
         });
-
-        // Validation before going to next page
         wizard.on("beforeNext", function ( /*wizardObj*/ ) {
-            // validate the form and use below function to stop the wizard's step
-            // wizardObj.stop();
         });
-
-        // Change event
         wizard.on("change", function ( /*wizardObj*/ ) {
             setTimeout(() => {
                 KTUtil.scrollTop();
@@ -319,7 +304,20 @@ export default {
             }
         ],
         languages: ["Russian", "English"],
-        services: ["Architecture", "Medicine"]
+        services: ["Architecture", "Medicine"],
+        firstname: null,
+        lastname: null,
+        middlename: null,
+        age: null,
+        gender: null,
+        birthdate: null,
+        phoneNumber: null,
+        pricing: null,
+        postal: null,
+        city: null,
+        state: null,
+        country: null,
+
     }),
     methods: {
         clickFile: function () {

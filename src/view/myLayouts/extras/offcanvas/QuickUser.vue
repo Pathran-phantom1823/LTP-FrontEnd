@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="navi-text">
-                            <div class="font-weight-bold">My Profile</div>
+                            <div class="font-weight-bold" @click.prevent="goToProfile">My Profile</div>
                             <div class="text-muted">
                                 Account settings and more
                                 <span class="label label-light-danger label-inline font-weight-bold">
@@ -103,8 +103,8 @@
                             </div>
                         </div>
                         <div class="navi-text">
-                            <div class="font-weight-bold">My Messages</div>
-                            <div class="text-muted">Inbox and tasks</div>
+                            <div class="font-weight-bold" @click.prevent="$router.push('/organization/messenger')">My Messages</div>
+                            <div class="text-muted">Rooms and conversations</div>
                         </div>
                     </div>
                 </router-link>
@@ -177,6 +177,11 @@ export default {
         },
         closeOffcanvas() {
             new KTOffcanvas(KTLayoutQuickUser.getElement()).hide();
+        },
+        goToProfile(){
+            const id = localStorage.getItem("value");
+            this.userID = id.substr(id.lastIndexOf("*") + 1);
+            this.$router.push(`/organization/profile/${this.userID}`)
         }
     },
     computed: {

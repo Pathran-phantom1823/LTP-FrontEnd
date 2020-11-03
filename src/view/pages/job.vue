@@ -2,21 +2,38 @@
   <div class="jobBoard">
     <div class="d-flex justify-content-between">
       <p class="job_board_title">Job Board</p>
-      <v-btn rounded color="primary" class="post_job" dark>
-        <v-icon dark class="post_job_icon" @click="redirect('/postjob')">mdi-plus</v-icon>post a job
+      <v-btn
+        rounded
+        color="primary"
+        class="post_job"
+        dark
+        @click="$router.push('/user/post_job')"
+      >
+        <v-icon dark class="post_job_icon">mdi-plus</v-icon>post a job
       </v-btn>
     </div>
     <div class="card mb-20">
       <div class="card-header board_header_container">
-        <div class="jobnav_container" v-for="(jobheader, index) in boardHeader" :key="index">
+        <div
+          class="jobnav_container"
+          v-for="(jobheader, index) in boardHeader"
+          :key="index"
+        >
           <a
             :ref="'nav' + index"
             class="jobnav"
             @click="navigateTo($event, jobheader)"
-          >{{jobheader}}</a>
+            >{{ jobheader }}</a
+          >
         </div>
       </div>
-      <div class="card-body pt-4 pb-4">
+      <v-data-table
+        v-if="showTable"
+        :headers="headers"
+        :items="returnData"
+        :search="search"
+      ></v-data-table>
+      <div class="card-body pt-4 pb-4" v-if="!showTable">
         <div
           class="row mb-1 cards FeedCard"
           v-for="data in returnData"
@@ -25,14 +42,24 @@
           @mouseleave="hideViewMore"
         >
           <div class="col-sm-12 card pl-3 pr-3 pt-5 pb-5 jobCard">
-            <div class="card-body p-0 d-flex justify-content-between data_header">
-              <b class="mb-0">{{data.title}}</b>
+            <div
+              class="card-body p-0 d-flex justify-content-between data_header"
+            >
+              <b class="mb-0">{{ data.title }}</b>
               <div class="saveJobIcon">
                 <i
-                  :class="(String(returnNavEvent.text).toLowerCase() === 'save jobs') ? 'mdi mdi-heart' : 'mdi mdi-heart-outline'"
+                  :class="
+                    String(returnNavEvent.text).toLowerCase() === 'save jobs'
+                      ? 'mdi mdi-heart'
+                      : 'mdi mdi-heart-outline'
+                  "
                   @click="saveJob($event, index)"
                   title="save job"
-                  v-if="String(returnNavEvent.text).toLowerCase() === 'active contracts' || String(returnNavEvent.text).toLowerCase() === 'save jobs'"
+                  v-if="
+                    String(returnNavEvent.text).toLowerCase() ===
+                      'active contracts' ||
+                    String(returnNavEvent.text).toLowerCase() === 'save jobs'
+                  "
                 ></i>
               </div>
             </div>
@@ -44,30 +71,31 @@
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
                     alt="John"
-                  >
+                  />
                 </v-avatar>
                 <div class="ml-2">
                   <p class="card-text mb-0 pt-1">
-                    <b>{{data.username}}</b>
+                    <b>{{ data.username }}</b>
                   </p>
                   <p class="locationbid">
                     Location:
-                    <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+                    <v-icon class="locationIcon">mdi-map-marker</v-icon
+                    >Philippines
                   </p>
                 </div>
               </div>
               <p class="card-text mb-1">
                 <b class="font-weight-normal">Date Posted:</b>
-                {{data.datePosted}}
+                {{ data.datePosted }}
               </p>
               <p class="card-text mb-1">
                 <b class="font-weight-normal">Date Needed:</b>
-                {{data.fromDate}} - {{data.toDate}}
+                {{ data.fromDate }} - {{ data.toDate }}
               </p>
               <div class="col-sm-12 skillsPadding">
                 <div class="row">
                   <b class="mr-2 font-weight-normal">Category :</b>
-                  <b class="skills">{{data.subject}}</b>
+                  <b class="skills">{{ data.subject }}</b>
                 </div>
               </div>
             </div>
@@ -76,11 +104,16 @@
             <div class="card-body p-3 align-middle">
               <p class="card-text pt-2">
                 <b class="pr-2">Description :</b>
-                {{(!data.description.length >= 200) ? data.description : data.description.substring(0, 200)}}
+                {{
+                  !data.description.length >= 200
+                    ? data.description
+                    : data.description.substring(0, 200)
+                }}
                 <b
                   class="font-weight-normal"
                   v-if="data.description.length >= 200"
-                >...</b>
+                  >...</b
+                >
               </p>
               <div class="col-sm-12 skillsPadding">
                 <div class="row">
@@ -88,110 +121,227 @@
                     class="skills"
                     v-for="(language, index) in data.languageFrom"
                     :key="index"
-                  >{{language}}</b>
+                    >{{ language }}</b
+                  >
                 </div>
               </div>
               <p class="card-text mb-0 mt-3">
                 <b>Price:</b>
-                <span v-if="data.fixedPrice !== null">${{data.fixedPrice}}</span>
-                <span v-else>${{data.fromPrice}} - ${{data.toPrice}}</span>
+                <span v-if="data.fixedPrice !== null"
+                  >${{ data.fixedPrice }}</span
+                >
+                <span v-else>${{ data.fromPrice }} - ${{ data.toPrice }}</span>
               </p>
-              <p class="card-text locationbid mt-2">Bids: {{data.bids}}</p>
+              <p class="card-text locationbid mt-2">Bids: {{ data.bids }}</p>
               <p
                 class="ViewMoreIcon"
                 @click="redirect('/user/review_bids/' + data.id)"
-                v-if="String(returnNavEvent.text).toLowerCase() === 'posted jobs'"
+                v-if="
+                  String(returnNavEvent.text).toLowerCase() === 'posted jobs'
+                "
               >
                 <v-icon title="review bids">mdi mdi-eye</v-icon>View Bids
               </p>
-              <v-avatar class="view_details" size="36" @click="viewMore(true, data.id)">
-                <v-icon title="View Details" class="white--text headline">mdi mdi-eye</v-icon>
+              <v-avatar
+                class="view_details"
+                size="36"
+                @click="viewMore(true, data.id)"
+              >
+                <v-icon title="View Details" class="white--text headline"
+                  >mdi mdi-eye</v-icon
+                >
               </v-avatar>
-              <v-avatar class="edit_posts" size="36">
-                <v-icon title="edit" class="white--text headline">mdi mdi-lead-pencil</v-icon>
+              <v-avatar
+                class="edit_posts"
+                size="36"
+                @click="showModal(data.id)"
+              >
+                <v-icon title="edit" class="white--text headline"
+                  >mdi mdi-lead-pencil</v-icon
+                >
               </v-avatar>
-              <v-avatar class="delete_posts" color="red accent-3" size="36">
-                <v-icon title="delete" class="white--text headline">mdi mdi-delete-forever</v-icon>
+              <v-avatar
+                class="delete_posts"
+                color="red accent-3"
+                size="36"
+                @click="deleteJob(data.id)"
+              >
+                <v-icon title="delete" class="white--text headline"
+                  >mdi mdi-delete-forever</v-icon
+                >
               </v-avatar>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <EditModal
+      v-if="jobDetailContent"
+      :dialog="showDialog"
+      @hideModal="hideDialog"
+      :jobData="jobDetailContent"
+    />
 
     <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
-        <div ref="moreInfo" class="moreInfo">
-            <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
-            <div class="card ViewMoreTitle mb-3">
-                <b>{{jobDetails.title}}</b>
-            </div>
-            <div class="card ViewMoreCard pt-3">
-                <div class="card-body ViewMoreBody">
-                    <p class="card-text mb-3">
-                        <span v-if="jobDetails.fixedPrice !== null"><b>Price: </b> ${{jobDetails.fixedPrice }}</span>
-                        <span v-else><b>Price: </b> ${{jobDetails.fromPrice}} - ${{jobDetails.toPrice}}</span>
-                    </p>
-                    <p class="card-text">
-                        <b> Description : </b>{{jobDetails.description}}
-                    </p>
-                </div>
-                <div class="card-footer ViewMoreFooter">
-                    <p class="locationbid"><b>Language Tranlation:</b> {{jobDetails.languageTo}}</p>
-                    <p class="locationbid"><b>Bids:</b>{{jobDetails.bids}}</p>
-                    <p class="locationbid">
-                        <b>Location:</b>
-                        <v-icon class="locationIcon">mdi-map-marker</v-icon>
-                        Philippines
-                    </p>
-                </div>
-            </div>
-            <div class="card ViewMoreCard mt-2">
-                <div class="card-header ViewMoreHeader">
-                    <b class="mb-5 font-weight-normal">Posted by:</b>
-                    <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
-                        <v-avatar>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                        </v-avatar>
-                        <div class="ml-2">
-                            <p class="card-text">
-                                <b>{{jobDetails.username}}</b>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body ViewMoreBody">
-                    <p class="card-text mb-3"><b>Date Posted: </b>{{jobDetails.datePosted}}</p>
-                    <p class="card-text mb-3"><b>Date Needed: </b>{{jobDetails.fromDate}} - {{jobDetails.toDate}}</p>
-                    <div class="col-sm-12 skillsPadding">
-                        <div class="row">
-                            <b class="mr-2"> Category :</b><b class="skills">{{jobDetails.subject}}</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div ref="moreInfo" class="moreInfo">
+        <v-icon class="exit_view_more" @click="viewMore(false)"
+          >mdi mdi-close</v-icon
+        >
+        <div class="card ViewMoreTitle mb-3">
+          <b>{{ jobDetails.title }}</b>
         </div>
+        <div class="card ViewMoreCard pt-3">
+          <div class="card-body ViewMoreBody">
+            <p class="card-text mb-3">
+              <span v-if="jobDetails.fixedPrice !== null"
+                ><b>Price: </b> ${{ jobDetails.fixedPrice }}</span
+              >
+              <span v-else
+                ><b>Price: </b> ${{ jobDetails.fromPrice }} - ${{
+                  jobDetails.toPrice
+                }}</span
+              >
+            </p>
+            <p class="card-text">
+              <b> Description : </b>{{ jobDetails.description }}
+            </p>
+          </div>
+          <div class="card-footer ViewMoreFooter">
+            <p class="locationbid">
+              <b>Language Tranlation:</b> {{ jobDetails.languageTo }}
+            </p>
+            <p class="locationbid"><b>Bids:</b>{{ jobDetails.bids }}</p>
+            <p class="locationbid">
+              <b>Location:</b>
+              <v-icon class="locationIcon">mdi-map-marker</v-icon>
+              Philippines
+            </p>
+          </div>
+        </div>
+        <div class="card ViewMoreCard mt-2">
+          <div class="card-header ViewMoreHeader">
+            <b class="mb-5 font-weight-normal">Posted by:</b>
+            <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
+              <v-avatar>
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
+                  alt="John"
+                />
+              </v-avatar>
+              <div class="ml-2">
+                <p class="card-text">
+                  <b>{{ jobDetails.username }}</b>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body ViewMoreBody">
+            <p class="card-text mb-3">
+              <b>Date Posted: </b>{{ jobDetails.datePosted }}
+            </p>
+            <p class="card-text mb-3">
+              <b>Date Needed: </b>{{ jobDetails.fromDate }} -
+              {{ jobDetails.toDate }}
+            </p>
+            <div class="col-sm-12 skillsPadding">
+              <div class="row">
+                <b class="mr-2"> Category :</b
+                ><b class="skills">{{ jobDetails.subject }}</b>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-footer ViewMoreFooter text-center pt-10 pb-10"
+            v-if="isShowFile"
+          >
+            <b>Download File</b>
+            <v-chip
+              class="ma-2 downloadFileBtn"
+              color="info accent-4"
+              outlined
+              @click="downloadFile(jobDetails.file)"
+            >
+              <v-icon left> mdi-file-download </v-icon>
+              {{ jobDetails.file }}
+            </v-chip>
+            <br />
+            <DragDrop :primaryId="jobDetails.id" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import ApiService from "@/core/services/api.service";
+import EditModal from "@/view/pages/postjob/EditPostJob/EditModal.vue";
+import JwtService from "@/core/services/jwt.service";
+import DragDrop from "@/view/pages/DragDrop.vue";
+
 export default {
   data() {
     return {
+      modal: false,
       boardHeader: [
         "Active Contracts",
         "Posted Jobs",
         "Save Jobs",
-        "Contracts History"
+        "Contracts History",
       ],
+      jobContent: [],
       data: [],
       navEvent: "",
       iconDisplay: "",
-      jobDetails: []
+      jobDetails: [],
+      jobDetailContent: null,
+      search: null,
+      showTable: false,
+      isShowFile: false,
+      headers: [
+        {
+          text: "Project Name",
+          align: "start",
+          filterable: true,
+          value: "title",
+        },
+        {
+          text: "Posted By",
+          value: "postedBy",
+        },
+        {
+          text: "Date Applied",
+          value: "dateApplied",
+        },
+        {
+          text: "Date Accepted",
+          value: "dateAccepted",
+        },
+        {
+          text: "Date Finished",
+          value: "dateFinish",
+        },
+        {
+          text: "Fixed Price",
+          value: "fixedPrice",
+        },
+        {
+          text: "From Price",
+          value: "fromPrice",
+        },
+        {
+          text: "To Price",
+          value: "toPrice",
+        },
+      ],
+      project: [],
     };
   },
-  components: {},
+  components: {
+    DragDrop,
+    EditModal,
+  },
   mounted() {
     this.$refs["nav0"][0].click();
   },
@@ -202,14 +352,36 @@ export default {
     returnData() {
       return this.data;
     },
-    returnJobDetail(){
-      return this.jobDetails
-    }
+    returnJobDetail() {
+      return this.jobDetails;
+    },
+    showDialog() {
+      return this.modal;
+    },
   },
   methods: {
+    showModal(data) {
+      ApiService.post("editJob", {
+        id: data,
+      }).then((res) => {
+        console.log(res.data[0]);
+        res.data.map((el) => {
+          let tempres = el.languageFrom.replace(/,/g, " ");
+          el.languageFrom = tempres.trim().split(" ");
+
+          let tempres2 = el.languageTo.replace(/,/g, " ");
+          el.languageTo = tempres2.trim().split(" ");
+        });
+        this.jobDetailContent = res.data[0];
+        this.modal = true;
+      });
+    },
+    hideDialog() {
+      this.modal = false;
+    },
     showViewMore(e) {
+      let target = e.target.children[2].children[0].children;
       if (String(this.navEvent.text).toLowerCase() === "posted jobs") {
-        let target = e.target.children[2].children[0].children;
         target[5].classList.remove("hide_posts_icons");
         target[5].classList.add("show_posts_icons");
         target[6].classList.remove("hide_posts_icons");
@@ -217,11 +389,17 @@ export default {
         target[7].classList.remove("hide_posts_icons");
         target[7].classList.add("show_posts_icons");
         target[4].style = "transition: .5s; right: 0 !important;";
+      } else if (
+        String(this.navEvent.text).toLowerCase() === "active contracts"
+      ) {
+        target[4].classList.remove("hide_posts_icons");
+        target[4].classList.add("show_posts_icons");
+        target[4].style = "right: 10px !important; padding: 5px !important;";
       }
     },
     hideViewMore(e) {
+      let target = e.target.children[2].children[0].children;
       if (String(this.navEvent.text).toLowerCase() === "posted jobs") {
-        let target = e.target.children[2].children[0].children;
         target[5].classList.add("hide_posts_icons");
         target[5].classList.remove("show_posts_icons");
         target[6].classList.add("hide_posts_icons");
@@ -229,6 +407,12 @@ export default {
         target[7].classList.add("hide_posts_icons");
         target[7].classList.remove("show_posts_icons");
         target[4].style = "transition: .5s; right: -100% !important;";
+      } else if (
+        String(this.navEvent.text).toLowerCase() === "active contracts"
+      ) {
+        target[4].classList.remove("show_posts_icons");
+        target[4].classList.add("hide_posts_icons");
+        target[4].style = "right: 10px !important; padding: 5px !important;";
       }
     },
     viewMore(ViewEvent, data) {
@@ -238,11 +422,11 @@ export default {
           "transition: .5s !important; left: 20% !important";
 
         ApiService.post("getJob", {
-            id: data
-        }).then(res => {
-            // console.log(res);
-            this.jobDetails = res.data[0]
-        })
+          id: data,
+        }).then((res) => {
+          // console.log(res);
+          this.jobDetails = res.data[0];
+        });
 
         if (window.innerWidth < 750) {
           this.$refs["moreInfo"].style =
@@ -287,54 +471,125 @@ export default {
 
       if (value === "Active Contracts") {
         // console.log(value);
+        this.showTable = false;
+        this.isShowFile = true;
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("getacceptedjobs", {
-          savedById: userID
-        }).then(res => {
-          // console.log(res.data);
-          res.data.map(el => {
-            let tempres = el.languageFrom.replace(/,/g, " ");
-            el.languageFrom = tempres.trim().split(" ");
-          });
-          this.data = res.data;
+          savedById: userID,
+        }).then((res) => {
+          if (res.data[0].id !== null) {
+            res.data.map((el) => {
+              let tempres = el.languageFrom.replace(/,/g, " ");
+              el.languageFrom = tempres.trim().split(" ");
+            });
+            this.data = res.data;
+          } else {
+            this.data = [];
+          }
         });
       } else if (value === "Posted Jobs") {
+        this.isShowFile = false;
+        this.showTable = false;
         console.log(value);
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("get-my-jobs", {
-          id: userID
-        }).then(res => {
-          res.data.map(el => {
-            let tempres = el.languageFrom.replace(/,/g, " ");
-            el.languageFrom = tempres.trim().split(" ");
-          });
-          this.data = res.data;
-          // console.log(this.data)
+          id: userID,
+        }).then((res) => {
+          if (res.data[0].id) {
+            res.data.map((el) => {
+              let tempres = el.languageFrom.replace(/,/g, " ");
+              el.languageFrom = tempres.trim().split(" ");
+            });
+            this.data = res.data;
+          } else {
+            this.data = [];
+          }
         });
       } else if (value === "Save Jobs") {
+        this.isShowFile = false;
         // console.log(value);
+        this.showTable = false;
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("getsavejob", {
-          savedById: userID
-        }).then(res => {
+          savedById: userID,
+        }).then((res) => {
           // console.log(res.data);
-          res.data.map(el => {
-            let tempres = el.languageFrom.replace(/,/g, " ");
-            el.languageFrom = tempres.trim().split(" ");
-          });
-          this.data = res.data;
+          if (res.data[0].id !== null) {
+            res.data.map((el) => {
+              let tempres = el.languageFrom.replace(/,/g, " ");
+              el.languageFrom = tempres.trim().split(" ");
+            });
+            this.data = res.data;
+          } else {
+            this.data = [];
+          }
         });
-      } else {
-        this.data = [];
+      } else if (value === "Contracts History") {
+        this.isShowFile = false;
+        this.showTable = true;
+        const id = localStorage.getItem("value");
+        const userID = id.substr(id.lastIndexOf("*") + 1);
+        ApiService.post("getMyJobHistory", {
+          id: userID,
+        }).then((res) => {
+          if (res.data[0].id) {
+            this.data = res.data;
+          } else {
+            this.data = [];
+          }
+        });
       }
     },
     redirect(url) {
       this.$router.push(url);
-    }
-  }
+    },
+    deleteJob(id) {
+      Swal.fire({
+        title: "Do you want to delete this job?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Save`,
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          ApiService.post("deleteJob", {
+            id: id,
+          }).then(() => {
+            Swal.fire("Deleted!", "", "success");
+          });
+        } else if (result.isDenied) {
+          Swal.fire("Delete is cancelleds", "", "info");
+        }
+      });
+    },
+    downloadFile(file) {
+      this.$axios({
+        method: "get",
+        url: "http://localhost:8003/ltp/getFiles/" + file,
+        header: { Authorization: `${JwtService.getToken()}` },
+        responseType: "blob",
+      }).then((res) => {
+        // console.log(res.data)
+        // let response = this.base64ToArrayBuffer(res)
+        this.forceToDownload(res, file);
+      });
+    },
+
+    forceToDownload(data, title) {
+      let blob = new Blob([data.data]);
+      let url = window.URL.createObjectURL(blob);
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.setAttribute("download", title);
+      document.body.appendChild(link);
+      link.click();
+    },
+  },
 };
 </script>
 

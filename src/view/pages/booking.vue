@@ -22,87 +22,27 @@
                     </div>
                   </div>
                   <p class="mb-0 bookingFilter mt-4">Day</p>
-                  <v-menu
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="date"
-                        label="Picker without buttons"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      v-model="date"
-                      @input="menu2 = false"
-                    ></v-date-picker>
-                  </v-menu>
+                  <v-select
+                    v-model="date"
+                    :items="daysList"
+                    outlined
+                    prepend-icon="mdi-calendar"
+                    height="20"
+                  ></v-select>
                   <p class="mb-0 bookingFilter">From</p>
-                  <v-menu
-                    ref="menu"
-                    v-model="from_menu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="from"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="220px"
-                    min-width="220px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="from"
-                        label="Time"
-                        prepend-icon="mdi mdi-clock-start"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                      v-if="from_menu"
-                      v-model="from"
-                      full-width
-                      @click:minute="$refs.menu.save(from)"
-                    ></v-time-picker>
-                  </v-menu>
+                  <b-form-timepicker
+                    v-model="ctxFrom"
+                    locale="en"
+                    @context="onContextFrom"
+                    size="lg"
+                  ></b-form-timepicker>
                   <p class="mb-0 bookingFilter">To</p>
-                  <v-menu
-                    ref="menu_to"
-                    v-model="to_menu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="to"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="220px"
-                    min-width="220px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="to"
-                        label="Time"
-                        prepend-icon="mdi mdi-clock-end"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                      v-if="to_menu"
-                      v-model="to"
-                      full-width
-                      @click:minute="$refs.menu_to.save(to)"
-                    ></v-time-picker>
-                  </v-menu>
+                  <b-form-timepicker
+                    v-model="ctxTo"
+                    locale="en"
+                    @context ="onContextTo"
+                     size="lg"
+                  ></b-form-timepicker>
                 </div>
               </div>
               <div class="col-sm-8 co_booking translators_container">
@@ -183,6 +123,15 @@ export default {
     return {
       dialog: false,
       roomName: null,
+      daysList: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thurday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
       date: null,
       menu: false,
       from: null,
@@ -192,6 +141,8 @@ export default {
       translators: [],
       chosenTranslatorId: null,
       userID: null,
+      ctxFrom: null,
+      ctxTo: null
     };
   },
   computed: {
@@ -206,10 +157,18 @@ export default {
   },
   methods: {
     retrieveUser() {
-      ApiService.get("getUsers").then((res) => {
+      ApiService.post("get-translators", { id: this.userID }).then((res) => {
         this.translators = res.data;
         //   console.log(this.contacts);
       });
+    },
+    onContextFrom(ctx) {
+      // console.log(ctx.formatted)
+      this.from = ctx.formatted;
+    },
+    onContextTo(ctx) {
+      // console.log(ctx.formatted);
+      this.to = ctx.formatted;
     },
     addRoom(userId) {
       this.translators.map((el) => {
@@ -220,7 +179,10 @@ export default {
       });
     },
     post() {
-      let tempTopic = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).replace('0.', '')
+      console.log(this.from, this.to);
+      let tempTopic =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).replace("0.", "");
       ApiService.post("createRoom", {
         name: this.roomName,
         topic: tempTopic,
@@ -228,12 +190,12 @@ export default {
         memberId: this.chosenTranslatorId,
         date: this.date,
         fromTime: this.from,
-        toTime: this.to
+        toTime: this.to,
       })
-        .then((res) => {
+        .then(() => {
           Swal.fire({
             title: "",
-            text: `${res.message}`,
+            text: `Room is successfully Created`,
             icon: "success",
             confirmButtonClass: "btn btn-secondary",
           });

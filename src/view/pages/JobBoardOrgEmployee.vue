@@ -155,10 +155,17 @@
           </div>
           <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
             <b>Download File</b>
-            <v-chip class="ma-2 downloadFileBtn" color="info accent-4" outlined @click="downloadFile(feedDetails.file)">
+            <v-chip
+              class="ma-2 downloadFileBtn"
+              color="info accent-4"
+              outlined
+              @click="downloadFile(feedDetails.file)"
+            >
               <v-icon left> mdi-file-download </v-icon>
-              {{feedDetails.file}}
+              {{ feedDetails.file }}
             </v-chip>
+            <br>
+            <DragDrop :primaryId="feedDetails.id" />
           </div>
         </div>
       </div>
@@ -169,6 +176,9 @@
 <script>
 // import Swal from "sweetalert2";
 import ApiService from "@/core/services/api.service";
+// import FileSaver from "file-saver";
+import JwtService from "@/core/services/jwt.service";
+import DragDrop from "@/view/pages/DragDrop.vue";
 export default {
   data() {
     return {
@@ -216,7 +226,9 @@ export default {
       ],
     };
   },
-  components: {},
+  components: {
+    DragDrop
+  },
   mounted() {
     const id = localStorage.getItem("value");
     this.userID = id.substr(id.lastIndexOf("*") + 1);
@@ -314,21 +326,29 @@ export default {
           "transition: .5s; width: calc(100% - 320px); margin-left: 320px !important;";
       }
     },
-    downloadFile(file){
-      ApiService.post("getFiles", {file: file}).then(res => {
+    downloadFile(file) {
+      this.$axios({
+        method: "get",
+        url: "http://localhost:8003/ltp/getFiles/" + file,
+        header: {"Authorization": `${JwtService.getToken()}`},
+        responseType: "blob"
+      }).then((res) => {
         // console.log(res.data)
-        this.forceToDownload(res, file)
-      })
+        // let response = this.base64ToArrayBuffer(res)
+        this.forceToDownload(res, file);
+      });
     },
-    forceToDownload(response, title){
-      console.log(title, response.data)
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', title)
-      document.body.appendChild(link)
+
+    forceToDownload(data, title) {
+      let blob = new Blob([data.data]);
+      let url = window.URL.createObjectURL(blob);
+      let link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = url;
+      link.setAttribute('download', title);
+      document.body.appendChild(link);
       link.click()
-    }
+    },
   },
 };
 </script>
@@ -611,7 +631,7 @@ export default {
   border: 0px;
 }
 
-.downloadFileBtn:hover{
+.downloadFileBtn:hover {
   box-shadow: 2px 3px 4px gray;
 }
 </style>

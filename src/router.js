@@ -88,12 +88,6 @@ export default new Router({
                         import ("@/view/pages/forumDetails.vue")
                 },
                 {
-                    path: "/user/orgprofile/:id",
-                    name: "orgprofile",
-                    component: () =>
-                        import ("@/view/pages/OrgProfile.vue")
-                },
-                {
                     path: "/user/viewprofile",
                     name: "viewprofile",
                     component: () =>
@@ -109,7 +103,13 @@ export default new Router({
                     path: "/user/booking",
                     name: "booking",
                     component: () => import ("@/view/pages/booking.vue")
-                }
+                },
+                {
+                    path: "/user/post_job",
+                    name: "userPostJob",
+                    component: () =>
+                        import ("@/view/pages/postjob/PostJob.vue"),
+                },
                 // ADD ROUTES HERE FOR USERS
             ]
         },
@@ -142,6 +142,12 @@ export default new Router({
                         import ("@/view/pages/forumDetails.vue")
                 },
                 {
+                    path: "/organization/profile/:id",
+                    name: "orgprofile",
+                    component: () =>
+                        import ("@/view/pages/OrgProfile.vue")
+                },
+                {
                     path: "/organization/quotation",
                     name: "quotation",
                     component: () =>
@@ -151,6 +157,12 @@ export default new Router({
                             { name: 'Quotation', link: 'quotation' }
                         ]
                     }
+                },
+                {
+                    path: "/organization/messenger",
+                    name: "messenger",
+                    component: () =>
+                        import ("@/view/pages/communication/Messenger3.vue")
                 },
                 {
                     path: "/organization/accounts",

@@ -248,7 +248,6 @@ export default {
             password: password,
             username: username,
             roleType: accountType,
-            isMember: "true",
           })
           .then(() => {
             this.$router.push({
@@ -275,7 +274,6 @@ export default {
             password: password,
             username: username,
             roleType: accountType,
-            isMember: "true",
           })
           .then(() => {
             this.$router.push({
@@ -299,7 +297,6 @@ export default {
             password: password,
             username: username,
             roleType: accountType,
-            isMember: "false",
           })
           .then(() => {
             this.$router.push({
