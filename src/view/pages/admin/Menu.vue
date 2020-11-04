@@ -26,7 +26,6 @@ export default {
     return {
       index: null,
        items: [
-         //Agent sidebar
         [
           'Home',
           {
@@ -56,8 +55,6 @@ export default {
             link: "#"
           }
         ],
-
-        //Agency sidebar
         [
           'Home',
           {
@@ -87,62 +84,8 @@ export default {
             name: "Job Board",
             link: "/organization/job_board"
           }
-        ],
-
-         // Agency Member sidebar
-        [
-          'Home',
-          {
-            icon: "flaticon2-architecture-and-city",
-            name: "Dashboard",
-            link: "/agencyMember/dashboard"
-          },
-          {
-            icon: "fas fa-user",
-            name: "Profile",
-            link: "/agencyMember/UserProfile" 
-          },
-          'Task Management',
-          {
-            icon: "fas fa-tasks",
-            name: "View Jobs",
-            link: "/agency/ViewJobs" 
-          },
-        ],
-
-        //Super admin sidebar
-        [
-          'Home',
-          {
-            icon: "flaticon2-architecture-and-city",
-            name: "Dashboard",
-            link: "/superAdmin/dashboard"
-          },
-          {
-            icon: "fas fa-user",
-            name: "Profile",
-            link: "/superAdmin/Profile"
-          },
-          'Account Management',
-          {
-            icon: " fas fa-user-friends",
-            name: "Agents",
-            link: "/superAdmin/Account"
-          },
-          {
-            icon: "flaticon2-expand",  
-            name: "Reports",
-            link: "/superAdmin/Report"
-          },
-          {
-            icon: "fab fa-wpforms",  
-            name: "Quotations",
-            link: "/superAdmin/Quotation"
-          }
-        ],   
+        ]
       ],
-
-      
       item_index: []
     };
   },
@@ -169,7 +112,7 @@ export default {
       //     this.index = index
       //   }
       // })
-      this.index = 2;
+      this.index = 1;
     },
     addGrouper(){
       this.items[this.index].forEach((element, index) => {

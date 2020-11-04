@@ -1,198 +1,122 @@
 <template>
-  <div class="jobBoard">
-    <div class="d-flex justify-content-between">
-      <p class="job_board_title">Job Board</p>
+  <div class="UsersContainer" centered>
+    <div ref="sidebar" class="sidebar overflow-auto">
+      <div class="card CategoryData"></div>
     </div>
-    <div class="card mb-20">
-      <div class="card-header board_header_container">
-        <div
-          class="jobnav_container"
-          v-for="(jobheader, index) in boardHeader"
-          :key="index"
-        >
-          <a :ref="'nav' + index" class="jobnav" @click="navigateTo">{{
-            jobheader
-          }}</a>
-        </div>
-      </div>
-      <div class="card-body pt-4 pb-4">
-        <div
-          class="row mb-1 cards FeedCard"
-          v-for="(data, index) in returnData"
-          :key="index"
-          @mouseenter="showViewMore"
-          @mouseleave="hideViewMore"
-        >
-          <div class="col-sm-12 card pl-3 pr-3 pt-5 pb-5 jobCard">
-            <div
-              class="card-body p-0 d-flex justify-content-between data_header"
-            >
-              <b class="mb-0">{{ data.title }}</b>
-              <div class="saveJobIcon">
-                <i
-                  :class="
-                    String(returnNavEvent.text).toLowerCase() === 'save jobs'
-                      ? 'mdi mdi-heart'
-                      : 'mdi mdi-heart-outline'
-                  "
-                  @click="saveJob($event, index)"
-                  title="save job"
-                  v-if="
-                    String(returnNavEvent.text).toLowerCase() ===
-                      'active contracts' ||
-                      String(returnNavEvent.text).toLowerCase() === 'save jobs'
-                  "
-                ></i>
-              </div>
+    <div ref="workspace" class="workspace">
+      <div class="row">
+        <div class="col-sm-12">
+          <div
+            class="card FeedCard"
+            v-for="(data, index) in allJobs"
+            :key="index"
+            @mouseenter="showViewMore"
+            @mouseleave="hideViewMore"
+          >
+            <div class="card-header dataHeader">
+              <div class="data_title">{{ data.title }}</div>
             </div>
-          </div>
-          <div class="col-sm-4 card p-0 jobCard">
-            <div class="card-body p-3">
-              <div class="d-flex justify-content-start mt-2 mb-3">
-                <v-avatar>
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
-                    alt="John"
-                  />
-                </v-avatar>
-                <div class="ml-2">
-                  <p class="card-text mb-0 pt-1">
-                    <b>Steve Jobs</b>
-                  </p>
-                  <p class="locationbid">
-                    Location:
-                    <v-icon class="locationIcon">mdi-map-marker</v-icon
-                    >Philippines
-                  </p>
-                </div>
-              </div>
-              <p class="card-text mb-1">
-                <b class="font-weight-normal">Date Posted:</b> 9/24/2020
-              </p>
-              <p class="card-text mb-1">
-                <b class="font-weight-normal">Date Needed:</b> 9/24/2020
+            <div class="card-body dataBody">
+              <b class="priceLabel">Price: </b>
+              <b
+                ><span v-if="data.fixedPrice !== null"
+                  >${{ data.fixedPrice }}</span
+                ><span v-else
+                  >${{ data.fromPrice }} - ${{ data.toPrice }}</span
+                ></b
+              >
+              <p class="card-text descriptionText">
+                Description: {{ data.description }}
               </p>
               <div class="col-sm-12 skillsPadding">
+                <br />
                 <div class="row">
-                  <b class="mr-2 font-weight-normal">Category :</b>
-                  <b class="skills" v-for="skill in 1" :key="skill"
-                    >Arts Crafts</b
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-8 card p-0 jobCard">
-            <div class="card-body p-3 align-middle">
-              <p class="card-text pt-2">
-                <b class="pr-2">Description :</b>
-                {{
-                  !data.description.length >= 200
-                    ? data.description
-                    : data.description.substring(0, 200)
-                }}
-                <b
-                  class="view_more_truncate"
-                  v-if="data.description.length >= 200"
-                  @click="viewMore(true)"
-                  >...view more</b
-                >
-              </p>
-              <div class="col-sm-12 skillsPadding">
-                <div class="row">
+                  Current Language of document:
                   <b
                     class="skills"
-                    v-for="(skill, index) in data.skills"
+                    v-for="(language, index) in data.languageFrom"
                     :key="index"
-                    >{{ skill }}</b
+                  >
+                    {{ language }}</b
                   >
                 </div>
               </div>
-              <p class="card-text mb-0 mt-3">
-                <b>Price:</b>
-                {{ data.price }}
+              <p class="card-text locationbid mt-2">
+                Bids: <b>{{ data.bids }}</b>
               </p>
-              <p class="card-text locationbid mt-2">Bids: 0</p>
-              <p
-                class="ViewMoreIcon"
-                @click="redirect('/user/review_bids')"
-                v-if="
-                  String(returnNavEvent.text).toLowerCase() === 'posted jobs'
-                "
-              >
-                <v-icon title="review bids">mdi mdi-eye</v-icon>
-                view bids
+              <p class="locationbid mb-2">
+                Location:
+                <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                <v-icon
+                  class="ViewMoreIcon"
+                  @click="viewMore(true, data.id)"
+                  title="view more"
+                >
+                  mdi-chevron-double-right
+                </v-icon>
               </p>
-              <v-avatar class="edit_posts" size="36">
-                <v-icon title="edit" class="white--text headline">
-                  mdi mdi-lead-pencil
-                </v-icon>
-              </v-avatar>
-              <v-avatar class="delete_posts" color="red accent-3" size="36">
-                <v-icon title="delete" class="white--text headline">
-                  mdi mdi-delete-forever
-                </v-icon>
-              </v-avatar>
             </div>
+            <br />
           </div>
         </div>
       </div>
+      <div class="text-center mt-5 mb-5">
+        <v-pagination
+          v-if="feedData.length > 7"
+          v-model="page"
+          :length="feedData.length"
+          :total-visible="7"
+          circle
+          color="blue lighten-1"
+        ></v-pagination>
+      </div>
     </div>
-
     <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
       <div ref="moreInfo" class="moreInfo">
         <v-icon class="exit_view_more" @click="viewMore(false)"
           >mdi mdi-close</v-icon
         >
         <div class="card ViewMoreTitle mb-3">
-          <b>{{ returnData[0].title }}</b>
+          <b>{{ feedDetails.title }}</b>
         </div>
         <div class="card ViewMoreCard pt-3">
           <!-- <div class="card-header ViewMoreHeader">
               <b>{{feedData[0].title}}</b>
-          </div>-->
+            </div> -->
           <div class="card-body ViewMoreBody">
             <p class="card-text mb-3">
-              <b>Price:</b>
-              {{ returnData[0].price }}
+              <span v-if="feedDetails.fixedPrice !== null"
+                ><b>Price: </b> ${{ feedDetails.fixedPrice }}</span
+              >
+              <span v-else
+                ><b>Price: </b> ${{ feedDetails.fromPrice }} - ${{
+                  feedDetails.toPrice
+                }}</span
+              >
             </p>
             <p class="card-text">
-              <b>Description :</b>Translate all agricultural documents from
-              farming machinery and crop science to agri trade with accuracy and
-              speed.Translate all agricultural documents from farming machinery
-              and crop science to agri trade with accuracy and speed.Translate
-              all agricultural documents from farming machinery and crop science
-              to agri trade with accuracy and speed.Translate all agricultural
-              documents Translate all agricultural documents from farming
-              machinery and crop science to agri trade with accuracy and
-              speed.Translate all agricultural documents from farming machinery
-              and crop science to agri trade with accuracy and speed.Translate
-              all agricultural documents from farming machinery and crop science
-              to agri trade with accuracy and speed.Translate all agricultural
-              documents Translate all agricultural documents from farming
-              machinery and crop science to agri trade with accuracy and
-              speed.Translate all agricultural documents from farming machinery
-              and crop science to agri trade with accuracy and speed.Translate
-              all agricultural documents from farming machinery and crop science
-              to agri trade with accuracy and speed.Translate all agricultural
-              documents
+              <b> Description : </b>{{ feedDetails.description }}
             </p>
-            <div class="col-sm-12 skillsPadding">
-              <div class="row">
-                <b
-                  class="skills"
-                  v-for="(skill, index) in returnData[0].skills"
-                  :key="index"
-                  >{{ skill }}</b
-                >
-              </div>
-            </div>
+            <!-- <div class="col-sm-12 skillsPadding">
+                <div class="row">
+                  <b
+                    class="skills"
+                    v-for="(skill, index) in feedData[0].skills"
+                    :key="index"
+                    >{{ skill }}</b
+                  >
+                </div>
+              </div> -->
           </div>
           <div class="card-footer ViewMoreFooter">
-            <p class="locationbid"><b>Bids:</b> 0</p>
+            <p class="locationbid">
+              <b>Language Tranlation:</b> {{ feedDetails.languageTo }}
+            </p>
+            <p class="locationbid"><b>Bids:</b>{{ feedDetails.bids }}</p>
             <p class="locationbid">
               <b>Location:</b>
-              <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+              <v-icon class="locationIcon">mdi-map-marker</v-icon>
+              Philippines
             </p>
           </div>
         </div>
@@ -208,25 +132,41 @@
               </v-avatar>
               <div class="ml-2">
                 <p class="card-text">
-                  <b>Steve Jobs</b>
+                  <b>{{ feedDetails.username }}</b>
                 </p>
               </div>
             </div>
             <!-- <b>Posted by: <b class="text-primary">Doom Bringer</b></b> -->
           </div>
           <div class="card-body ViewMoreBody">
-            <p class="card-text mb-3"><b>Date Posted:</b> 9/24/2020</p>
-            <p class="card-text mb-3"><b>Date Needed:</b> 9/24/2020</p>
+            <p class="card-text mb-3">
+              <b>Date Posted: </b>{{ feedDetails.datePosted }}
+            </p>
+            <p class="card-text mb-3">
+              <b>Date Needed: </b>{{ feedDetails.fromDate }} -
+              {{ feedDetails.toDate }}
+            </p>
             <div class="col-sm-12 skillsPadding">
               <div class="row">
-                <b class="mr-2">Category :</b>
-                <b class="skills" v-for="skill in 1" :key="skill"
-                  >Arts Crafts</b
-                >
+                <b class="mr-2"> Category :</b
+                ><b class="skills">{{ feedDetails.subject }}</b>
               </div>
             </div>
           </div>
-          <div class="card-footer ViewMoreFooter"></div>
+          <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
+            <b>Download File</b>
+            <v-chip
+              class="ma-2 downloadFileBtn"
+              color="info accent-4"
+              outlined
+              @click="downloadFile(feedDetails.file)"
+            >
+              <v-icon left> mdi-file-download </v-icon>
+              {{ feedDetails.file }}
+            </v-chip>
+            <br>
+            <DragDrop :primaryId="feedDetails.id" />
+          </div>
         </div>
       </div>
     </div>
@@ -234,104 +174,114 @@
 </template>
 
 <script>
+// import Swal from "sweetalert2";
+import ApiService from "@/core/services/api.service";
+// import FileSaver from "file-saver";
+import JwtService from "@/core/services/jwt.service";
+import DragDrop from "@/view/pages/DragDrop.vue";
 export default {
   data() {
     return {
-      boardHeader: [
-        "Active Contracts",
-        "Posted Jobs",
-        "Save Jobs",
-        "Contracts History",
+      userID: null,
+      feedDetails: [],
+      feedData: [],
+      categories: [
+        "Agriculture",
+        "Architecture",
+        "Arts Crafts",
+        "Automotive",
+        "Banking",
+        "BioTechnology",
+        "Certificates & Lincences",
+        "Chemicals",
       ],
-      data: [
-        {
-          title: "Premeiere arts for the Global Agriculture Industry",
-          description:
-            "W3Schools is optimized for learning, testing, and training. Examples might be simplified to improve reading and basic understanding. Tutorials, references, and examples are constantly reviewed to avoid errors, but we cannot warrant full correctness of all content. While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy. Copyright 1999-2020 by Refsnes Data. All Rights Reserved.",
-          skills: ["ENGLISH", "RUSSIAN", "KOREAN"],
-          price: "$300",
-        },
-        {
-          title: "Premeiere mechanical for the Global Agriculture Industry",
-          description:
-            "Translate all mechanical documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300",
-        },
-        {
-          title: "Premeiere doctoral for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300",
-        },
-        {
-          title: "Premeiere philosophical for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300",
-        },
-        {
-          title: "Premeiere managerial for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300",
-        },
-        {
-          title: "Premeiere imperial for the Global Agriculture Industry",
-          description:
-            "Translate all agricultural documents from farming machinery and crop science to agri trade with accuracy and speed.",
-          skills: ["ENGLISH", "RUSSIAN"],
-          price: "$300",
-        },
+      countries: [
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "Andorra",
+        "Angola",
+        "Anguilla",
+        "Antigua &amp; Barbuda",
+        "Argentina",
+        "Armenia",
+        "Aruba",
+        "Australia",
       ],
-      navEvent: "",
-      iconDisplay: "",
+      fromLanguage: "",
+      toLanguage: "",
+      searchLabel: "Search Jobs",
+      page: 1,
+      searchOption: "jobs",
+      searchOptions: ["jobs", "translators"],
+      freetime: "",
+      days: [
+        "sunday",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+      ],
     };
   },
-  components: {},
+  components: {
+    DragDrop
+  },
   mounted() {
-    this.$refs["nav0"][0].click();
+    const id = localStorage.getItem("value");
+    this.userID = id.substr(id.lastIndexOf("*") + 1);
+    ApiService.post("getAllJobs", {
+      id: this.userID,
+    }).then((res) => {
+      // console.log(res);
+      res.data.map((el) => {
+        let tempRes = el.languageFrom.replace(/,/g, " ");
+        el.languageFrom = tempRes.trim().split(" ");
+      });
+      this.feedData = res.data;
+      // console.log(res.data);
+    });
+
+    if (window.innerWidth < 750) {
+      this.$refs["sidebar"].style = "right: 100% !important;";
+      this.$refs["workspace"].style =
+        "width: 100% !important; margin-left: 0px !important;";
+      this.$refs["sidebarToggler"].click();
+    }
   },
   computed: {
-    returnNavEvent() {
-      return this.navEvent;
-    },
-    returnData() {
-      return this.data;
+    allJobs() {
+      return this.feedData;
     },
   },
   methods: {
     showViewMore(e) {
-      if (String(this.navEvent.text).toLowerCase() === "posted jobs") {
-        let target = e.target.children[2].children[0].children;
-        target[5].classList.remove("hide_posts_icons");
-        target[5].classList.add("show_posts_icons");
-        target[6].classList.remove("hide_posts_icons");
-        target[6].classList.add("show_posts_icons");
-        target[4].style = "transition: .5s; right: 0 !important;";
-      }
+      e.target.children[1].children[5].children[1].style =
+        "transition: .5s; right: 0 !important;";
     },
     hideViewMore(e) {
-      if (String(this.navEvent.text).toLowerCase() === "posted jobs") {
-        let target = e.target.children[2].children[0].children;
-        target[5].classList.add("hide_posts_icons");
-        target[5].classList.remove("show_posts_icons");
-        target[6].classList.add("hide_posts_icons");
-        target[6].classList.remove("show_posts_icons");
-        target[4].style = "transition: .5s; right: -100% !important;";
-      }
+      e.target.children[1].children[5].children[1].style =
+        "transition: .5s; right: -100% !important;";
     },
-    viewMore(ViewEvent) {
+    viewMore(ViewEvent, data) {
       if (ViewEvent) {
         this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
         this.$refs["moreInfo"].style =
-          "transition: .5s !important; left: 20% !important";
+          "transition: .5s !important; left: 40% !important";
+
+        // console.log(data)
+        ApiService.post("getJobDetails", {
+          id: data,
+        }).then((res) => {
+          // console.log(res);
+          this.feedDetails = res.data[0];
+          console.log("feedDetails", this.feedDetails);
+        });
         if (window.innerWidth < 750) {
           this.$refs["moreInfo"].style =
-            "width: 90% !important; transition: .5s !important; left: 10% !important";
+            "width: 80% !important; transition: .5s !important; left: 20% !important";
         }
       } else {
         this.$refs["MoreInfoWrapper"].style = "left: 100% !important";
@@ -339,84 +289,80 @@ export default {
           "transition: .5s !important; right: 100% !important";
       }
     },
-    saveJob(e, index) {
-      if (e.target.className === "mdi mdi-heart-outline") {
-        e.target.className = "mdi mdi-heart";
+    hideShow() {
+      if (
+        this.$refs["sidebarToggler"].classList[1] === "show" ||
+        this.$refs["sidebarToggler"].classList[1] === undefined
+      ) {
+        this.$refs["sidebarToggler"].classList.remove("show");
+        this.$refs["sidebarToggler"].classList.add("hide");
+        if (window.innerWidth < 750) {
+          this.$refs["sidebarToggler"].classList.remove("mobileshow");
+          this.$refs["sidebarToggler"].classList.add("mobilehide");
+          this.$refs["MoreInfoWrapper"].style = "left: 100% !important";
+          this.$refs["workspace"].style =
+            "width: 100% !important; margin-left: 0px !important; z-index: 2;";
+          this.$refs["sidebar"].style =
+            "transition: 3s !important; right: 100% !important; z-index: 11; width: 250px !important;";
+          return;
+        }
+        this.$refs["workspace"].style =
+          "transition: .5s; width: 100% !important; margin-left: 0px;";
       } else {
-        if (
-          String(this.navEvent.text).toLowerCase() === "save jobs" &&
-          e.target.className === "mdi mdi-heart"
-        ) {
-          this.data.splice(index, 1);
-        } else {
-          e.target.className = "mdi mdi-heart-outline";
+        this.$refs["sidebarToggler"].classList.remove("hide");
+        this.$refs["sidebarToggler"].classList.add("show");
+        if (window.innerWidth < 750) {
+          this.$refs["sidebarToggler"].classList.add("mobileshow");
+          this.$refs["sidebarToggler"].classList.remove("mobilehide");
+          this.$refs["MoreInfoWrapper"].style =
+            "left: 0 !important; z-index: 1 !important;";
+          this.$refs["workspace"].style =
+            "width: 100% !important; z-index: 2; margin-left: 0px !important;";
+          this.$refs["sidebar"].style =
+            "transition: 3s !important; left: 0 !important; z-index: 11; width: 250px !important;";
+          return;
         }
+        this.$refs["workspace"].style =
+          "transition: .5s; width: calc(100% - 320px); margin-left: 320px !important;";
       }
     },
-    navigateTo(e) {
-      if (e.target !== this.navEvent) {
-        e.target.parentNode.classList.add("focused");
-        e.target.style = "color: white !important;";
-        if (this.navEvent !== "") {
-          this.navEvent.parentNode.classList.add("notFocused");
-          this.navEvent.parentNode.classList.remove("focused");
-          this.navEvent.style = "color: rgb(51, 188, 247) !important;";
-        }
-      }
-      this.navEvent = e.target;
+    downloadFile(file) {
+      this.$axios({
+        method: "get",
+        url: "http://localhost:8003/ltp/getFiles/" + file,
+        header: {"Authorization": `${JwtService.getToken()}`},
+        responseType: "blob"
+      }).then((res) => {
+        // console.log(res.data)
+        // let response = this.base64ToArrayBuffer(res)
+        this.forceToDownload(res, file);
+      });
     },
-    redirect(url) {
-      if (this.$route.path !== url) {
-        this.$router.push(url);
-      }
+
+    forceToDownload(data, title) {
+      let blob = new Blob([data.data]);
+      let url = window.URL.createObjectURL(blob);
+      let link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = url;
+      link.setAttribute('download', title);
+      document.body.appendChild(link);
+      link.click()
     },
   },
 };
 </script>
 
 <style scoped>
-.view_more_truncate {
-  color: rgb(51, 188, 247);
-  cursor: pointer;
-}
-.show_posts_icons {
-  animation: popIn;
-  animation-duration: 1s;
-  display: inline !important;
-}
-@keyframes popIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-.hide_posts_icons {
-  transition: 1s;
-  display: none !important;
-}
-.edit_posts {
-  font-size: 14px !important;
+.acceptOffer {
   background-color: rgb(51, 188, 247) !important;
-  position: absolute;
-  right: 185px;
-  bottom: 15px;
-  cursor: pointer;
-  display: none;
 }
-.delete_posts {
-  font-size: 14px !important;
-  position: absolute;
-  right: 140px;
-  bottom: 15px;
-  cursor: pointer;
-  display: none;
+
+.post_owner {
+  display: flex;
+  align-items: center;
 }
-.FeedCard {
-  overflow: hidden;
-}
+
 .ViewMoreIcon {
   padding-left: 25px;
   padding-right: 25px;
@@ -425,96 +371,78 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
   position: absolute !important;
-  bottom: 0px !important;
+  bottom: 15px !important;
   right: -100%;
-  cursor: pointer;
+  /* left: 100%; */
 }
-.ViewMoreIcon i {
-  font-size: 14px;
-  color: white !important;
+
+.ViewMoreCard {
+  direction: ltr;
 }
-.data_header {
-  display: flex !important;
-  align-items: center !important;
+
+.ViewMoreTitle {
+  margin-top: -15px;
+  height: 80px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 0px;
+  direction: ltr;
 }
-.cards {
-  border: 1px solid rgb(212, 212, 212);
-}
-.notFocused {
+
+.ViewMoreFooter {
+  padding: 15px;
+  border-top: none;
   background: none;
 }
-.focused {
-  transition: 0.5s;
-  background: rgb(51, 188, 247);
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.saveJobIcon i {
-  width: 40px;
-  text-align: right;
-  font-size: 20px;
-  color: #f2470f !important;
-  cursor: pointer;
-}
-.jobCard {
-  border-radius: 0px;
-}
-.locationIcon {
-  color: #f2470f !important;
-  font-size: 14px !important;
-}
-.skills {
-  font-size: 12px;
+
+.ViewMoreBody {
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-right: 15px;
   padding-left: 15px;
-  background-color: rgb(51, 188, 247);
-  border: 1px solid rgb(51, 188, 247);
-  color: white;
-  border-radius: 15px;
-  margin: 2px;
+  background: none;
+  padding-right: 15px;
 }
-.skillsPadding {
-  margin: 0px;
-  padding-bottom: 0px;
-}
-.locationbid {
-  margin-bottom: 0px !important;
-}
-.jobBoard {
-  margin-top: 72px !important;
-}
-.post_job_icon {
-  font-size: 12px !important;
-  padding: 2px !important;
-  margin-right: 10px !important;
-  border: 1px solid white;
-  border-radius: 50%;
-}
-.post_job {
-  margin-top: 52px;
-  background-color: #f2470f !important;
-}
-.job_board_title {
-  padding-top: 50px;
-  font-size: 35px;
-  padding-bottom: 0px;
-  margin-bottom: 0px !important;
-}
-.jobnav {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  color: rgb(51, 188, 247);
-}
-.board_header_container {
-  display: flex;
-  min-height: 70px;
+
+.ViewMoreHeader {
   padding: 15px;
-  align-items: center;
+  border-bottom: none;
+  background: none;
 }
+
+.default {
+  margin-left: -75px;
+  position: fixed;
+  z-index: 3;
+  top: 92px;
+}
+
+.hide {
+  transition: 0.5s;
+  transform: rotateY(180deg);
+  margin-left: -40px;
+}
+
+.show {
+  transition: 0.5s;
+  transform: rotateY(0deg);
+}
+
+.mobileshow {
+  left: 330px !important;
+  top: 80px !important;
+  z-index: 3 !important;
+  transition: 0.5s;
+}
+
+.mobilehide {
+  left: 45px !important;
+  top: 80px !important;
+  z-index: 3;
+}
+
 .exit_view_more {
   margin-top: -15px;
   margin-left: -12px;
@@ -527,88 +455,183 @@ export default {
   z-index: 11;
   background: rgb(240, 240, 240);
 }
+
 .exit_view_more:hover {
   color: white !important;
   background-color: rgb(51, 188, 247) !important;
 }
+
 .MoreInfoWrapper {
-  height: calc(100% - 72px) !important;
+  height: 100vh !important;
   width: 100% !important;
   position: fixed;
   left: 100%;
-  top: 72px !important;
-  z-index: 10;
+  top: 0px !important;
+  z-index: 96;
   background: rgba(95, 92, 92, 0.4);
 }
+
 .moreInfo {
   padding: 15px;
-  height: calc(100% - 72px) !important;
+  height: calc(100% - 65px) !important;
   position: fixed !important;
-  top: 72px;
+  top: 65px;
   left: 100% !important;
   background: rgb(240, 240, 240);
-  width: 80% !important;
-  z-index: 10 !important;
+  width: 60% !important;
+  z-index: 99 !important;
   overflow-y: scroll;
   border: 1px solid rgb(211, 200, 200);
   direction: rtl;
 }
+
 .moreInfo::backdrop {
   width: 100%;
   background: #f2470f !important;
 }
-.ViewMoreTitle {
-  margin-top: -15px;
+
+.placeholder {
+  font-size: 12px !important;
+}
+
+.dataBody {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.dataHeader {
+  height: 60px;
+  max-height: 200px !important;
+  display: flex;
+  align-items: center;
+  color: rgb(41, 38, 38);
+  border-bottom: none;
+  font-weight: 600;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: white;
+}
+
+.data_title {
+  word-wrap: break-word !important;
+  white-space: initial !important;
+  width: calc(100% - 40px);
+  max-height: 200px;
+}
+
+.saveJobIcon {
+  width: 40px;
+  text-align: right;
+  font-size: 20px;
+}
+
+.saveJobIcon i {
+  color: #f2470f;
+}
+
+.saveJobIcon:hover {
+  cursor: pointer;
+}
+
+.saveJobIcon:active {
+  transform: scaleY(1.2);
+}
+
+.descriptionText {
+  margin-bottom: 0px;
+  padding: 2px;
+}
+
+.locationbid {
+  margin-bottom: 0px !important;
+}
+
+.FeedTitle {
   height: 80px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 15px;
-  font-size: 15px;
+  padding: 20px;
   border-radius: 0px;
-  direction: ltr;
 }
-.ViewMoreCard {
-  direction: ltr;
+
+.FeedTitle b {
+  font-size: 20px;
+  font-weight: normal;
 }
-.ViewMoreFooter {
-  padding: 15px;
-  border-top: none;
-  background: none;
-}
-.ViewMoreBody {
+
+.skills {
+  font-size: 12px;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 15px;
-  background: none;
   padding-right: 15px;
+  padding-left: 15px;
+  background-color: rgb(51, 188, 247);
+  border: 1px solid rgb(51, 188, 247);
+  color: white;
+  border-radius: 15px;
+  margin: 2px;
 }
-.ViewMoreHeader {
+
+.skillsPadding {
+  margin: 0px;
+  padding-bottom: 0px;
+}
+
+.locationIcon {
+  color: #f2470f !important;
+  font-size: 14px !important;
+}
+
+.priceLabel {
+  font-weight: normal;
+}
+
+.workspace {
+  width: 100%;
+  padding-top: 0px !important;
   padding: 15px;
-  border-bottom: none;
-  background: none;
+  z-index: 2;
 }
-@media (max-width: 576px) {
-  .board_header_container {
-    display: block;
-    text-align: center;
-  }
-  .jobnav_container {
-    width: 100% !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+
+.UsersContainer {
+  margin-top: 10px;
+  overflow-x: hidden !important;
+  display: flex;
+  justify-content: flex-start;
 }
+
+::placeholder {
+  color: grey !important;
+}
+
+:-ms-input-placeholder {
+  color: grey;
+}
+
+::-ms-input-placeholder {
+  color: grey;
+}
+
 .moreInfo::-webkit-scrollbar {
   width: 7px;
 }
+
 .moreInfo::-webkit-scrollbar-track {
   background: rgb(240, 237, 235);
   margin-bottom: 10px;
 }
+
 .moreInfo::-webkit-scrollbar-thumb {
   background-color: #c7cbcc;
   border-radius: 20px;
   border: 0px;
+}
+
+.downloadFileBtn:hover {
+  box-shadow: 2px 3px 4px gray;
 }
 </style>

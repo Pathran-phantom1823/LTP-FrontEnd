@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!--begin::Content header-->
-    <!--end::Content header-->
-
-    <!--begin::Signin-->
     <v-container class="mt-20">
       <div class="text-center mb-10 mb-lg-20">
         <h6
@@ -43,13 +39,45 @@
           class="form-control form-control-solid h-auto py-6 px-6"
           id="example-input-1"
           name="example-input-1"
-          v-model="$v.form.email.$model"
-          :state="validateState('email')"
+          v-model="$v.form.password.$model"
+          :state="validateState('password')"
           aria-describedby="input-1-live-feedback"
           style="border-color: rgb(51, 188, 247)"
         ></b-form-input>
-        <b-form-invalid-feedback id="input-1-live-feedback"
-          >Email is required and a valid email address.</b-form-invalid-feedback
+        <b-form-invalid-feedback
+          id="input-1-live-feedback"
+          v-if="!$v.form.password.required"
+          >Password is Required</b-form-invalid-feedback
+        >
+        <b-form-invalid-feedback
+          id="input-1-live-feedback"
+          v-if="!$v.form.password.minLength"
+          >Password should atleast 6 characters</b-form-invalid-feedback
+        >
+      </b-form-group>
+      <b-form-group
+        id="example-input-group-1"
+        label
+        label-for="example-input-1"
+      >
+        <b-form-input
+          class="form-control form-control-solid h-auto py-6 px-6"
+          id="example-input-1"
+          name="example-input-1"
+          v-model="$v.form.confirmPass.$model"
+          :state="validateState('confirmPass')"
+          aria-describedby="input-1-live-feedback"
+          style="border-color: rgb(51, 188, 247)"
+        ></b-form-input>
+        <b-form-invalid-feedback
+          id="input-1-live-feedback"
+          v-if="!$v.form.confirmPass.required"
+          >Confirm Password is Required</b-form-invalid-feedback
+        >
+        <b-form-invalid-feedback
+          id="input-1-live-feedback"
+          v-if="!$v.form.confirmPass.sameAsPassword"
+          >Password is not the same</b-form-invalid-feedback
         >
       </b-form-group>
       <div class="form-group">
@@ -105,29 +133,33 @@
 import { mapState } from "vuex";
 
 import { validationMixin } from "vuelidate";
-import { email, required } from "vuelidate/lib/validators";
+import { sameAs, required, minLength } from "vuelidate/lib/validators";
 import Swal from "sweetalert2";
 import ApiService from "@/core/services/api.service";
-
 export default {
   mixins: [validationMixin],
   name: "login",
   data() {
     return {
-      // Remove this dummy login info
       form: {
-        email: "admin@demo.com",
+        password: "",
+        confirmPass: "",
       },
     };
   },
   validations: {
     form: {
-      email: {
+      password: {
         required,
-        email,
+        minLength: minLength(6),
+      },
+      confirmPass: {
+        required,
+        sameAsPassword: sameAs("password"),
       },
     },
   },
+  mounted() {},
   methods: {
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
@@ -147,16 +179,15 @@ export default {
       if (this.$v.form.$anyError) {
         return;
       }
-
-      const email = this.$v.form.email.$model;
+      const password = this.$v.form.password.$model;
 
       // set spinner to submit button
       const submitButton = this.$refs["kt_login_signin_submit"];
       submitButton.classList.add("spinner", "spinner-light", "spinner-right");
 
-      ApiService.post("send-email", {
-        to: email,
-        subject: "Forgot Password",
+      ApiService.post("reset-password", {
+        email: this.$route.query.email,
+        password: password
       }).then((res) => {
         console.log(res);
         submitButton.classList.remove(
@@ -164,14 +195,28 @@ export default {
           "spinner-light",
           "spinner-right"
         );
+
         Swal.fire({
-          title: "Forgot Password Success",
-          text: "You will notify throught your email for the reset password confirmation",
+          title: "Reset Password is Complete",
+          text:
+            "",
           icon: "success",
+          confirmButtonClass: "btn btn-secondary",
+        }).then(() => {
+            this.$router.push("/login")
+        });
+      }).catch(() => {
+          Swal.fire({
+          title: "Network error",
+          text: "Please refresh the page or Contact the administrator",
+          icon: "error",
           confirmButtonClass: "btn btn-secondary",
         });
       });
     },
+  },
+  created() {
+    console.log(this.$route.query.email);
   },
   computed: {
     ...mapState({

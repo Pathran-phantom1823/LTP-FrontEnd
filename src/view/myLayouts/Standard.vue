@@ -22,6 +22,9 @@
                 <v-btn text>
                     <a class="nav-link text-light navItems" @click="redirect('/user/forum')">Forums</a>
                 </v-btn>
+                <v-btn text>
+                    <a class="nav-link text-light navItems" @click="redirect('/user/messenger')">Messenger</a>
+                </v-btn>
                 <!-- <v-btn text>
                     <a class="nav-link text-light navItems" @click="$router.push('/user/messenger')">Messages</a>
                 </v-btn> -->

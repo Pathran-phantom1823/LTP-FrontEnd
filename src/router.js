@@ -4,8 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-    routes: [
-        {
+    routes: [{
             path: "/",
             name: "banner",
             component: () =>
@@ -56,13 +55,19 @@ export default new Router({
                     path: "/user/messenger",
                     name: "messenger",
                     component: () =>
-                        import ("@/view/pages/communication/Messenger.vue")
+                        import ("@/view/pages/communication/Messenger3.vue")
                 },
                 {
-                    path: "/user/userprofile",
+                    path: "/user/profile",
                     name: "profile",
                     component: () =>
                         import ("@/view/pages/UserProfile.vue")
+                },
+                {
+                    path: "/user/drap",
+                    name: "drap",
+                    component: () =>
+                        import ("@/view/pages/DragDrop.vue")
                 },
                 {
                     path: "/user/review_bids/:id",
@@ -71,7 +76,7 @@ export default new Router({
                         import ("@/view/pages/ReviewBids.vue")
                 },
                 {
-                    path: "/user/forum",
+                    path: "/user/forum/",
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forum.vue")
@@ -81,12 +86,6 @@ export default new Router({
                     name: "forum",
                     component: () =>
                         import ("@/view/pages/forumDetails.vue")
-                },
-                {
-                    path: "/user/orgprofile",
-                    name: "orgprofile",
-                    component: () =>
-                        import ("@/view/pages/OrgProfile.vue")
                 },
                 {
                     path: "/user/viewprofile",
@@ -104,17 +103,24 @@ export default new Router({
                     path: "/user/booking",
                     name: "booking",
                     component: () => import ("@/view/pages/booking.vue")
-                }
+                },
+                {
+                    path: "/user/post_job",
+                    name: "userPostJob",
+                    component: () =>
+                        import ("@/view/pages/postjob/PostJob.vue"),
+                },
                 // ADD ROUTES HERE FOR USERS
             ]
         },
+
+
         {
             path: "/organization",
             redirect: "/organization/dashboard",
             component: () =>
                 import ("@/view/myLayouts/Layout"),
-                children: [
-                {
+            children: [{
                     path: "/organization/dashboard",
                     name: "dashboard",
                     component: () =>
@@ -138,6 +144,12 @@ export default new Router({
                         import ("@/view/pages/forumDetails.vue")
                 },
                 {
+                    path: "/organization/profile/:id",
+                    name: "orgprofile",
+                    component: () =>
+                        import ("@/view/pages/OrgProfile.vue")
+                },
+                {
                     path: "/organization/quotation",
                     name: "quotation",
                     component: () =>
@@ -147,6 +159,12 @@ export default new Router({
                             { name: 'Quotation', link: 'quotation' }
                         ]
                     }
+                },
+                {
+                    path: "/organization/messenger",
+                    name: "messenger",
+                    component: () =>
+                        import ("@/view/pages/communication/Messenger3.vue")
                 },
                 {
                     path: "/organization/accounts",
@@ -214,6 +232,23 @@ export default new Router({
             ]
         },
         {
+            path: "/agency_member",
+            redirect: "/agency_member/dashboard",
+            component: () => 
+                import("@/view/myLayouts/Layout"),
+            children: [{
+                path: "/agency_member/jobs",
+                name: "agencyMemberViewJobs",
+                component: () => import("@/view/pages/job-management/ViewJobs.vue")
+            },
+            {
+                path: "/agency_member/job_board",
+                name: "agencyMemberJobBoard",
+                component: () => import("@/view/pages/JobBoardOrgEmployee.vue") 
+            }
+        ]
+        },
+        {
             path: "/admin",
             redirect: "/admin/Dashboard",
             component: () =>
@@ -276,6 +311,110 @@ export default new Router({
             ]
         },
         {
+            path: '/superAdmin',
+            redirect: '/superAdmin/Dashboard',
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+            children: [{
+                    path: "/superAdmin/Dashboard",
+                    name: "superAdminDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Dashboard' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/report",
+                    name: "report",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Report.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Report' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/quotation",
+                    name: "quotation",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Quotation.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Quotation' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/account",
+                    name: "account",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Account.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Agents' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/profile",
+                    name: "profile",
+                    component: () =>
+                        import ("@/view/pages/superAdmin/Profile.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Profile' }
+                        ]
+                    }
+                },
+            ]
+        },
+
+        //agency member here
+        {
+            path: '/agencyMember',
+            redirect: '/agencyMember/Dashboard',
+            component: () =>
+                import ("@/view/myLayouts/Layout"),
+            children: [{
+                    path: "/agencyMember/Dashboard",
+                    name: "agencyMemberDashboard",
+                    component: () =>
+                        import ("@/view/pages/Dashboard.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Dashboard' }
+                        ]
+                    }
+                },
+                {
+                    path: "/agencyMember/profile",
+                    name: "profile",
+                    component: () =>
+                        import ("@/view/pages/UserProfile.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Profile' }
+                        ]
+                    }
+                },
+                {
+                    path: "/superAdmin/viewJobs",
+                    name: "viewJobs",
+                    component: () =>
+                        import ("@/view/pages/job-management/ViewJobs.vue"),
+                    meta: {
+                        breadcrumb: [
+                            { name: 'Quotation' }
+                        ]
+                    }
+                },
+            ]
+        },
+        {
             path: "/login",
             component: () =>
                 import ("@/view/pages/auth/Auth"),
@@ -296,7 +435,13 @@ export default new Router({
                     path: "/forgotpass",
                     component: () =>
                         import ("@/view/pages/auth/ForgotPass")
-                }
+                },
+                {
+                    path: "/new_password/:code?",
+                    name: "newPassword",
+                    component: () => 
+                        import ("@/view/pages/auth/ForgotPasswordForm.vue")
+                },
             ]
         }
     ]
