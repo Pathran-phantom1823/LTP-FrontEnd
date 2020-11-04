@@ -196,9 +196,13 @@ export default {
           password,
         })
         .then(() => {
+          if(sessionStorage.getItem('method') !== null){
+            this.$router.push("/instant-quote")
+          }else{
           this.$router.push({
             name: "dashboard",
           });
+          }
           submitButton.classList.remove(
             "spinner",
             "spinner-light",

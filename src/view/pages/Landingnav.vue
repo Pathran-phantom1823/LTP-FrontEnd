@@ -79,7 +79,7 @@ export default {
     methods: {
         quotation() {
             this.$router.push('/instant-quote')
-            localStorage.setItem('method', 'quotation')
+            sessionStorage.setItem('method', 'quotation')
         },
         goToForum() {
             this.$router.push('/forums')

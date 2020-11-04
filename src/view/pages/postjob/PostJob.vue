@@ -1,165 +1,198 @@
 <template>
-<div>
+  <div>
     <Landingnav v-if="hideNav" />
-    <v-snackbar v-model="snackbar" :timeout="timeout" color="red" elevation="24">
-        {{ text }}
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      color="red"
+      elevation="24"
+    >
+      {{ text }}
 
-        <template v-slot:action="{ attrs }">
-            <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
-                Close
-            </v-btn>
-        </template>
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
     </v-snackbar>
     <v-container fluid class="pt-30 postform">
-        <div class="card card-custom">
-            <div class="card-body p-0">
-                <!--begin: Wizard-->
-                <div class="wizard wizard-2" id="kt_wizard_v2" data-wizard-state="step-first" data-wizard-clickable="true">
-                    <!--begin: Wizard Nav -->
-                    <div class="wizard-nav py-8 px-8 py-lg-20 px-lg-10">
-                        <v-card class="wizard-steps">
-                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
-                                <div class="wizard-wrapper">
-                                    <div class="wizard-icon">
-                                        <span class="svg-icon svg-icon-2x">
-                                            <inline-svg src="media/svg/icons/General/User.svg" />
-                                        </span>
-                                    </div>
-                                    <div class="wizard-label">
-                                        <h3 class="wizard-title">Title and Category</h3>
-                                        <div class="wizard-desc">
-                                            Setup Your Job Title and Category
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wizard-step" data-wizard-type="step">
-                                <div class="wizard-wrapper">
-                                    <div class="wizard-icon">
-                                        <span class="svg-icon svg-icon-2x">
-                                            <inline-svg src="media/svg/icons/Map/Compass.svg" />
-                                        </span>
-                                    </div>
-                                    <div class="wizard-label">
-                                        <h3 class="wizard-title">Description</h3>
-                                        <div class="wizard-desc">
-                                            Setup your project description
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wizard-step" data-wizard-type="step">
-                                <div class="wizard-wrapper">
-                                    <div class="wizard-icon">
-                                        <span class="svg-icon svg-icon-2x">
-                                            <inline-svg src="media/svg/icons/General/Visible.svg" />
-                                        </span>
-                                    </div>
-                                    <div class="wizard-label">
-                                        <h3 class="wizard-title">Visibility</h3>
-                                        <div class="wizard-desc">
-                                            Choose People that will see your job
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wizard-step" data-wizard-type="step">
-                                <div class="wizard-wrapper">
-                                    <div class="wizard-icon">
-                                        <span class="svg-icon svg-icon-2x">
-                                            <inline-svg src="media/svg/icons/Shopping/Credit-card.svg" />
-                                        </span>
-                                    </div>
-                                    <div class="wizard-label">
-                                        <h3 class="wizard-title">Budget</h3>
-                                        <div class="wizard-desc">
-                                            Setup your budget for the job
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </v-card>
+      <div class="card card-custom">
+        <div class="card-body p-0">
+          <!--begin: Wizard-->
+          <div
+            class="wizard wizard-2"
+            id="kt_wizard_v2"
+            data-wizard-state="step-first"
+            data-wizard-clickable="true"
+          >
+            <!--begin: Wizard Nav -->
+            <div class="wizard-nav py-8 px-8 py-lg-20 px-lg-10">
+              <v-card class="wizard-steps">
+                <div
+                  class="wizard-step"
+                  data-wizard-type="step"
+                  data-wizard-state="current"
+                >
+                  <div class="wizard-wrapper">
+                    <div class="wizard-icon">
+                      <span class="svg-icon svg-icon-2x">
+                        <inline-svg src="media/svg/icons/General/User.svg" />
+                      </span>
                     </div>
-                    <!--end: Wizard Nav -->
-
-                    <!--begin: Wizard Body -->
-                    <div class="wizard-body py-8 px-8 jumbotron">
-                        <!--begin: Wizard Form-->
-                        <div class="row">
-                            <div class="offset-xxl-2 col-xxl-8">
-                                <form class="form" id="kt_form">
-                                    <!--begin: Wizard Step 1-->
-                                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                        <h4 class="mb-10 font-weight-bold text-dark">
-                                            Project Title
-                                        </h4>
-                                        <UploadForm @title="getTitle" />
-                                    </div>
-                                    <!--end: Wizard Step 1-->
-
-                                    <!--begin: Wizard Step 2-->
-                                    <div class="pb-5" data-wizard-type="step-content">
-                                        <h4 class="mb-10 font-weight-bold text-dark">
-                                            Setup Your Description
-                                        </h4>
-                                        <Description @description="getDescription" />
-                                    </div>
-                                    <!--end: Wizard Step 2-->
-
-                                    <!--begin: Wizard Step 5-->
-                                    <div class="pb-5" data-wizard-type="step-content">
-                                        <h4 class="mb-10 font-weight-bold text-dark">
-                                            Setup the Visibility
-                                        </h4>
-                                        <Visibility @visibility="getVisibility" />
-                                    </div>
-                                    <!--end: Wizard Step 5-->
-
-                                    <!--begin: Wizard Step 6-->
-                                    <div class="pb-5" data-wizard-type="step-content">
-                                        <h4 class="mb-10 font-weight-bold text-dark">
-                                            Setup your Budget
-                                        </h4>
-                                        <Budget @budget="getBudget" />
-                                    </div>
-                                    <!--end: Wizard Step 6-->
-
-                                    <!--begin: Wizard Actions -->
-                                    <div class="d-flex justify-content-between border-top pt-10">
-                                        <div class="mr-2">
-                                            <button class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-prev">
-                                                Previous
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button v-on:click="submit" class="btn btn-success font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-submit">
-                                                Submit
-                                            </button>
-                                            <button class="btn btn-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-next" @click="validate">
-                                                Next Step
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!--end: Wizard Actions -->
-                                </form>
-                            </div>
-                            <!--end: Wizard-->
-                        </div>
+                    <div class="wizard-label">
+                      <h3 class="wizard-title">Title and Category</h3>
+                      <div class="wizard-desc">
+                        Setup Your Job Title and Category
+                      </div>
                     </div>
-                    <!--end: Wizard Body -->
+                  </div>
+                </div>
+                <div class="wizard-step" data-wizard-type="step">
+                  <div class="wizard-wrapper">
+                    <div class="wizard-icon">
+                      <span class="svg-icon svg-icon-2x">
+                        <inline-svg src="media/svg/icons/Map/Compass.svg" />
+                      </span>
+                    </div>
+                    <div class="wizard-label">
+                      <h3 class="wizard-title">Description</h3>
+                      <div class="wizard-desc">
+                        Setup your project description
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wizard-step" data-wizard-type="step">
+                  <div class="wizard-wrapper">
+                    <div class="wizard-icon">
+                      <span class="svg-icon svg-icon-2x">
+                        <inline-svg src="media/svg/icons/General/Visible.svg" />
+                      </span>
+                    </div>
+                    <div class="wizard-label">
+                      <h3 class="wizard-title">Visibility</h3>
+                      <div class="wizard-desc">
+                        Choose People that will see your job
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wizard-step" data-wizard-type="step">
+                  <div class="wizard-wrapper">
+                    <div class="wizard-icon">
+                      <span class="svg-icon svg-icon-2x">
+                        <inline-svg
+                          src="media/svg/icons/Shopping/Credit-card.svg"
+                        />
+                      </span>
+                    </div>
+                    <div class="wizard-label">
+                      <h3 class="wizard-title">Budget</h3>
+                      <div class="wizard-desc">
+                        Setup your budget for the job
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </v-card>
+            </div>
+            <!--end: Wizard Nav -->
+
+            <!--begin: Wizard Body -->
+            <div class="wizard-body py-8 px-8 jumbotron">
+              <!--begin: Wizard Form-->
+              <div class="row">
+                <div class="offset-xxl-2 col-xxl-8">
+                  <form class="form" id="kt_form">
+                    <!--begin: Wizard Step 1-->
+                    <div
+                      class="pb-5"
+                      data-wizard-type="step-content"
+                      data-wizard-state="current"
+                    >
+                      <h4 class="mb-10 font-weight-bold text-dark">
+                        Project Title
+                      </h4>
+                      <UploadForm @title="getTitle" />
+                    </div>
+                    <!--end: Wizard Step 1-->
+
+                    <!--begin: Wizard Step 2-->
+                    <div class="pb-5" data-wizard-type="step-content">
+                      <h4 class="mb-10 font-weight-bold text-dark">
+                        Setup Your Description
+                      </h4>
+                      <Description @description="getDescription" />
+                    </div>
+                    <!--end: Wizard Step 2-->
+
+                    <!--begin: Wizard Step 5-->
+                    <div class="pb-5" data-wizard-type="step-content">
+                      <h4 class="mb-10 font-weight-bold text-dark">
+                        Setup the Visibility
+                      </h4>
+                      <Visibility @visibility="getVisibility" />
+                    </div>
+                    <!--end: Wizard Step 5-->
+
+                    <!--begin: Wizard Step 6-->
+                    <div class="pb-5" data-wizard-type="step-content">
+                      <h4 class="mb-10 font-weight-bold text-dark">
+                        Setup your Budget
+                      </h4>
+                      <Budget @budget="getBudget" />
+                    </div>
+                    <!--end: Wizard Step 6-->
+
+                    <!--begin: Wizard Actions -->
+                    <div
+                      class="d-flex justify-content-between border-top pt-10"
+                    >
+                      <div class="mr-2">
+                        <button
+                          class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                          data-wizard-type="action-prev"
+                        >
+                          Previous
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          v-on:click="submit"
+                          class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
+                          data-wizard-type="action-submit"
+                        >
+                          Submit
+                        </button>
+                        <button
+                          class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                          data-wizard-type="action-next"
+                          @click="validate"
+                        >
+                          Next Step
+                        </button>
+                      </div>
+                    </div>
+                    <!--end: Wizard Actions -->
+                  </form>
                 </div>
                 <!--end: Wizard-->
+              </div>
             </div>
+            <!--end: Wizard Body -->
+          </div>
+          <!--end: Wizard-->
         </div>
+      </div>
     </v-container>
-</div>
+  </div>
 </template>
 
 <style lang="scss">
 @import "@/assets/sass/pages/wizard/wizard-2.scss";
 
 .postform {
-    box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
 }
 </style>
 
@@ -175,154 +208,174 @@ import Landingnav from "@/view/pages/Landingnav";
 import ApiService from "@/core/services/api.service";
 
 export default {
-    name: "Wizard-2",
-    components: {
-        Description,
-        UploadForm,
-        Visibility,
-        Budget,
-        Landingnav,
+  name: "Wizard-2",
+  components: {
+    Description,
+    UploadForm,
+    Visibility,
+    Budget,
+    Landingnav,
+  },
+  data() {
+    return {
+      projectTitle: null,
+      service: null,
+      description: null,
+      subject: null,
+      languageFrom: [],
+      languageTo: [],
+      file: null,
+      canSeeJob: null,
+      confidentiality: null,
+      paymentType: null,
+      priceFrom: null,
+      priceTo: null,
+      fixedPrice: null,
+      dateFrom: null,
+      dateTo: null,
+      wizard: null,
+      snackbar: false,
+      text: null,
+      timeout: 3000,
+      userID: null,
+    };
+  },
+  computed: {
+    backgroundImage() {
+      return process.env.BASE_URL + "media/bg/bg-5.jpg";
     },
-    data() {
-        return {
-            projectTitle: null,
-            service: null,
-            description: null,
-            subject: null,
-            languageFrom: [],
-            languageTo: [],
-            file: null,
-            canSeeJob: null,
-            confidentiality: null,
-            paymentType: null,
-            priceFrom: null,
-            priceTo: null,
-            fixedPrice: null,
-            dateFrom: null,
-            dateTo: null,
-            wizard: null,
-            snackbar: false,
-            text: null,
-            timeout: 3000,
-            userID: null
-        };
+    hideNav() {
+      return this.$store.state.isAuthenticated;
     },
-    computed: {
-        backgroundImage() {
-            return process.env.BASE_URL + "media/bg/bg-5.jpg";
-        },
-        hideNav() {
-            return (this.$store.state.isAuthenticated)
-        }
-    },
-    mounted() {
-        const id = localStorage.getItem('value')
-        this.userID = id.substr(id.lastIndexOf('*') + 1)
-        // Initialize form wizard
-        this.wizard = new KTWizard("kt_wizard_v2", {
-            startStep: 1, // initial active step number
-            clickableSteps: true, // allow step clicking
-        });
+  },
+  mounted() {
+    const id = localStorage.getItem("value");
+    if(id !== null){
+        this.userID = id.substr(id.lastIndexOf("*") + 1);
+    }
+    // Initialize form wizard
+    this.wizard = new KTWizard("kt_wizard_v2", {
+      startStep: 1, // initial active step number
+      clickableSteps: true, // allow step clicking
+    });
 
-        // Validation before going to next page
-        this.wizard.on("beforeNext", function (wizardObj) {
-            // console.log(this.projectTitle);
-            // validate the form and use below function to stop the wizard's step
-            wizardObj.stop();
-        });
+    // Validation before going to next page
+    this.wizard.on("beforeNext", function (wizardObj) {
+      // console.log(this.projectTitle);
+      // validate the form and use below function to stop the wizard's step
+      wizardObj.stop();
+    });
 
-        // Change event
-        this.wizard.on("change", function ( /*wizardObj*/ ) {
-            setTimeout(() => {
-                KTUtil.scrollTop();
-            }, 500);
+    // Change event
+    this.wizard.on("change", function (/*wizardObj*/) {
+      setTimeout(() => {
+        KTUtil.scrollTop();
+      }, 500);
+    });
+  },
+  methods: {
+    getTitle(data) {
+      this.projectTitle = data.title;
+      this.service = data.category;
+      this.subject = data.subject;
+    },
+    getDescription(data) {
+      // console.log("file", data.file[0]);
+      this.description = data.description;
+      if (data.file[0] !== undefined) {
+        this.file = data.file[0];
+      } else {
+        this.file = null;
+      }
+      this.languageFrom = data.languageFrom;
+      this.languageTo = data.languageTo;
+      // console.log('file', this.file)
+      // console.log(this.languageTo.toString());
+    },
+    getVisibility(data) {
+      this.canSeeJob = data.canSee;
+      this.confidentiality = data.confidential;
+    },
+    getBudget(data) {
+      if (data.paymentType === "Pay per hour") {
+        this.paymentType = data.paymentType;
+        this.priceFrom = data.priceFrom;
+        this.priceTo = data.priceTo;
+        this.dateFrom = data.dateFrom;
+        this.dateTo = data.dateTo;
+      } else {
+        this.paymentType = data.paymentType;
+        this.fixedPrice = data.fixedPrice;
+        this.dateFrom = data.dateFrom;
+        this.dateTo = data.dateTo;
+      }
+    },
+    validate() {
+      if (this.projectTitle === null) {
+        this.text = "Fields with (*) / Click button DONE are required";
+        this.snackbar = true;
+        this.wizard.stop();
+      }
+    },
+    submit: function (e) {
+      let formData = new FormData();
+      let postDetails = {
+        title: this.projectTitle,
+        description: this.description,
+        category: this.service,
+        languageFrom: this.languageFrom.toString(),
+        languageTo: this.languageTo.toString(),
+        fromDate: this.dateFrom,
+        toDate: this.dateTo,
+        fromPrice: this.priceFrom,
+        toPrice: this.priceTo,
+        priceType: this.paymentType,
+        visibility: this.canSeeJob,
+        levelOfConfidentiality: this.confidentiality,
+        fixedPrice: this.fixedPrice,
+        type: sessionStorage.getItem('method'),
+        postById: this.userID,
+        subject: this.subject,
+      };
+      formData.append("postDetails", JSON.stringify(postDetails));
+      formData.append("file", this.file);
+      if (localStorage.getItem("id_token") === null) {
+        Swal.fire({
+          title: "",
+          text: `Please Login/Register First`,
+          icon: "error",
+          confirmButtonClass: "btn btn-secondary",
+        }).then(res => {
+            if(res.isConfirmed){
+                this.$router.push("/login")
+            }else if(res.isDismissed){
+                Swal.fire("You're not allowe to Quote", '', 'info').then(this.$router.push('/'))
+            }
         });
+      } else {
+        ApiService.post("create", formData)
+          .then(() => {
+            // console.log("response", res)
+          })
+          .then(() => {
+            e.preventDefault();
+            Swal.fire({
+              title: "",
+              text: "The Job is successfully posted",
+              icon: "success",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          })
+          .catch((e) => {
+            Swal.fire({
+              title: "",
+              text: `${e.message}`,
+              icon: "error",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          });
+      }
     },
-    methods: {
-        getTitle(data) {
-            this.projectTitle = data.title;
-            this.service = data.category;
-            this.subject = data.subject
-        },
-        getDescription(data) {
-            // console.log("file", data.file[0]);
-            this.description = data.description;
-            if(data.file[0] !== undefined){
-                this.file = data.file[0];
-            }else{
-                this.file = null
-            }
-            this.languageFrom = data.languageFrom;
-            this.languageTo = data.languageTo;
-            // console.log('file', this.file)
-            // console.log(this.languageTo.toString());
-        },
-        getVisibility(data) {
-            this.canSeeJob = data.canSee;
-            this.confidentiality = data.confidential;
-        },
-        getBudget(data) {
-            if (data.paymentType === "Pay per hour") {
-                this.paymentType = data.paymentType;
-                this.priceFrom = data.priceFrom;
-                this.priceTo = data.priceTo;
-                this.dateFrom = data.dateFrom;
-                this.dateTo = data.dateTo;
-            } else {
-                this.paymentType = data.paymentType;
-                this.fixedPrice = data.fixedPrice;
-                this.dateFrom = data.dateFrom;
-                this.dateTo = data.dateTo;
-            }
-        },
-        validate() {
-            if (this.projectTitle === null) {
-                this.text = "Fields with (*) / Click button DONE are required"
-                this.snackbar = true
-                this.wizard.stop();
-            }
-        },
-        submit: function (e) {
-            let formData = new FormData();
-            let postDetails = {
-                title: this.projectTitle,
-                description: this.description,
-                category: this.service,
-                languageFrom: this.languageFrom.toString(),
-                languageTo: this.languageTo.toString(),
-                fromDate: this.dateFrom,
-                toDate: this.dateTo,
-                fromPrice: this.priceFrom,
-                toPrice: this.priceTo,
-                priceType: this.paymentType,
-                visibility: this.canSeeJob,
-                levelOfConfidentiality: this.confidentiality,
-                fixedPrice: this.fixedPrice,
-                type: localStorage.getItem('method'),
-                postById: this.userID, 
-                subject: this.subject
-            }
-            formData.append("postDetails", JSON.stringify(postDetails))
-            formData.append("file", this.file)
-            ApiService.post('create', formData).then(() => {
-                // console.log("response", res)
-            }).then(() => {
-                e.preventDefault();
-                Swal.fire({
-                    title: "",
-                    text: "The Job is successfully posted",
-                    icon: "success",
-                    confirmButtonClass: "btn btn-secondary",
-                });
-            }).catch(e =>{
-                 Swal.fire({
-                    title: "",
-                    text: `${e.message}`,
-                    icon: "error",
-                    confirmButtonClass: "btn btn-secondary",
-                });
-            })
-        },
-    },
+  },
 };
 </script>

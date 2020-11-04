@@ -187,7 +187,7 @@ export default {
         },
         postJob() {
             localStorage.setItem('service', null)
-            localStorage.setItem('method', 'postjob')
+            sessionStorage.setItem('method', 'postjob')
             this.$router.push('/postjob')
         },
     },

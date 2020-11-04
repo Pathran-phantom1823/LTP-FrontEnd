@@ -67,9 +67,9 @@
                 </div>
             </div>
         </div>
-        <div class="text-center mt-5 mb-5">
+        <!-- <div class="text-center mt-5 mb-5">
             <v-pagination v-model="page" :length="15" :total-visible="7" circle color="blue lighten-1"></v-pagination>
-        </div>
+        </div> -->
         <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
             <div ref="moreInfo" class="moreInfo">
                 <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
