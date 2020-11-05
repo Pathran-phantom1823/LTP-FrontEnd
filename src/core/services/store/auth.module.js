@@ -63,8 +63,7 @@ const actions = {
           }
         })
         .catch(({ response }) => {
-          console.log(response);
-          // context.commit(SET_ERROR, response.data.errors);
+          context.commit(SET_ERROR, response.data);
         });
     });
   },

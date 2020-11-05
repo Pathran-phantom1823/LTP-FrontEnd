@@ -15,6 +15,7 @@
 @import "assets/plugins/flaticon2/flaticon.css";
 @import "assets/plugins/keenthemes-icons/font/ki.css";
 
+
 // Main demo style scss
 @import "assets/sass/style.vue";
 
@@ -25,6 +26,7 @@
 
 <script>
 import { OVERRIDE_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+
 
 export default {
   name: "MetronicVue",
