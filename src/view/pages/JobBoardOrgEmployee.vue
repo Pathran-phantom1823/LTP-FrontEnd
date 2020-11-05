@@ -42,11 +42,12 @@
                 </div>
               </div>
               <p class="card-text locationbid mt-2">
-                Bids: <b>{{ data.bids }}</b>
+                <!-- Bids: <b>{{ data.bids }}</b> -->
               </p>
               <p class="locationbid mb-2">
                 Location:
                 <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                {{data.city}}, {{data.country}}
                 <v-icon
                   class="ViewMoreIcon"
                   @click="viewMore(true, data.id)"
@@ -112,11 +113,11 @@
             <p class="locationbid">
               <b>Language Tranlation:</b> {{ feedDetails.languageTo }}
             </p>
-            <p class="locationbid"><b>Bids:</b>{{ feedDetails.bids }}</p>
+            <!-- <p class="locationbid"><b>Bids:</b>{{ feedDetails.bids }}</p> -->
             <p class="locationbid">
               <b>Location:</b>
               <v-icon class="locationIcon">mdi-map-marker</v-icon>
-              Philippines
+              {{feedDetails.city}}, {{feedDetails.country}}
             </p>
           </div>
         </div>
@@ -132,7 +133,8 @@
               </v-avatar>
               <div class="ml-2">
                 <p class="card-text">
-                  <b>{{ feedDetails.username }}</b>
+                   <b v-if="feedDetails.firstName === null || feedDetails.lastName === null">{{feedDetails.username}}</b>
+                      <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
                 </p>
               </div>
             </div>
@@ -232,7 +234,7 @@ export default {
   mounted() {
     const id = localStorage.getItem("value");
     this.userID = id.substr(id.lastIndexOf("*") + 1);
-    ApiService.post("getAllJobs", {
+    ApiService.post("getMyAssignedJobs", {
       id: this.userID,
     }).then((res) => {
       // console.log(res);
@@ -277,7 +279,7 @@ export default {
         }).then((res) => {
           // console.log(res);
           this.feedDetails = res.data[0];
-          console.log("feedDetails", this.feedDetails);
+          // console.log("feedDetails", this.feedDetails);
         });
         if (window.innerWidth < 750) {
           this.$refs["moreInfo"].style =

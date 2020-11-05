@@ -55,6 +55,7 @@ export default {
                     email: this.email,
                     password: this.password,
                     orgId: this.userID,
+                    roleType: 'AGENCY-MEMBER'
                 }).then(() => {
                     this.errorMessage = null
                     Swal.fire({

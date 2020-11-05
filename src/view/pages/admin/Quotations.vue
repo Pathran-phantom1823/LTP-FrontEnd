@@ -14,7 +14,8 @@
 
             <v-list-item-content>
               <v-list-item-title>
-                <h3>{{ quotation.username }}</h3>
+                <h3 v-if="quotation.firstName === null || quotation.lastName === null">{{ quotation.username }}</h3>
+                <h3 v-else>{{quotation.firstName}} {{quotation.lastName}}</h3>
               </v-list-item-title>
               <v-list-item-title>{{ quotation.datePosted }}</v-list-item-title>
             </v-list-item-content>
@@ -105,7 +106,8 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
-                <h3>{{ details.username }}</h3>
+                <h3 v-if="details.firstName === null || details.lastName === null">{{ details.username }}</h3>
+                <h3 v-else>{{details.firstName}} {{details.lastName}}</h3>
               </v-list-item-title>
               <v-list-item-title>{{ details.datePosted }}</v-list-item-title>
             </v-list-item-content>
@@ -247,7 +249,7 @@ export default {
       ApiService.get("getQuote").then((res) => {
         // if(res.id[] !== null){
         this.quotation = res.data;
-        console.log(res.data);
+        // console.log(res.data);
         // }
       });
     },

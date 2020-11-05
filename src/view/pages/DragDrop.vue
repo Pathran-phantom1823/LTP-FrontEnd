@@ -53,8 +53,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$route.path);
-    this.route = this.route.path;
+    // console.log(this.$route.path);
+    this.route = this.$route.path;
   },
   methods: {
     OnDragEnter(e) {
@@ -112,7 +112,24 @@ export default {
             });
           });
       }else if(this.getRoute === "/agency_member/job_board"){
-        console.log("agency")
+        ApiService.post("finish-file-orgmember", formdata)
+          .then(() => { 
+            Swal.fire({
+              title: "",
+              text: "The Job is successfully posted",
+              icon: "success",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          })
+          .catch(() => {
+            Swal.fire({
+              title: "Error",
+              text:
+                "Upload Failed refresh the page or contact the administrator",
+              icon: "erro",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          });
       }
     },
   },

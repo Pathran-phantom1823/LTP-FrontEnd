@@ -13,8 +13,10 @@
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
                                 </v-avatar>
                                 <div class="ml-2">
-                                    <p class="mb-0">Posted by: {{ jobs.username }}</p>
-                                    <p class="mb-1">Location: India</p>
+                                    <p class="mb-0">Posted by:<span v-if="jobs.firstName === null || jobs.lastName === null"> {{ jobs.username }}</span>
+                                    <span v-else>{{ jobs.firstName }} {{jobs.lastName}}</span> 
+                                    </p>
+                                    <p class="mb-1">Location: {{jobs.city}},{{jobs.country}}</p>
                                 </div>
                             </div>
                             <div class="col-sm-7 p-0 new_project_info">
@@ -73,7 +75,7 @@
                             </v-avatar>
                             <div class="ml-2">
                                 <p class="mb-0">{{ assigned.workedByUsername }}</p>
-                                <p class="mb-1">Location: India</p>
+                                <p class="mb-1">Location: {{assigned.workedByCity}},{{assigned.workedByCountry}}</p>
                             </div>
                         </div>
                         <div class="col-sm-12 p-0 mt-2">
@@ -100,7 +102,7 @@
         </div>
     </div>
     <div class="col-sm-12 p-0 save_jobs_container">
-        <p class="mb-0">Saved and Posted Jobs</p>
+        <p class="mb-0">Saved Jobs</p>
         <hr />
         <div class="card">
             <div class="card-header board_header_container">
@@ -134,11 +136,12 @@
                                 </v-avatar>
                                 <div class="ml-2">
                                     <p class="card-text mb-0 pt-1">
-                                        <b>{{ data.username }}</b>
+                                        <b v-if="data.firstName === null || data.lastName === null">{{ data.username }}</b>
+                                        <b v-else>{{data.firstName}} {{data.lastName}}</b>
                                     </p>
                                     <p class="locationbid">
                                         Location:
-                                        <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+                                        <v-icon class="locationIcon">mdi-map-marker</v-icon>{{data.city}},{{data.country}}
                                     </p>
                                 </div>
                             </div>
@@ -311,7 +314,7 @@
                     <!-- <p class="locationbid"><b>Bids:</b> 0</p>   -->
                     <p class="locationbid">
                         <b>Location:</b>
-                        <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+                        <v-icon class="locationIcon">mdi-map-marker</v-icon>{{assignedJobsDetails.workedByCity}},{{assignedJobsDetails.workedByCountry}}
                     </p>
                 </div>
             </div>
@@ -337,7 +340,8 @@
                                 </v-avatar>
                                 <div class="ml-2">
                                     <p class="card-text">
-                                        <b>{{ assignedJobsDetails.postedByUsername }}</b>
+                                        <b v-if="assignedJobsDetails.postedByFirstName === null || assignedJobsDetails.postedByLastName === null">{{ assignedJobsDetails.postedByUsername }}</b>
+                                        <b v-else>{{assignedJobsDetails.postedByFirstName}} {{ assignedJobsDetails.postedByLastName }}</b>
                                     </p>
                                 </div>
                             </div>
@@ -428,7 +432,7 @@ export default {
         ApiService.post("getsavejob", {
             savedById: userID,
         }).then((res) => {
-            // console.log(res.data);
+            // console.log("data", res.data);
             res.data.map((el) => {
                 let tempres = el.languageFrom.replace(/,/g, " ");
                 el.languageFrom = tempres.trim().split(" ");
@@ -446,6 +450,7 @@ export default {
         ApiService.post("getAssignedJobs", {
             orgId: userID,
         }).then((res) => {
+            // console.log("assignedJobs", res.data);
             this.assignedJobs = res.data;
         });
 

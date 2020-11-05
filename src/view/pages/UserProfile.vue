@@ -462,6 +462,7 @@ import countries from "@/view/pages/countries.json";
 export default {
   name: "Wizard-1",
   mounted() {
+
     this.country2.map((el) => {
       this.country3.push(el);
     });
@@ -494,7 +495,9 @@ export default {
     });
   },
   data: () => ({
+    timeout: 3000,
     errorMessage: null,
+    text: "Fields are required",
     snackbar: false,
     days: [
       "Monday",
@@ -509,16 +512,6 @@ export default {
     image:
       "https://vegibit.com/wp-content/uploads/2018/02/VueJS-Image-Upload.png",
     file2: [],
-    countries: [
-      {
-        name: "Viet Nam",
-        initial: "VN",
-      },
-      {
-        name: "United States",
-        initial: "US",
-      },
-    ],
     languages: [
       "Abkhaz",
       "Afar",
@@ -798,7 +791,7 @@ export default {
     country3: [],
     cities: [],
   }),
-  methods: {},
+  methods: {
   changedCity(data) {
     // console.log("data", this.country);
     Object.keys(this.listOfCountry).map((el) => {
@@ -896,5 +889,6 @@ export default {
         });
       });
   },
+  }
 };
 </script>

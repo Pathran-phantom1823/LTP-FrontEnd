@@ -58,7 +58,7 @@
                         </p>
                         <p class="locationbid mb-2">
                             Location:
-                            <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                            <v-icon class="locationIcon">mdi-map-marker</v-icon>{{data.city}}, {{data.country}}
                             <v-icon class="ViewMoreIcon" @click="viewMore(true, data.id)" title="view more">
                                 mdi-chevron-double-right
                             </v-icon>
@@ -100,7 +100,7 @@
                         <p class="locationbid">
                             <b>Location:</b>
                             <v-icon class="locationIcon">mdi-map-marker</v-icon>
-                            Philippines
+                            {{feedDetails.city}}, {{feedDetails.country}}
                         </p>
                     </div>
                 </div>
@@ -113,7 +113,8 @@
                             </v-avatar>
                             <div class="ml-2">
                                 <p class="card-text">
-                                    <b>{{feedDetails.username}}</b>
+                                    <b v-if="feedDetails.firstName === null || feedDetails.lastName === null">{{feedDetails.username}}</b>
+                                <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
                                 </p>
                             </div>
                         </div>

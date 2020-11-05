@@ -40,6 +40,7 @@
                     large
                     class="text-white"
                     text
+                    @click.prevent="getNotification(item.email)"
                   >
                   Resolve
                   </v-btn>
@@ -150,7 +151,16 @@ import ApiService from "@/core/services/api.service";
         this.topics = res.data;
       });
     },
-    
+
+    getNotification(email){
+      ApiService.post("send-notification",{
+        to: email,
+        subject: "Your report has been resolved",
+        })
+      .then((res) => {
+        console.log(res)
+      })
     },
   }
+}
 </script>

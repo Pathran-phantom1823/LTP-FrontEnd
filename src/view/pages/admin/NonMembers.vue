@@ -26,10 +26,10 @@ export default {
                     text: 'Email',
                     value: 'email'
                 },
-                {
-                    text: 'Status',
-                    value: 'statu'
-                },
+                // {
+                //     text: 'Status',
+                //     value: 'statu'
+                // },
             ],
         }
     },

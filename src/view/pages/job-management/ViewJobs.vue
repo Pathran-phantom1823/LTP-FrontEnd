@@ -26,8 +26,8 @@
                         </div>
                         <p class="card-text locationbid mt-2">Bids: <b>{{data.bids}}</b></p>
                         <p class="locationbid mb-2">
-                            Location:
-                            <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                            <!-- Location: -->
+                            <v-icon class="locationIcon"></v-icon>
                             <v-icon class="ViewMoreIcon" @click="viewMore(true, data.id)" title="view more">
                                 mdi-chevron-double-right
                             </v-icon>
@@ -71,12 +71,12 @@
               </div> -->
                 </div>
                 <div class="card-footer ViewMoreFooter">
-                    <p class="locationbid"><b>Language Tranlation:</b> {{feedDetails.languageTo}}</p>
+                    <p class="locationbid"><b>Language Translation:</b> {{feedDetails.languageTo}}</p>
                     <p class="locationbid"><b>Bids:</b>{{feedDetails.bids}}</p>
                     <p class="locationbid">
                         <b>Location:</b>
                         <v-icon class="locationIcon">mdi-map-marker</v-icon>
-                        Philippines
+                        {{feedDetails.city}},{{feedDetails.country}}
                     </p>
                 </div>
             </div>
@@ -89,7 +89,8 @@
                         </v-avatar>
                         <div class="ml-2">
                             <p class="card-text">
-                                <b>{{feedDetails.username}}</b>
+                                <b v-if="feedDetails.firstName === null || feedDetails.lastName === null">{{feedDetails.username}}</b>
+                                <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
                             </p>
                         </div>
                     </div>
@@ -172,7 +173,7 @@ export default {
         ApiService.post("getAllJobs", {
             id: this.userID
         }).then(res => {
-            // console.log(res);
+            // console.log(res.);
             res.data.map(el => {
                 let tempRes = el.languageFrom.replace(/,/g,' ')
                 el.languageFrom = tempRes.trim().split(' ')
@@ -232,9 +233,9 @@ export default {
                 ApiService.post("getJob", {
                     id: data
                 }).then(res => {
-                    // console.log(res);
+                    // console.log(res.data);
                     this.feedDetails = res.data[0]
-                    console.log("feedDetails", this.feedDetails);
+                    // console.log("feedDetails", this.feedDetails);
                 })
                 if (window.innerWidth < 750) {
                     this.$refs["moreInfo"].style =
