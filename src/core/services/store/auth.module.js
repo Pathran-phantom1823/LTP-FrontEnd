@@ -2,25 +2,35 @@ import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
 // import axios from "axios";
 
+import CryptoJS  from 'crypto-js';
+
 // action types
 export const VERIFY_AUTH = "verifyAuth";
 export const LOGIN = "login";
 export const LOGOUT = "logout";
 export const REGISTER = "register";
 export const UPDATE_USER = "updateUser";
+export const Encrypt = "Encrypt";
+export const Decrypt = "Decrypt";
+export const CREATE_ROLE = "createRole";
 
 // mutation types
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
 export const SET_ERROR = "setError";
-export const SET_PLAN = "setplan"
+export const SET_PLAN = "setplan";
+export const SET_ROLE = "setRole";
+
 
 const state = {
   errors: null,
   user: {},
   plan: null,
   userId: null,
-  isAuthenticated: !!JwtService.getToken()
+  isAuthenticated: !!JwtService.getToken(),
+  encrypted: null,
+  decrypted: null,
+  role: null
 };
 
 const getters = {
@@ -32,6 +42,9 @@ const getters = {
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
+  },
+  getRole(state){
+    return state.role
   }
 };
 
@@ -41,11 +54,13 @@ const actions = {
     return new Promise(resolve => {
       ApiService.post("authenticate", credentials)
         .then(({ data }) => {
-          // console.log('data', data.data[0].id)
-          const result = string + '*' +  data.data[0].id
-          localStorage.setItem('value', result)
-          context.commit(SET_AUTH, data);
-          resolve(data);
+          if(data.status === 200){
+            const result = string + '*' +  data.data[0].id
+            localStorage.setItem('value', result)
+            context.commit(SET_ROLE, data.data[0].roleType)
+            context.commit(SET_AUTH, data);
+            resolve(data);
+          }
         })
         .catch(({ response }) => {
           context.commit(SET_ERROR, response.data);
@@ -103,9 +118,12 @@ const actions = {
 
     return ApiService.put("user", user).then(({ data }) => {
       context.commit(SET_AUTH, data);
-      return data;
+      return data; 
     });
   },
+  [CREATE_ROLE](context, payload) {
+    context.commit(SET_ROLE, payload)
+  }
 };
 
 const mutations = {
@@ -118,7 +136,6 @@ const mutations = {
     state.errors = {};
     // state.userId = user.data[1].id
     JwtService.saveToken(`Bearer ${user.data[0].token}`);
-    localStorage.setItem('role', `${state.plan}`)
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
@@ -130,6 +147,21 @@ const mutations = {
   [SET_PLAN](state, plan) {
     state.plan = plan;
     // state.errors = {};
+  },
+  [Encrypt](state, text) {
+    const passphrase = 'ltp';
+    state.encrypted = CryptoJS.AES.encrypt(text, passphrase).toString();
+  },
+  [Decrypt](state, ciphertext){
+    const passphrase = 'ltp';
+    const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    state.decrypted = originalText;
+  },
+  [SET_ROLE](state, role){
+    const passphrase = 'ltp';
+    state.role = CryptoJS.AES.encrypt(role, passphrase).toString();
+    localStorage.setItem('role', `${state.role}`)
   }
 };
 

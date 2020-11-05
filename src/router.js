@@ -105,6 +105,11 @@ export default new Router({
                     component: () => import ("@/view/pages/booking.vue")
                 },
                 {
+                    path: "/user/paypal/success",
+                    name: "success",
+                    component: () => import ("@/view/pages/success.vue")
+                },
+                {
                     path: "/user/post_job",
                     name: "userPostJob",
                     component: () =>
