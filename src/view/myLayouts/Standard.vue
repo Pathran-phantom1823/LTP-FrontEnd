@@ -11,6 +11,9 @@
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
                 <v-btn text>
+                    <a class="nav-link text-light navItems" @click="pay">Pay</a>
+                </v-btn>
+                <v-btn text>
                     <a class="nav-link text-light navItems" @click="redirect('/user/feed')">Home</a>
                 </v-btn>
                 <v-btn text>
@@ -53,6 +56,7 @@
 </template>
 
 <script>
+import ApiService from "@/core/services/api.service";
 export default {
     data() {
         return {
@@ -68,6 +72,24 @@ export default {
             if (this.$route.path !== url) {
                 this.$router.push(url)
             }
+        },
+        // private double price;
+        // private String currency;
+        // private String method;
+        // private String intent;
+        // private String description;
+        pay(){
+            console.log('---paying----');
+            ApiService.post("/pay", {
+                total: 12.00,
+                currency: "USD",
+                method: "paypal",
+                intent: "SALE", //
+                description: "Payment"
+            }).then(response => {
+                window.location.href = response.data.data[0].url
+                console.log(response.data)
+            });
         }
     }
 };

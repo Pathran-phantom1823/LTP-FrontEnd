@@ -104,6 +104,11 @@ export default new Router({
                     path: "/user/booking",
                     name: "booking",
                     component: () => import ("@/view/pages/booking.vue")
+                },
+                {
+                    path: "/user/paypal/success",
+                    name: "success",
+                    component: () => import ("@/view/pages/success.vue")
                 }
                 // ADD ROUTES HERE FOR USERS
             ]
