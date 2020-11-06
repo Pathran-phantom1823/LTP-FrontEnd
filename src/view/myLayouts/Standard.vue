@@ -34,13 +34,13 @@
                 <v-btn text>
                     <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
                 </v-btn>
-                <b-popover target="notifications" triggers="hover" placement="bottom">
+                <!-- <b-popover target="notifications" triggers="hover" placement="bottom">
                     <div class="card">
                         <div class="card-body">
                             <h5> notifications </h5>
                         </div>
                     </div>
-                </b-popover>
+                </b-popover> -->
 
                 <div>
                     <img src="https://static.toiimg.com/thumb/72975551.cms?width=680&height=512&imgsize=881753" alt="Profile Picture" class="profile" id="profile-popover">

@@ -188,11 +188,11 @@
               <hr style="border: 2px solid orange" />
               <b-row>
                 <b-col sm="6">
-                  <h3>To Price</h3>
+                  <h3>Visibility</h3>
                   <v-card class="p-5">{{ details.visibility }}</v-card>
                 </b-col>
                 <b-col sm="6">
-                  <h3>To Price</h3>
+                  <h3>Level Of Confidentiality</h3>
                   <v-card class="p-5">{{
                     details.levelOfConfidentiality
                   }}</v-card>
