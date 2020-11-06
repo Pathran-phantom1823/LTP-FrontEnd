@@ -58,7 +58,7 @@
                         </p>
                         <p class="locationbid mb-2">
                             Location:
-                            <v-icon class="locationIcon">mdi-map-marker</v-icon>
+                            <v-icon class="locationIcon">mdi-map-marker</v-icon>{{data.city}}, {{data.country}}
                             <v-icon class="ViewMoreIcon" @click="viewMore(true, data.id)" title="view more">
                                 mdi-chevron-double-right
                             </v-icon>
@@ -67,9 +67,9 @@
                 </div>
             </div>
         </div>
-        <div class="text-center mt-5 mb-5">
+        <!-- <div class="text-center mt-5 mb-5">
             <v-pagination v-model="page" :length="15" :total-visible="7" circle color="blue lighten-1"></v-pagination>
-        </div>
+        </div> -->
         <div ref="MoreInfoWrapper" class="MoreInfoWrapper">
             <div ref="moreInfo" class="moreInfo">
                 <v-icon class="exit_view_more" @click="viewMore(false)">mdi mdi-close</v-icon>
@@ -100,7 +100,7 @@
                         <p class="locationbid">
                             <b>Location:</b>
                             <v-icon class="locationIcon">mdi-map-marker</v-icon>
-                            Philippines
+                            {{feedDetails.city}}, {{feedDetails.country}}
                         </p>
                     </div>
                 </div>
@@ -113,7 +113,8 @@
                             </v-avatar>
                             <div class="ml-2">
                                 <p class="card-text">
-                                    <b>{{feedDetails.username}}</b>
+                                    <b v-if="feedDetails.firstName === null || feedDetails.lastName === null">{{feedDetails.username}}</b>
+                                <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
                                 </p>
                             </div>
                         </div>

@@ -1,16 +1,13 @@
 <template>
 <div>
-<v-dialog max-width="500" v-model="dialog">
-<template v-slot:activator="{on,attrs}"> 
-<v-btn 
+    <v-btn 
     color="blue darken-1" 
     class="text-white" 
-    v-on = "on"
-    v-bind = "attrs"
+    @click.stop="dialog = true"
     >
     Add Agent
 </v-btn>
-</template>
+<v-dialog max-width="500" v-model="dialog">
     <v-container>
         <center>
             <v-card max-width="600" class="form p-4">
@@ -69,6 +66,7 @@ export default {
                     email: this.email,
                     password: this.password,
                     orgId: this.userID,
+                    roleType: "AGENT"
                 }).then(() => {
                     this.errorMessage = null
                     Swal.fire({

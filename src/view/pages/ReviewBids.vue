@@ -26,11 +26,12 @@
                             </v-avatar>
                             <div class="ml-2">
                                 <p class="card-text mb-0 pt-1">
-                                    <b>{{data.username}}</b>
+                                    <b v-if="data.firstName === null || data.lastName === null">{{data.username}}</b>
+                                    <b v-else>{{data.firstName}} {{data.lastName}}</b>
                                 </p>
                                 <p class="locationbid">
                                     Location:
-                                    <v-icon class="locationIcon">mdi-map-marker</v-icon>Philippines
+                                    <v-icon class="locationIcon">mdi-map-marker</v-icon>{{data.city}}, {{data.country}}
                                 </p>
                             </div>
                         </div>
@@ -90,18 +91,19 @@
                             <div class="row cards" v-for="bidder in getBidders" :key="bidder.id">
                                 <div class="col-sm-4 card p-3 bid_card">
                                     <div class="card-body p-0">
-                                        <div class="d-flex justify-content-start align-items-center" v-if="bidder.roleType === 'user'">
+                                        <div class="d-flex justify-content-start align-items-center" v-if="bidder.roleType === 'FREE'">
                                             <v-avatar color="indigo" size="36">
                                                 <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
                                             </v-avatar>
-                                            <b class="ml-2 font-weight-normal">{{bidder.username}}</b>
+                                             <b class="ml-2 font-weight-normal" v-if="bidder.firstName === null || bidder.lastName === null">{{bidder.username}}</b>
+                                            <b class="ml-2 font-weight-normal" v-else>{{bidder.firstName}} {{bidder.lastName}}</b>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-8 card p-3 bid_card">
                                     <div class="card-body p-0 d-flex align-items-center justify-content-start">
                                         <div class="location_bids">
-                                            <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">$100.00 </b></b>
+                                            <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">${{bidder.pricing}} </b></b>
                                             <b class="skills font-weight-normal bidAction" @click="accept(data.id, bidder.applicationId)" >Accept</b>
                                             <b class="skills font-weight-normal Decline bidAction" @click="decline(data.id, bidder.applicationId)">Decline</b>
                                         </div>
@@ -120,21 +122,22 @@
                     <hr>
                     <div class="card p-0 organization bid_cards_container">
                         <div class="card-body pt-0 pb-0"  v-for="bidder in getBidders" :key="bidder.id" >
-                            <div class="row cards" v-if="bidder.roleType === 'organization'">
+                            <div class="row cards" v-if="bidder.roleType === 'AGENCY'">
                                 <div class="col-sm-4 card p-3 bid_card">
                                     <div class="card-body p-0">
                                         <div class="d-flex justify-content-start align-items-center">
                                             <v-avatar color="indigo" size="36">
                                                 <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
                                             </v-avatar>
-                                            <b class="ml-2 font-weight-normal">{{bidder.username}}</b>
+                                            <b class="ml-2 font-weight-normal" v-if="bidder.firstName === null || bidder.lastName === null">{{bidder.username}}</b>
+                                            <b class="ml-2 font-weight-normal" v-else>{{bidder.firstName}} {{bidder.lastName}}</b>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-8 card p-3 bid_card">
                                     <div class="card-body p-0 d-flex align-items-center justify-content-start">
                                         <div class="location_bids">
-                                            <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">$100.00 </b></b>
+                                            <b class=" mr-2">Price: <v-icon class="locationIcon">mdi-map-marker</v-icon> <b class="font-weight-normal">${{bidder.pricing}} </b></b>
                                             <b class="skills font-weight-normal bidAction" @click="accept(data.id, bidder.applicationId)">Accept</b>
                                             <b class="skills font-weight-normal Decline bidAction" @click="decline(data.id, bidder.applicationId)">Decline</b>
                                         </div>
@@ -262,11 +265,11 @@ export default {
         }).then(res => {
             // console.log(res);
             this.data = res.data[0]
-            console.log("feedDetails", this.data);
+            // console.log("feedDetails", this.data);
         })
 
         ApiService.post("getBids", {id: id}).then(res => {
-        //   console.log(res);
+          console.log(res);
           this.bidders = res.data
         })
 

@@ -1,5 +1,5 @@
 <template>
-<v-data-table :headers="headers" :items="members" sort-by="calories" class="elevation-1">
+<v-data-table :headers="headers" :items="agents" sort-by="calories" class="elevation-1">
     <template v-slot:top>
         <v-toolbar flat>
             <v-toolbar-title>My Agents</v-toolbar-title>
@@ -91,6 +91,7 @@ export default {
     data: () => ({
         dialog: false,
         dialogDelete: false,
+        agents: [],
         headers: [{
                 text: 'Email',
                 align: 'start',
@@ -282,7 +283,7 @@ export default {
             }).then(res => {
                 // console.log(res.data);
                 res.data.map(el => {
-                    this.members.push(el)
+                    this.agents.push(el)
                 })
                 // this.members = res
                 // console.log(this.members);

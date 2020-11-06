@@ -115,6 +115,12 @@ export default new Router({
                     component: () =>
                         import ("@/view/pages/postjob/PostJob.vue"),
                 },
+                {
+                    path: "/user/report",
+                    name: "userReport",
+                    component: () =>
+                        import ("@/view/pages/UserReport.vue"),
+                },
                 // ADD ROUTES HERE FOR USERS
             ]
         },
@@ -270,7 +276,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: "/admin/quotation",
+                    path: "/admin/quotations",
                     name: "adminQuotations",
                     component: () =>
                         import ("@/view/pages/admin/Quotations.vue"),

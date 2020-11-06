@@ -1,8 +1,8 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
-    sort-by="calories"
+    :items="quotes"
+    sort-by="title"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -67,22 +67,26 @@
   </v-data-table>
 </template>
 <script>
+import ApiService from "@/core/services/api.service";
+
   export default {
     data: () => ({
       dialog: false,
       dialogDelete: false,
+      quotes: [],
       headers: [
         {
-          text: 'TOPICS',
+          text: 'Title',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'title',
         },
-        { text: 'Agent', value: 'agent'},
-        { text: 'Assign', value: 'assign'},
-        { text: 'Date', value: 'date'},
-        { text: 'Status', value: 'status', sortable: false ,align: 'center'},
-        { text: 'Actions', value: 'actions', sortable: false},
+        { text: 'Posted By', value: 'postedBy'},
+        { text: 'Agent', value: 'assignedBy'},
+        { text: 'Assign To', value: 'assignedTo'},
+        { text: 'Date Posted', value: 'datePosted'},
+        { text: 'Date Assigned', value: 'dateAssigned'},
+        // { text: 'Actions', value: 'actions', sortable: false},
       ],
       item:null,
       topics: [],
@@ -111,6 +115,9 @@
 
     created () {
       this.initialize()
+    },
+    mounted(){
+      this.retrieveQuotation()
     },
 
     methods: {
@@ -158,6 +165,12 @@
         this.item = item
         this.dialog = true
       },
+      retrieveQuotation(){
+        ApiService.get("getQuotation").then(res => {
+          console.log("data", res.data);
+          this.quotes = res.data
+        })
+      }
     },
   }
 </script>

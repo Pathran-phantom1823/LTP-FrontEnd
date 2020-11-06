@@ -75,12 +75,13 @@
                 </v-avatar>
                 <div class="ml-2">
                   <p class="card-text mb-0 pt-1">
-                    <b>{{ data.username }}</b>
+                    <b v-if="data.firstName === null || data.lastName === null">{{ data.username }}</b>
+                    <b v-else>{{data.firstName}} {{ data.lastName }}</b>
                   </p>
                   <p class="locationbid">
                     Location:
                     <v-icon class="locationIcon">mdi-map-marker</v-icon
-                    >Philippines
+                    >{{data.city}}, {{data.country}}
                   </p>
                 </div>
               </div>
@@ -214,7 +215,7 @@
             <p class="locationbid">
               <b>Location:</b>
               <v-icon class="locationIcon">mdi-map-marker</v-icon>
-              Philippines
+              {{jobDetails.city}}, {{jobDetails.country}}
             </p>
           </div>
         </div>
@@ -230,7 +231,8 @@
               </v-avatar>
               <div class="ml-2">
                 <p class="card-text">
-                  <b>{{ jobDetails.username }}</b>
+                  <b v-if="jobDetails.firstName === null || jobDetails.lastName === null">{{ jobDetails.username }}</b>
+                    <b v-else>{{jobDetails.firstName}} {{ jobDetails.lastName }}</b>
                 </p>
               </div>
             </div>
@@ -535,7 +537,8 @@ export default {
         ApiService.post("getMyJobHistory", {
           id: userID,
         }).then((res) => {
-          if (res.data[0].id) {
+          console.log(res.data);
+          if (res.data[0].postedBy) {
             this.data = res.data;
           } else {
             this.data = [];

@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="topics"
     sort-by="calories"
     class="elevation-1"
   >
@@ -22,19 +22,36 @@
           v-if="item !== null"
         >
           <v-card class="pa-2">
-        <v-icon
-           class="float-right"
-           @click="dialog = false"
-           color="red"
-        >mdi-close</v-icon> 
           <v-card-title>
-              <span class="headline">{{ item.name }}</span>
+              <span class="headline">{{ item.topic }}</span>
             </v-card-title>
+                <v-divider></v-divider>
               <v-card-text>
-                  <p>{{ item.users }}</p>
-                  <p>{{ item.date }}</p>
-                  <p>{{ item.descriptions }}</p>
-              </v-card-text>     
+                  <span>{{ item.username }}</span>
+                  <p>{{ item.email }}</p>
+                  <p>{{ item.reportTimestamp }}</p>
+                  <v-divider></v-divider>
+                  <p>{{ item.description }}</p>
+              </v-card-text>  
+              <v-card-actions>
+              <v-spacer></v-spacer>
+                  <v-btn
+                    color="blue"
+                    large
+                    class="text-white"
+                    text
+                    @click.prevent="getNotification(item.email)"
+                  >
+                  Resolve
+                  </v-btn>
+                  <v-btn
+                    @click="dialog = false"
+                    color="red"
+                    class="text-red"
+                    text
+                  >Close
+                  </v-btn> 
+          </v-card-actions>   
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -57,14 +74,16 @@
         class="mr-2"
         @click="viewItem(item)"
         color="blue"
-        medium
+        large
       >
         mdi-eye
       </v-icon>
+      
     </template>
   </v-data-table>
 </template>
 <script>
+import ApiService from "@/core/services/api.service";
   export default {
     data: () => ({
       dialog: false,
@@ -74,27 +93,27 @@
           text: 'TOPICS',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'topic',
         },
-        { text: 'Users', value: 'users'},
-        { text: 'Date', value: 'date'},
+        { text: 'Users', value: 'username'},
+        { text: 'Date', value: 'reportTimestamp'},
         { text: 'Status', value: 'status', sortable: false ,align: 'center'},
         { text: 'Actions', value: 'actions', sortable: false},
       ],
       item:null,
       topics: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        users: '',
-        date: '',
-      },
-      defaultItem: {
-        name: '',
-        users: '',
-        date: '',
-      },
+      accountId:null,
     }),
+     computed: {
+        isResolve() {
+            return this.resolve
+        }
+    },
+    mounted(){
+      this.retrieveReport()
+    },
+
+    
 
     watch: {
       dialog (val) {
@@ -110,45 +129,38 @@
     },
 
     methods: {
-      initialize () {
-        this.desserts = [
-          {
-            name: 'I cannot send quotations',
-            descriptions: 'I cannot send quotations descriptions',
-            users: '41',
-            date: '2020-10-12',
-          },
-         {
-            name: 'I cannot send quotations',
-            descriptions: 'I cannot send quotations',
-            users: 'John Doe',
-            date: '2020-10-12',
-          },
-          {
-            name: 'I cannot send quotations',
-            descriptions: 'I cannot send quotations',
-            users: 'John Doe',
-            date: '2020-10-12',
-          },
-          {
-            name: 'I cannot send quotations',
-            descriptions: 'I cannot send quotations', 
-            users: 'John Doe',
-            date: '2020-10-12',
-          },
-          {
-            name: 'I cannot send quotations',
-            descriptions: 'I cannot send quotations', 
-            users: 'John Doe',
-            date: '2020-10-12',
-          },
-        ]
-      },
+       changeResolveColor(reportId) {       // let status = null;
+            ApiService.post("resolve", {
+                id: reportId,
+                resolve: "true",
+            }).then(() => {
+                this.resolved = !this.resolved
+                this.retrieveComment()
+            })
+       },
 
       viewItem (item) {
+        console.log(item)
         this.item = item
         this.dialog = true
       },
+  
+     retrieveReport() {
+      ApiService.get("getReports").then((res) => {
+        console.log(res.data);
+        this.topics = res.data;
+      });
+    },
+
+    getNotification(email){
+      ApiService.post("send-notification",{
+        to: email,
+        subject: "Your report has been resolved",
+        })
+      .then((res) => {
+        console.log(res)
+      })
     },
   }
+}
 </script>

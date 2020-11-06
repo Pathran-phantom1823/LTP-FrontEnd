@@ -43,17 +43,17 @@ export default {
           {
             icon: "fas fa-id-badge",
             name: "Member Translators",
-            link: "#"
+            link: "/admin/members-translators"
           },
           {
             icon: "fas fa-user-friends",
             name: "Non Member Translators",
-            link: "#"
+            link: "/admin/non-members-translators"
           },
           {
             icon: "fas fa-user",
             name: "Organizations",
-            link: "#"
+            link: "/admin/organizations"
           }
         ],
 
@@ -169,7 +169,7 @@ export default {
       //     this.index = index
       //   }
       // })
-      this.index = 2;
+      this.index = 3;
     },
     addGrouper(){
       this.items[this.index].forEach((element, index) => {
