@@ -87,9 +87,16 @@ export default {
     upload(id) {
       console.log(id);
       let formdata = new FormData();
+      let formdateQuote = new FormData()
       let job = {
         id: id,
       };
+      let quoteId = {
+        jobId: id
+      }
+      formdateQuote.append("job", JSON.stringify(quoteId));
+      formdateQuote.append("file", this.tempFile);
+
       formdata.append("job", JSON.stringify(job));
       formdata.append("file", this.tempFile);
       if (this.getRoute === "/user/job_board") {
@@ -113,6 +120,25 @@ export default {
           });
       }else if(this.getRoute === "/agency_member/job_board"){
         ApiService.post("finish-file-orgmember", formdata)
+          .then(() => { 
+            Swal.fire({
+              title: "",
+              text: "The Job is successfully posted",
+              icon: "success",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          })
+          .catch(() => {
+            Swal.fire({
+              title: "Error",
+              text:
+                "Upload Failed refresh the page or contact the administrator",
+              icon: "erro",
+              confirmButtonClass: "btn btn-secondary",
+            });
+          });
+      }else if(this.getRoute === "/organization/dashboard"){
+        ApiService.post("finish-assigned-quote", formdateQuote)
           .then(() => { 
             Swal.fire({
               title: "",
