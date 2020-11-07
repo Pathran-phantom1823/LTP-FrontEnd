@@ -1,6 +1,6 @@
 import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
-// import axios from "axios";
+// import router from '@/router'
 
 import CryptoJS  from 'crypto-js';
 
@@ -20,7 +20,9 @@ export const SET_AUTH = "setUser";
 export const SET_ERROR = "setError";
 export const SET_PLAN = "setplan";
 export const SET_ROLE = "setRole";
-
+export const GET_ROLE = "get_Role";
+export const SET_INVALID = "set_invalid";
+export const SET_USERTYPE = "set_userType";
 
 const state = {
   errors: null,
@@ -30,7 +32,9 @@ const state = {
   isAuthenticated: !!JwtService.getToken(),
   encrypted: null,
   decrypted: null,
-  role: null
+  role: null,
+  invalid: false,
+  userType: null
 };
 
 const getters = {
@@ -45,6 +49,12 @@ const getters = {
   },
   getRole(state){
     return state.role
+  },
+  getInvalid(state){
+    return state.invalid
+  },
+  getUserType(state){
+    return state.userType
   }
 };
 
@@ -59,6 +69,8 @@ const actions = {
             localStorage.setItem('value', result)
             context.commit(SET_ROLE, data.data[0].roleType)
             context.commit(SET_AUTH, data);
+            context.commit(GET_ROLE, localStorage.getItem("role"))
+            context.commit(SET_USERTYPE)
             resolve(data);
           }
         })
@@ -75,7 +87,7 @@ const actions = {
     const string = Math.random().toString(36).substring(2,5)
     return new Promise((resolve) => {
       ApiService.post("register", credentials).then(res => {
-        const result = string + '*' +  res.data[1].id
+        const result = string + '*' +  res.data[0].id
         localStorage.setItem('value', result)
         // context.commit(SET_AUTH, res);
         resolve(res)
@@ -93,9 +105,35 @@ const actions = {
         // });
     });
   },
-  [VERIFY_AUTH](context) {
+  [VERIFY_AUTH](context, param) {
     if (JwtService.getToken()) {
-      ApiService.setHeader();
+      // ApiService.setHeader();
+      let role = localStorage.getItem("role")
+      context.commit(GET_ROLE, role)
+      // console.log("state ------------- " + context.state.role)
+      // console.log("this " + router)
+      
+      context.commit(SET_USERTYPE)
+      // console.log("user type ", context.getters.getUserType)
+      // console.log(JSON.stringify(next))
+      // console.log("current " + param.to.path)
+      if(!param.to.path.split("/").includes(context.getters.getUserType) && param.to.path.replaceAll(" ", "") !== "/error"){
+        console.log("Unauthorized access")
+        // console.log("not included ", param.from.path === param.to.path)
+        // if(param.from.path !== router.currentRoute.path){
+        //   console.log("redirecting to : /" + context.getters.getUserType)
+        //   router.push("/" + context.getters.getUserType)
+        //   context.commit(SET_INVALID, false)
+        // }
+        // router.push("/error")
+        // else{
+        //   // console.log("not equal ")
+        //   router.push("/error")
+        context.commit(SET_INVALID, true)
+        // }
+      }else{
+        context.commit(SET_INVALID, false)
+      }
       // const id = localStorage.getItem('value')
       // const userID = id.substr(id.lastIndexOf('*') + 1)
       // ApiService.post("verify", {id: userID})
@@ -106,6 +144,7 @@ const actions = {
       //     console.log(response)
       //   }); 
     } else {
+      context.commit(SET_INVALID, false)
       context.commit(PURGE_AUTH);
     }
   },
@@ -162,6 +201,45 @@ const mutations = {
     const passphrase = 'ltp';
     state.role = CryptoJS.AES.encrypt(role, passphrase).toString();
     localStorage.setItem('role', `${state.role}`)
+  },
+  [GET_ROLE](state, cipherRole){
+    const passphrase = 'ltp';
+    const bytes = CryptoJS.AES.decrypt(cipherRole, passphrase);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    state.role = originalText;
+  },
+  [SET_INVALID](state, val){
+    state.invalid = val
+  },
+  [SET_USERTYPE](state){
+    let scope = [
+      {
+        "super-admin": "superAdmin"
+      },
+      {
+        "agent": "agent"
+      },
+      {
+        "agency": "organization"
+      },
+      {
+        "agency-member": "agencyMember"
+      },
+      {
+        "free": "user"
+      },
+      {
+        "standard": "standard"
+      }
+    ]
+    let access = scope.find(el => {
+      let key = Object.keys(el)
+      if(key[0] === state.role.toLowerCase()){
+        return el
+      }
+    })
+    let key = Object.keys(access)
+    state.userType = access[key[0]]
   }
 };
 

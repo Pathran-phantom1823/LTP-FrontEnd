@@ -184,6 +184,14 @@ export default {
     },
     components: {},
     mounted() {
+        if (window.innerWidth < 750) {
+            this.$refs["sidebar"].style = "right: 100% !important;";
+            this.$refs["workspace"].style =
+                "width: 100% !important; margin-left: 0px !important;";
+            this.$refs["sidebarToggler"].click();
+        }
+    },
+    created(){
         const id = localStorage.getItem('value')
         this.userID = id.substr(id.lastIndexOf('*') + 1)
         ApiService.post("getAllJobs", {
@@ -196,12 +204,6 @@ export default {
             this.feedData = res.data
             // console.log(res.data);
         })
-        if (window.innerWidth < 750) {
-            this.$refs["sidebar"].style = "right: 100% !important;";
-            this.$refs["workspace"].style =
-                "width: 100% !important; margin-left: 0px !important;";
-            this.$refs["sidebarToggler"].click();
-        }
     },
     computed: {
         getFeeds() {

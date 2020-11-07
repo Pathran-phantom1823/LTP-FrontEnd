@@ -47,9 +47,9 @@
                 </div>
                 <b-popover target="profile-popover" triggers="hover" placement="bottom">
                     <button class="btn form-control" @click="$router.push('/user/profile')">profile info</button>
-                    <button class="btn form-control">logout</button>
+                    <button class="btn form-control" @click="onLogout">logout</button>
                 </b-popover>
-            </b-navbar-nav  >
+            </b-navbar-nav>
         </b-collapse>
     </b-navbar>
     <v-container>
@@ -59,7 +59,18 @@
 </template>
 
 <script>
+import {
+    LOGOUT
+} from "@/core/services/store/auth.module";
+import {
+    mapGetters
+} from "vuex";
 import ApiService from "@/core/services/api.service";
+import HtmlClass from "@/core/services/htmlclass.service";
+import {
+    ADD_BODY_CLASSNAME,
+    REMOVE_BODY_CLASSNAME
+} from "@/core/services/store/htmlclass.module.js";
 export default {
     data() {
         return {
@@ -70,18 +81,49 @@ export default {
             }]
         };
     },
+    beforeMount() {
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "page-loading");
+        HtmlClass.init(this.layoutConfig());
+    },
+    mounted() {
+        // check if current user is authenticated
+        if (!this.isAuthenticated) {
+            this.$router.push({
+                name: "login"
+            });
+        }
+
+        // Simulate the delay page loading
+        setTimeout(() => {
+            // Remove page loader after some time
+            this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
+        }, 2000);
+    },
+    computed: {
+        ...mapGetters([
+            "isAuthenticated"
+        ]),
+    },
     methods: {
         redirect(url) {
             if (this.$route.path !== url) {
                 this.$router.push(url)
             }
         },
+        onLogout() {
+            this.$store.dispatch(LOGOUT).then(() => {
+                window.location.reload();
+                this.$router.push({
+                    name: "login",
+                });
+            });
+        },
         // private double price;
         // private String currency;
         // private String method;
         // private String intent;
         // private String description;
-        pay(){
+        pay() {
             console.log('---paying----');
             ApiService.post("/pay", {
                 total: 12.00,

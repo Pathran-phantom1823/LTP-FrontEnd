@@ -9,6 +9,7 @@ import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import JwtService from "@/core/services/jwt.service";
 
 Vue.use(VueAxios, axios)
 Vue.prototype.$axios = axios
@@ -37,6 +38,7 @@ import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+// import { mapGetters } from "vuex";
 
 // API service init
 ApiService.init();
@@ -44,10 +46,24 @@ ApiService.init();
 //AnimATION
 AOS.init()
 
-
 router.beforeEach((to, from, next) => {
     // Ensure we checked auth before each page load.
-    Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
+    // const test = {
+    //     ...mapGetters([
+    //     "getInvalid"
+    //   ]),
+    // }
+    Promise.all([store.dispatch(VERIFY_AUTH, {to: to, from: from})]).then(()=>{
+        if(JwtService.getToken() && to.path === "/login"){
+            next("/" + store.getters.getUserType)
+        }else if(JwtService.getToken() && to.path === "/"){
+            next("/" + store.getters.getUserType)
+        }else if(store.getters.getInvalid){
+            next("/error")
+        }else{
+            next()
+        }
+    })
 
     // reset config to initial state
     store.dispatch(RESET_LAYOUT_CONFIG);
