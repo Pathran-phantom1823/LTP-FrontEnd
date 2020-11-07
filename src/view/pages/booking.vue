@@ -43,6 +43,7 @@
                     @context ="onContextTo"
                      size="lg"
                   ></b-form-timepicker>
+                <v-btn @click="retrieveUser">Search</v-btn>
                 </div>
               </div>
               <div class="col-sm-8 co_booking translators_container">
@@ -157,10 +158,19 @@ export default {
   },
   methods: {
     retrieveUser() {
-      ApiService.post("get-translators", { id: this.userID }).then((res) => {
+      ApiService.post("get-translators", { 
+        accountId: this.userID,
+        date: this.date,
+        timeFrom: this.ctxFrom,
+        timeTo: this.ctxTo
+        
+        }).then((res) => {
         this.translators = res.data;
-        //   console.log(this.contacts);
+          console.log(res.data);
       });
+    },
+    searchRetrieve(){
+
     },
     onContextFrom(ctx) {
       // console.log(ctx.formatted)

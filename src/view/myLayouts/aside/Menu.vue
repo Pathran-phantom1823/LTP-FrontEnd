@@ -169,7 +169,7 @@ export default {
       //     this.index = index
       //   }
       // })
-      this.index = 3;
+      this.index = 1;
     },
     addGrouper(){
       this.items[this.index].forEach((element, index) => {

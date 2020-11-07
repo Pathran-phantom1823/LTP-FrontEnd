@@ -8,8 +8,8 @@
                 <b-col sm="5">
                     <h1 class="pt-10 bannerTitle">Language Translation Portal</h1>
                     <p class="bannerDesc">
-                        An online web application portal for tanslation different
-                        documents worlwide.
+                        An online web application portal for tanslation of different
+                           languages.
                     </p>
                     <div>
                         <b-button block size="lg" variant="primary" @click="postJob">POST JOB NOW</b-button>
@@ -188,7 +188,9 @@ export default {
         postJob() {
             localStorage.setItem('service', null)
             sessionStorage.setItem('method', 'postjob')
-            this.$router.push('/postjob')
+            if(localStorage.getItem('id_token') === null){
+                this.$router.push('/login')
+            }
         },
     },
 };

@@ -460,6 +460,7 @@ export default {
       }
     },
     navigateTo(e, value) {
+      this.data = []
       if (e.target !== this.navEvent) {
         e.target.parentNode.classList.add("focused");
         e.target.style = "color: white !important;";
@@ -493,12 +494,12 @@ export default {
       } else if (value === "Posted Jobs") {
         this.isShowFile = false;
         this.showTable = false;
-        console.log(value);
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("get-my-jobs", {
           id: userID,
         }).then((res) => {
+          console.log(res.data);
           if (res.data[0].id) {
             res.data.map((el) => {
               let tempres = el.languageFrom.replace(/,/g, " ");
@@ -518,15 +519,13 @@ export default {
         ApiService.post("getsavejob", {
           savedById: userID,
         }).then((res) => {
-          // console.log(res.data);
-          if (res.data[0].id !== null) {
+          console.log("saved jobs ============ " + JSON.stringify(res.data));
+          if (res.data.length > 0) {
             res.data.map((el) => {
               let tempres = el.languageFrom.replace(/,/g, " ");
               el.languageFrom = tempres.trim().split(" ");
             });
             this.data = res.data;
-          } else {
-            this.data = [];
           }
         });
       } else if (value === "Contracts History") {
@@ -538,7 +537,7 @@ export default {
           id: userID,
         }).then((res) => {
           console.log(res.data);
-          if (res.data[0].postedBy) {
+          if (res.data.length > 0) {
             this.data = res.data;
           } else {
             this.data = [];

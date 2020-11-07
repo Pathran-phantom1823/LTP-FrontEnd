@@ -109,9 +109,9 @@ import ApiService from "@/core/services/api.service";
             return this.resolve
         }
     },
-    mounted(){
-      this.retrieveReport()
-    },
+    // mounted(){
+      
+    // },
 
     
 
@@ -125,7 +125,7 @@ import ApiService from "@/core/services/api.service";
     },
 
     created () {
-      this.initialize()
+      this.retrieveReport()
     },
 
     methods: {

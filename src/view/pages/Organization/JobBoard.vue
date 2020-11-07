@@ -13,8 +13,8 @@
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
                                 </v-avatar>
                                 <div class="ml-2">
-                                    <p class="mb-0">Posted by:<span v-if="jobs.firstName === null || jobs.lastName === null"> {{ jobs.username }}</span>
-                                    <span v-else>{{ jobs.firstName }} {{jobs.lastName}}</span> 
+                                    <p class="mb-0">Posted by:<span v-if="jobs.firstName === null || jobs.lastname === null"> {{ jobs.username }}</span>
+                                    <span v-else>{{ jobs.firstName }} {{jobs.lastname}}</span> 
                                     </p>
                                     <p class="mb-1">Location: {{jobs.city}},{{jobs.country}}</p>
                                 </div>
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="card-body pt-4 pb-4 save_jobs_body">
-                <div class="row mb-1 cards FeedCard" v-for="(data, index) in returnData" :key="index" @mouseenter="showViewMore" @mouseleave="hideViewMore">
+                <div class="row mb-1 cards FeedCard" v-for="(data, index) in returnData" :key="data.id" @mouseenter="showViewMore" @mouseleave="hideViewMore">
                     <div class="col-sm-12 card pl-3 pr-3 pt-5 pb-5 jobCard">
                         <div class="card-body p-0 d-flex justify-content-between data_header">
                             <b class="mb-0">{{ data.title }}</b>
@@ -443,8 +443,12 @@ export default {
         ApiService.post("getacceptedjobs", {
             savedById: userID,
         }).then((res) => {
-            // console.log("acceptedJObs",res.data);
-            this.acceptedJobs = res.data;
+            console.log("acceptedJObs",res.data);
+            res.data.map(el => {
+                if(el.username !== null){
+                    this.acceptedJobs = res.data;
+                }
+            })
         });
 
         ApiService.post("getAssignedJobs", {
