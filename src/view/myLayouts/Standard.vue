@@ -59,7 +59,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ApiService from "@/core/services/api.service";
+import HtmlClass from "@/core/services/htmlclass.service";
+import {
+  ADD_BODY_CLASSNAME,
+  REMOVE_BODY_CLASSNAME
+} from "@/core/services/store/htmlclass.module.js";
 export default {
     data() {
         return {
@@ -69,6 +75,27 @@ export default {
                 name: "Logout"
             }]
         };
+    },
+    beforeMount(){
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "page-loading");
+        HtmlClass.init(this.layoutConfig());
+    },
+    mounted(){
+        // check if current user is authenticated
+        if (!this.isAuthenticated) {
+            this.$router.push({ name: "login" });
+        }
+            
+        // Simulate the delay page loading
+        setTimeout(() => {
+        // Remove page loader after some time
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
+        }, 2000);
+    },
+    computed:{
+        ...mapGetters([
+            "isAuthenticated"
+        ]),
     },
     methods: {
         redirect(url) {

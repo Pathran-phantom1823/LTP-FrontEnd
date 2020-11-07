@@ -260,13 +260,13 @@ export default new Router({
         ]
         },
         {
-            path: "/admin",
-            redirect: "/admin/Dashboard",
+            path: "/agent",
+            redirect: "/agent/Dashboard",
             component: () =>
                 import ("@/view/myLayouts/Layout"),
             children: [{
-                    path: "/admin/Dashboard",
-                    name: "adminDashboard",
+                    path: "/agent/Dashboard",
+                    name: "agentDashboard",
                     component: () =>
                         import ("@/view/pages/Dashboard.vue"),
                     meta: {
@@ -276,8 +276,8 @@ export default new Router({
                     }
                 },
                 {
-                    path: "/admin/quotations",
-                    name: "adminQuotations",
+                    path: "/agent/quotations",
+                    name: "agentQuotations",
                     component: () =>
                         import ("@/view/pages/admin/Quotations.vue"),
                     meta: {
@@ -287,7 +287,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: "/admin/members-translators",
+                    path: "/agent/members-translators",
                     name: "MemberTranslators",
                     component: () =>
                         import ("@/view/pages/admin/Members.vue"),
@@ -298,7 +298,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: "/admin/non-members-translators",
+                    path: "/agent/non-members-translators",
                     name: "NonMemberTranslators",
                     component: () =>
                         import ("@/view/pages/admin/NonMembers.vue"),
@@ -309,7 +309,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: "/admin/organizations",
+                    path: "/agent/organizations",
                     name: "Organizations",
                     component: () =>
                         import ("@/view/pages/admin/Organizations.vue"),
@@ -454,6 +454,11 @@ export default new Router({
                         import ("@/view/pages/auth/ForgotPasswordForm.vue")
                 },
             ]
+        },
+        {
+            path: "/error",
+            name: "notFound",
+            component: () => import ("@/view/myLayouts/error/Error-3")
         }
     ]
 });
