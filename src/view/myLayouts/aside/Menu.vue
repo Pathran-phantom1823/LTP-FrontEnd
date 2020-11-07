@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "KTMenu",
   data() {
@@ -32,28 +33,28 @@ export default {
           {
             icon: "flaticon2-architecture-and-city",
             name: "Dashboard",
-            link: "/admin/dashboard"
+            link: "/agent/dashboard"
           },
           {
             icon: "flaticon2-expand",
             name: "Quotations",
-            link: "/admin/quotations"
+            link: "/agent/quotations"
           },
           'Account Management',
           {
             icon: "fas fa-id-badge",
             name: "Member Translators",
-            link: "/admin/members-translators"
+            link: "/agent/members-translators"
           },
           {
             icon: "fas fa-user-friends",
             name: "Non Member Translators",
-            link: "/admin/non-members-translators"
+            link: "/agent/non-members-translators"
           },
           {
             icon: "fas fa-user",
             name: "Organizations",
-            link: "/admin/organizations"
+            link: "/agent/organizations"
           }
         ],
 
@@ -153,6 +154,9 @@ export default {
     this.addGrouper()
   },
   computed: {
+    ...mapGetters([
+      "getRole"
+    ]),
     returnIndex(){
       return this.index
     },
@@ -169,7 +173,26 @@ export default {
       //     this.index = index
       //   }
       // })
-      this.index = 3;
+      console.log("encrypted ", this.getRole)
+      this.$store.commit('get_Role', localStorage.getItem("role"))
+      console.log("decrypted ", this.getRole)
+      switch(this.getRole.toLowerCase()){
+        case 'agency':
+          this.index = 1;
+          break;
+        case 'agent':
+          this.index = 0;
+          break;
+        case 'agency-member':
+          this.index = 2;
+          break;
+        case 'super-admin':
+          this.index = 3;
+          break;
+        default: 
+          this.index = 1
+      }
+      // this.index = 3;
     },
     addGrouper(){
       this.items[this.index].forEach((element, index) => {

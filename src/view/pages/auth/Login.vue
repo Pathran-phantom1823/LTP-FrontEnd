@@ -124,14 +124,14 @@
 </style>
 
 <script>
-import {
-    mapState
-} from "vuex";
+import { mapState } from "vuex";
 import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
 
 import { validationMixin } from "vuelidate";
 import { minLength, required } from "vuelidate/lib/validators";
 import Swal from "sweetalert2";
+import { mapGetters } from "vuex";
+import ApiService from "@/core/services/api.service";
 
 export default {
   mixins: [validationMixin],
@@ -199,9 +199,9 @@ export default {
           if(sessionStorage.getItem('method') !== null){
             this.$router.push("/instant-quote")
           }else{
-          this.$router.push({
-            name: "dashboard",
-          });
+          ApiService.setHeader();
+          this.$store.commit('get_Role', localStorage.getItem("role"))
+          this.$router.push("/"+ this.getUserType);
           }
           submitButton.classList.remove(
             "spinner",
@@ -236,7 +236,11 @@ export default {
           getErrors(state){
             return state.auth.errors
           }
-      })
+      }),
+      ...mapGetters([
+        "getRole",
+        "getUserType"
+      ])
   },
 };
 </script>
