@@ -40,7 +40,7 @@
                     <div class="card-header dataHeader">
                         <div class="data_title">{{data.title}}</div>
                         <div class="saveJobIcon">
-                            <i class="mdi mdi-heart-outline" @click="saveJob" title="save job"></i>
+                            <i class="mdi mdi-heart-outline" @click="saveJob($event, data.id, data.postById)" title="save job"></i>
                         </div>
                     </div>
                     <div class="card-body dataBody">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
-                        <v-btn rounded class="acceptOffer" dark>Accept Offer</v-btn>
+                        <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)" >APPLY FOR JOB</v-btn>
                     </div>
                 </div>
             </div>
@@ -141,6 +141,8 @@
 
 <script>
 import ApiService from "@/core/services/api.service";
+import Swal from "sweetalert2";
+
 export default {
     data() {
         return {
@@ -209,7 +211,19 @@ export default {
         }
     },
     methods: {
-        saveJob(e) {
+        saveJob(e, jobId, postedById) {
+            ApiService.post("save-job", {
+                jobId: jobId,
+                postedById: postedById,
+                savedById: this.userID
+            }).then(() => {
+                Swal.fire({
+                    title: "",
+                    text: "Job is Successfully saved",
+                    icon: "success",
+                    confirmButtonClass: "btn btn-secondary",
+                });
+            })
             if (e.target.className === 'mdi mdi-heart-outline') {
                 e.target.className = 'mdi mdi-heart'
             } else {
@@ -284,6 +298,21 @@ export default {
                 this.$refs["workspace"].style =
                     "transition: .5s; width: calc(100% - 320px); margin-left: 320px !important;";
             }
+        },
+        acceptJob(jobId) {
+            console.log(jobId, this.userID)
+            ApiService.post("apply-job", {
+                applicantId: this.userID,
+                jobId: jobId,
+            }).then(() => {
+                // console.log(res)
+                Swal.fire({
+                    title: "",
+                    text: "Application Done, Please wait until the owner accepts your application",
+                    icon: "success",
+                    confirmButtonClass: "btn btn-secondary",
+                });
+            })
         }
     }
 };

@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
-                    <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)">Accept Offer</v-btn>
+                    <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)">Apply for job</v-btn>
                 </div>
             </div>
         </div>

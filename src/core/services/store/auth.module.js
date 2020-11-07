@@ -87,7 +87,7 @@ const actions = {
     const string = Math.random().toString(36).substring(2,5)
     return new Promise((resolve) => {
       ApiService.post("register", credentials).then(res => {
-        const result = string + '*' +  res.data[1].id
+        const result = string + '*' +  res.data[0].id
         localStorage.setItem('value', result)
         // context.commit(SET_AUTH, res);
         resolve(res)

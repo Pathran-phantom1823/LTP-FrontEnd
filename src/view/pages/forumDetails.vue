@@ -46,7 +46,7 @@
             <br>
             <center>
                 <span style="color:red">{{error}}</span>
-                <v-text-field v-model="comment" append-outer-icon="mdi-send" filled clear-icon="mdi-close-circle" clearable rounded label="Message" type="text" @click:append-outer="sendComment(forumDetails.transactionId)"></v-text-field>
+                <v-text-field v-model="comment" append-outer-icon="mdi-send" filled clear-icon="mdi-close-circle" clearable rounded label="Message" type="text" @click:append-outer="sendComment(forumDetails.transactionId)" :disabled="!isAuthenticated"></v-text-field>
                 <!-- <v-text-field outlined label="Reply" class="searchBox" append-icon="mdi-message-text" dense clearable rounded color="blue lighten-1" v-model="comment"></v-text-field>
                 <v-btn @click="sendComment(forumDetails.transactionId)">Send</v-btn> -->
             </center>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ApiService from "@/core/services/api.service";
 export default {
     data() {
@@ -77,9 +78,14 @@ export default {
         },
         isLike() {
             return this.liked
-        }
+        },
+        ...mapGetters([
+            "isAuthenticated"
+        ])
     },
     mounted() {
+
+
         let id = this.$route.params.id
 
         console.log(id);
