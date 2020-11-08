@@ -72,9 +72,13 @@ const actions = {
             context.commit(GET_ROLE, localStorage.getItem("role"))
             context.commit(SET_USERTYPE)
             resolve(data);
+          }else{
+            console.log(data.message);
+            context.commit(SET_ERROR, data.message);
           }
         })
         .catch(({ response }) => {
+          console.log("res", response);
           context.commit(SET_ERROR, response.data);
         });
     });
@@ -229,7 +233,7 @@ const mutations = {
         "free": "user"
       },
       {
-        "standard": "standard"
+        "standard": "user"
       }
     ]
     let access = scope.find(el => {

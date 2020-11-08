@@ -13,8 +13,10 @@
 
                     <v-card-text>
                         <v-container>
-                            <v-text-field v-model="editedItem.username" label="Username"></v-text-field>
-                            <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                            <span v-if="isExist" style="color: red">Username is Unavailable.</span>
+                            <v-text-field v-model="editedItem.username" label="Username" @input="checkUsername"></v-text-field>
+                            <span v-if="emailexist" style="color: red">Email is Unavailable.</span>
+                            <v-text-field v-model="editedItem.email" label="Email" @input="checkEmail"></v-text-field>
                             <!-- <v-text-field v-model="editedItem.password" label="Password"></v-text-field> -->
                         </v-container>
                     </v-card-text>
@@ -57,9 +59,7 @@
         </v-btn>
     </template>
     <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">
-            Reset
-        </v-btn>
+            No Data
     </template>
 </v-data-table>
 </template>
@@ -82,15 +82,6 @@ export default {
                 text: 'Useraname',
                 value: 'username'
             },
-            // {
-            //     text: 'Password',
-            //     value: 'password'
-            // },
-            // {
-            //     text: 'Status',
-            //     value: 'status',
-            //     sortable: false
-            // },
             {
                 text: 'Actions',
                 value: 'actions',
@@ -101,6 +92,8 @@ export default {
         members: [],
         itemId: null,
         editedIndex: -1,
+        isExist: false,
+        emailexist: false,
         editedItem: {
             username: '',
             email: '',
@@ -132,51 +125,31 @@ export default {
         },
     },
 
-    created() {
-        this.initialize()
-    },
-
     methods: {
-        initialize() {
-            this.desserts = [{
-                    name: 'Gingerbread',
-                    email: 'gingerbread@gmail.com',
-                    password: 'pass6',
-                    status: 'assigned'
-                },
-                {
-                    name: 'Jelly bean',
-                    email: 'jellybean@gmail.com',
-                    password: 'pass5',
-                    status: 'no assignment'
-                },
-                {
-                    name: 'Lollipop',
-                    email: 'lolipop@gmail.com',
-                    password: 'pass4',
-                    status: 'no assignment'
-                },
-                {
-                    name: 'Honeycomb',
-                    email: 'Honeycomb@gmail.com',
-                    password: 'pass3',
-                    status: 'no assignment'
-                },
-                {
-                    name: 'Donut',
-                    email: 'Donut@gmail.com',
-                    password: 'pass2',
-                    status: 'assigned'
-                },
-                {
-                    name: 'KitKat',
-                    email: 'kitkat@gmail.com',
-                    password: 'pass1',
-                    status: 'no assignment'
-                },
-            ]
+        checkUsername(e) {
+            ApiService.post("checkUsernameExistence", {
+                username: e
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data === "Username is Unavailable") {
+                    this.isExist = true;
+                } else {
+                    this.isExist = false;
+                }
+            });
         },
-
+        checkEmail(e) {
+            ApiService.post("checkEmailExistence", {
+                email: e
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data === "Email is Unavailable") {
+                    this.emailexist = true;
+                } else {
+                    this.emailexist = false;
+                }
+            });
+        },
         editItem(item) {
             // console.log(item.id);
             this.itemId = item.id
@@ -205,7 +178,7 @@ export default {
                 createdAt: this.editedItem.createdAt
             }).then(() => {
                 this.retrieve()
-                this.$router.push('/add-accounts')
+                this.$router.push('/organization/add_account')
             })
             this.closeDelete()
         },
@@ -266,8 +239,6 @@ export default {
                 res.data.map(el => {
                     this.members.push(el)
                 })
-                // this.members = res
-                // console.log(this.members);
             })
         }
     },

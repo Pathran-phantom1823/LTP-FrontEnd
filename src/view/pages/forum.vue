@@ -167,10 +167,17 @@ export default {
       });
     },
     retrieveForum() {
+      if(localStorage.getItem('id_token') === null){
       ApiService.get("getPost").then((res) => {
         console.log(res.data);
         this.forumData = res.data;
       });
+      }else{
+       ApiService.get("getPostwithAuth").then((res) => {
+        console.log(res.data);
+        this.forumData = res.data;
+      }); 
+      }
     },
   },
 };

@@ -57,7 +57,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+    mapGetters
+} from "vuex";
 import ApiService from "@/core/services/api.service";
 export default {
     data() {
@@ -85,19 +87,31 @@ export default {
     },
     mounted() {
 
-
-        let id = this.$route.params.id
-
-        console.log(id);
-        ApiService.post("getForumDetails", {
-            postId: id
-        }).then(res => {
-            // console.log("data", res.data)
-            this.forumDetails = res.data[0]
-            this.retrieveComment()
-            this.retrieveLikes(),
-            this.retrieveCurrentUser()
-        })
+        if (!this.isAuthenticated) {
+            let id = this.$route.params.id
+            console.log(id);
+            ApiService.post("getForumDetails", {
+                postId: id
+            }).then(res => {
+                // console.log("data", res.data)
+                this.forumDetails = res.data[0]
+                this.retrieveComment()
+                this.retrieveLikes(),
+                    this.retrieveCurrentUser()
+            })
+        } else {
+            let id = this.$route.params.id
+            console.log(id);
+            ApiService.post("getForumDetailswithAuth", {
+                postId: id
+            }).then(res => {
+                // console.log("data", res.data)
+                this.forumDetails = res.data[0]
+                this.retrieveComment()
+                this.retrieveLikes(),
+                    this.retrieveCurrentUser()
+            })
+        }
 
     },
     methods: {
@@ -136,30 +150,52 @@ export default {
             let id = this.$route.params.id
             const uId = localStorage.getItem('value')
             this.userID = uId.substr(uId.lastIndexOf('*') + 1)
-            ApiService.post("getComment", {
-                postId: id
-            }).then(res => {
-                console.log(res.data)
-                this.comments = res.data
-                // console.log("res", this.liked);
-            })
+            if (!this.isAuthenticated) {
+                ApiService.post("getComment", {
+                    postId: id
+                }).then(res => {
+                    console.log(res.data)
+                    this.comments = res.data
+                    // console.log("res", this.liked);
+                })
+            } else {
+                ApiService.post("getCommentwithAuth", {
+                    postId: id
+                }).then(res => {
+                    console.log(res.data)
+                    this.comments = res.data
+                    // console.log("res", this.liked);
+                })
+            }
         },
         retrieveLikes() {
-            ApiService.get("getLikes").then(res => {
-                // console.log("likes", res);
-                res.data.map(el => {
-                    this.comments.map(com => {
-                        console.log();
-                        if(el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()){
-                            this.liked = true
-                            // console.log(true);
-                        }else{
-                            this.false
-                            // console.log(false);
-                        }
+            if (!this.isAuthenticated) {
+                ApiService.get("getLikes").then(res => {
+                    res.data.map(el => {
+                        this.comments.map(com => {
+                            console.log();
+                            if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
+                                this.liked = true
+                            } else {
+                                this.false
+                            }
+                        })
                     })
                 })
-            })
+            } else {
+                ApiService.get("getLikeswithAuth").then(res => {
+                    res.data.map(el => {
+                        this.comments.map(com => {
+                            console.log();
+                            if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
+                                this.liked = true
+                            } else {
+                                this.false
+                            }
+                        })
+                    })
+                })
+            }
         },
         retrieveCurrentUser() {
             const id = localStorage.getItem('value')

@@ -203,7 +203,7 @@ export default {
                 this.form.email === null ||
                 this.form.username === null ||
                 this.password === null ||
-                this.exist === true
+                this.exist === true || this.emailexist === true
             ) {
                 alert("fields are required");
             } else {

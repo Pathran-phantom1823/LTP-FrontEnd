@@ -92,13 +92,12 @@
         <!--begin::Nav-->
         <div class="navi navi-spacer-x-0 p-0">
           <!--begin::Item-->
-          <router-link
+          <!-- <router-link
             to="/builder"
             @click.native="closeOffcanvas"
-            href="#"
             class="navi-item"
-          >
-            <div class="navi-link">
+          > -->
+            <div class="navi-link" v-if="role !== 'super-admin' || role !== 'agency'">
               <div class="symbol symbol-40 bg-light mr-3">
                 <div class="symbol-label">
                   <span class="svg-icon svg-icon-md svg-icon-success">
@@ -124,14 +123,13 @@
                 </div>
               </div>
             </div>
-          </router-link>
+          <!-- </router-link> -->
           <!--end:Item-->
           <!--begin::Item-->
           <router-link
-            to="/builder"
+            to="/organization/messenger"
             @click.native="closeOffcanvas"
-            href="#"
-            class="navi-item"
+            class="navi-item" v-if="role === 'agency'"
           >
             <div class="navi-link">
               <div class="symbol symbol-40 bg-light mr-3">
@@ -146,7 +144,6 @@
               <div class="navi-text">
                 <div
                   class="font-weight-bold"
-                  @click.prevent="$router.push('/organization/messenger')"
                 >
                   My Messages
                 </div>
@@ -188,7 +185,9 @@ import KTLayoutQuickUser from "@/assets/js/layout/extended/quick-user.js";
 import KTOffcanvas from "@/assets/js/components/offcanvas.js";
 import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
-
+import {
+    mapGetters
+} from "vuex";
 export default {
   name: "KTQuickUser",
   data() {
@@ -201,14 +200,20 @@ export default {
       email: null,
       name: null,
       profileImage: null,
+      role: null
     };
   },
   mounted() {
     // Init Quick User Panel
+    this.$store.commit('get_Role', localStorage.getItem("role"))
+    this.role = this.getRole.toLowerCase()
+
     KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
 
     const id = localStorage.getItem("value");
     this.userID = id.substr(id.lastIndexOf("*") + 1);
+
+
     ApiService.post("getCurrentUser", {
       id: this.userID,
     }).then((res) => {
@@ -268,12 +273,20 @@ export default {
       const id = localStorage.getItem("value");
       this.userID = id.substr(id.lastIndexOf("*") + 1);
       this.$router.push(`/organization/profile/${this.userID}`);
+      if(this.role === "agency"){
+        this.$router.push(`/organization/profile/${this.userID}`)
+      }else if(this.role === "super-admin"){
+        this.$router.push("/superAdmin/profile")
+      }
     },
   },
   computed: {
     picture() {
       return process.env.BASE_URL + "media/users/300_21.jpg";
     },
+     ...mapGetters([
+      "getRole"
+    ]),
   },
 };
 </script>

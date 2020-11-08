@@ -27,8 +27,8 @@
         </button>
         <div class="row">
             <div class="col-sm-12 d-flex justify-content-left mt-10 mb-5">
-                <v-select :items="searchOptions" label="Search" class="searchOption" color="blue lighten-1" dense solo v-model="searchOption"></v-select>
-                <v-text-field outlined :label="searchLabel" class="searchBox" append-icon="mdi-magnify" dense clearable rounded color="blue lighten-1"></v-text-field>
+                <!-- <v-select :items="searchOptions" label="Search" class="searchOption" color="blue lighten-1" dense solo v-model="searchOption"></v-select> -->
+                <v-text-field v-model="search" outlined label="search Jobs" class="searchBox" append-icon="mdi-magnify" dense clearable rounded color="blue lighten-1"></v-text-field>
             </div>
         </div>
         <div class="row">
@@ -109,12 +109,12 @@
                         <b class="mb-5 font-weight-normal">Posted by:</b>
                         <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
                             <v-avatar>
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John">
+                                <img :src="profileImage" alt="John">
                             </v-avatar>
                             <div class="ml-2">
                                 <p class="card-text">
                                     <b v-if="feedDetails.firstName === null || feedDetails.lastName === null">{{feedDetails.username}}</b>
-                                <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
+                                    <b v-else>{{feedDetails.firstName}} {{feedDetails.lastName}}</b>
                                 </p>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="card-footer ViewMoreFooter text-center pt-10 pb-10">
-                        <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)" >APPLY FOR JOB</v-btn>
+                        <v-btn rounded class="acceptOffer" dark @click="acceptJob(feedDetails.id)">APPLY FOR JOB</v-btn>
                     </div>
                 </div>
             </div>
@@ -142,6 +142,7 @@
 <script>
 import ApiService from "@/core/services/api.service";
 import Swal from "sweetalert2";
+import JwtService from "@/core/services/jwt.service";
 
 export default {
     data() {
@@ -178,7 +179,9 @@ export default {
             page: 1,
             searchOption: "jobs",
             searchOptions: ["jobs", "translators"],
+            search: '',
             freetime: '',
+            profileImage: null,
             days: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
         };
     },
@@ -190,8 +193,6 @@ export default {
                 "width: 100% !important; margin-left: 0px !important;";
             this.$refs["sidebarToggler"].click();
         }
-    },
-    created(){
         const id = localStorage.getItem('value')
         this.userID = id.substr(id.lastIndexOf('*') + 1)
         ApiService.post("getAllJobs", {
@@ -207,7 +208,9 @@ export default {
     },
     computed: {
         getFeeds() {
-            return this.feedData
+            return this.feedData.filter(el => {
+                return el.title.toLowerCase().includes(this.search.toLowerCase())
+            })
         }
     },
     methods: {
@@ -244,6 +247,20 @@ export default {
                     // console.log(res);
                     this.feedDetails = res.data[0]
                     console.log("feedDetails", this.feedDetails);
+
+                    this.$axios({
+                        method: "post",
+                        url: "http://localhost:8003/ltp/getProfile/",
+                        header: {
+                            Authorization: `${JwtService.getToken()}`
+                        },
+                        responseType: "blob",
+                        data: {
+                            accountId: res.data[0].postedById
+                        },
+                    }).then((res) => {
+                        this.forceToDownload(res);
+                    });
                 })
                 if (window.innerWidth < 750) {
                     this.$refs["moreInfo"].style =
@@ -261,6 +278,16 @@ export default {
                 this.$refs["moreInfo"].style =
                     "transition: .5s !important; right: 100% !important";
             }
+        },
+        forceToDownload(data) {
+            console.log(data.data);
+            const url = URL.createObjectURL(data.data);
+            let img = new Image();
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+                console.log(img);
+            };
+            this.profileImage = url
         },
         hideShow() {
             if (

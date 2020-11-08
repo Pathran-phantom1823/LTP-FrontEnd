@@ -59,7 +59,8 @@ const ApiService = {
   get(resource, slug= "") {
     Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://localhost:8003/ltp" : "http://localhost:8003/api/";
     // console.log(resource, slug)
-    return Vue.axios.get(`${resource}/${slug}`, config)
+    let header = config.headers.Authorization === "null" ? config2 : config
+    return Vue.axios.get(`${resource}/${slug}`, header)
   },
 
 
@@ -71,7 +72,7 @@ const ApiService = {
    * @constructor
    */
   getById(resource, params){
-    let header = config.headers.Authorization === "null" ? config2 : config
+    let header = JwtService.getToken() === null ? config2 : config
     return Vue.axios.get(`${resource}`, params, header);
   },
 

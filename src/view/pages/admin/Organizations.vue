@@ -5,8 +5,6 @@
       :items-per-page.sync="itemsPerPage"
       :page="page"
       :search="search"
-      :sort-by="sortBy.toLowerCase()"
-      :sort-desc="sortDesc"
       hide-default-footer
     >
       <template v-slot:header>
@@ -20,27 +18,6 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
           ></v-text-field>
-          <template v-if="$vuetify.breakpoint.mdAndUp">
-            <v-spacer></v-spacer>
-            <v-select
-              v-model="sortBy"
-              flat
-              solo-inverted
-              hide-details
-              :items="keys"
-              prepend-inner-icon="mdi-magnify"
-              label="Sort by"
-            ></v-select>
-            <v-spacer></v-spacer>
-            <v-btn-toggle v-model="sortDesc" mandatory>
-              <v-btn large depressed color="blue" :value="false">
-                <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn large depressed color="blue" :value="true">
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
-            </v-btn-toggle>
-          </template>
         </v-toolbar>
       </template>
 
@@ -62,20 +39,31 @@
               <v-divider></v-divider>
 
               <v-list dense>
-                <v-list-item v-for="(key, index) in filteredKeys" :key="index">
-                  <v-list-item-content
-                    :class="{ 'blue--text': sortBy === key }"
-                  >
-                    {{ key }}:
+
+                <v-list-item>
+                  <v-list-item-content>Name:</v-list-item-content>
+                  <v-list-item-content class="align-end" v-if="item.firstName === null || item.lastName === null">
+                    {{ item.username }}
                   </v-list-item-content>
-                  <v-list-item-content
-                    class="align-end"
-                    :class="{ 'blue--text': sortBy === key }"
-                  >
-                    {{ item[key.toLowerCase()] }}
+                  <v-list-item-content class="align-end" v-else>
+                    {{ item.firstName }} {{item.lastName}}
                   </v-list-item-content>
                 </v-list-item>
-                <!-- <v-rating v-model="item.rating" readonly color="yellow darken-3" background-color="grey darken-1" empty-icon="$ratingFull"  medium></v-rating> -->
+
+                <v-list-item>
+                  <v-list-item-content>Email:</v-list-item-content>
+                  <v-list-item-content class="align-end">
+                    {{ item.email }}
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item v-if="item.dateFrom !== null">
+                  <v-list-item-content>Availability:</v-list-item-content>
+                  <v-list-item-content class="align-end">
+                    {{ item.dateFrom }} - {{ item.dateTo }}, {{item.timeFrom}} - {{item.timeTo}}
+                  </v-list-item-content>
+                </v-list-item>
+
               </v-list>
               <v-card-actions>
                 <v-btn color="info">View Profile</v-btn>
@@ -147,22 +135,14 @@ export default {
     return {
       itemsPerPageArray: [3, 6, 9, 12],
       search: "",
-      filter: {},
-      sortDesc: false,
       page: 1,
       itemsPerPage: 6,
-      sortBy: "username",
-      rating: 4.5,
       accounts: [],
-      keys: ["username", "email"],
     };
   },
   computed: {
     numberOfPages() {
       return Math.ceil(this.accounts.length / this.itemsPerPage);
-    },
-    filteredKeys() {
-      return this.keys.filter((key) => key !== "Username");
     },
   },
   mounted() {
@@ -179,9 +159,9 @@ export default {
       this.itemsPerPage = number;
     },
     retrieveAccounts() {
-      ApiService.post("getAccounts", { roleType: "FREE" }).then((res) => {
+      ApiService.post("getAccounts", { roleType: "AGENCY" }).then((res) => {
         this.accounts = res.data;
-        console.log(res.data);
+        console.log("org", res.data);
       });
     },
     assignJob(id) {

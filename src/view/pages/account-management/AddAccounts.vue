@@ -10,8 +10,10 @@
                 </div><br>
                 <p style="color:red">{{errorMessage}}</p>
                 <v-form>
-                    <v-text-field type="email" v-model="email" label="Email" outlined required></v-text-field>
-                    <v-text-field type="text" v-model="username" label="Username" outlined required></v-text-field>
+                    <span v-if="emailexist" style="color: red">Email is Unavailable.</span>
+                    <v-text-field type="email" v-model="email" label="Email" outlined required @input="checkEmail"></v-text-field>
+                    <span v-if="isExist" style="color: red">Username is Unavailable.</span>
+                    <v-text-field type="text" v-model="username" label="Username" outlined required @input="checkUsername"></v-text-field>
                     <v-text-field :type="showPass ? 'password' : 'text'" v-model="password" label="Password" outlined required :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPass = !showPass"></v-text-field>
                 </v-form>
                 <b-btn variant="primary" block @click="submit">Add Member</b-btn>
@@ -33,7 +35,9 @@ export default {
             username: null,
             errorMessage: null,
             userID: null,
-            showPass: true
+            showPass: true,
+            isExist: false,
+            emailexist: false
         }
     },
     mounted(){
@@ -46,8 +50,32 @@ export default {
         }
     },
     methods: {
+        checkUsername(e) {
+            ApiService.post("checkUsernameExistence", {
+                username: e
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data === "Username is Unavailable") {
+                    this.isExist = true;
+                } else {
+                    this.isExist = false;
+                }
+            });
+        },
+        checkEmail(e) {
+            ApiService.post("checkEmailExistence", {
+                email: e
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data === "Email is Unavailable") {
+                    this.emailexist = true;
+                } else {
+                    this.emailexist = false;
+                }
+            });
+        },
         submit() {
-            if (this.email === null || this.password === null || this.username === null) {
+            if (this.email === null || this.password === null || this.username === null ||  this.isExist === true || this.emailexist === true) {
                 this.errorMessage = "Fields are required"
             } else {
                 ApiService.post('member/create', {

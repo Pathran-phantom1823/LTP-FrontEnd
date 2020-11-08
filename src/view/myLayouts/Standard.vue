@@ -28,22 +28,19 @@
                 <v-btn text>
                     <a class="nav-link text-light navItems" @click="redirect('/user/messenger')">Messenger</a>
                 </v-btn>
-                <!-- <v-btn text>
-                    <a class="nav-link text-light navItems" @click="$router.push('/user/messenger')">Messages</a>
-                </v-btn> -->
-                <v-btn text>
-                    <a class="nav-link navItems" id="notifications"><i class="far fa-bell text-light"></i></a>
-                </v-btn>
-                <!-- <b-popover target="notifications" triggers="hover" placement="bottom">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5> notifications </h5>
-                        </div>
-                    </div>
-                </b-popover> -->
+                <b-dropdown size="sm" variant="link" dropleft toggle-class="topbar-item text-decoration-none" no-caret no-flip>
+                    <template v-slot:button-content>
+                        <i class="far fa-bell text-light"></i>
+                    </template>
+                    <b-dropdown-text tag="div" class="min-w-md-350px">
+                        <form>
+                            <KTDropdownNotification :quotations="data"></KTDropdownNotification>
+                        </form>
+                    </b-dropdown-text>
+                </b-dropdown>
 
                 <div>
-                    <img src="https://static.toiimg.com/thumb/72975551.cms?width=680&height=512&imgsize=881753" alt="Profile Picture" class="profile" id="profile-popover">
+                    <img :src="profileImage" alt="Profile Picture" class="profile" id="profile-popover">
                 </div>
                 <b-popover target="profile-popover" triggers="hover" placement="bottom">
                     <button class="btn form-control" @click="$router.push('/user/profile')">profile info</button>
@@ -71,6 +68,9 @@ import {
     ADD_BODY_CLASSNAME,
     REMOVE_BODY_CLASSNAME
 } from "@/core/services/store/htmlclass.module.js";
+import KTDropdownNotification from "@/view/myLayouts/extras/dropdown/DropdownNotification.vue";
+
+import JwtService from "@/core/services/jwt.service";
 export default {
     data() {
         return {
@@ -78,8 +78,13 @@ export default {
                 name: "Profile"
             }, {
                 name: "Logout"
-            }]
+            }],
+            data: [],
+            profileImage: null,
         };
+    },
+    components: {
+        KTDropdownNotification,
     },
     beforeMount() {
         this.$store.dispatch(ADD_BODY_CLASSNAME, "page-loading");
@@ -93,11 +98,31 @@ export default {
             });
         }
 
+        this.retrieveQuotation()
+
         // Simulate the delay page loading
         setTimeout(() => {
             // Remove page loader after some time
             this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
         }, 2000);
+        const id = localStorage.getItem("value");
+        if(id !== null){
+            this.userID = id.substr(id.lastIndexOf("*") + 1);
+        }
+        console.log(this.userID);
+        this.$axios({
+            method: "post",
+            url: "http://localhost:8003/ltp/getProfile/",
+            header: {
+                Authorization: `${JwtService.getToken()}`
+            },
+            responseType: "blob",
+            data: {
+                accountId: this.userID
+            },
+        }).then((res) => {
+            this.forceToDownload(res);
+        });
     },
     computed: {
         ...mapGetters([
@@ -117,6 +142,26 @@ export default {
                     name: "login",
                 });
             });
+        },
+        retrieveQuotation() {
+            const id = localStorage.getItem("value");
+            const userID = id.substr(id.lastIndexOf("*") + 1);
+            ApiService.post("getmyAssignedQuotations", {
+                id: userID
+            }).then((res) => {
+                console.log("quote", res.data);
+                this.data = res.data
+            })
+        },
+        forceToDownload(data) {
+            console.log(data.data);
+            const url = URL.createObjectURL(data.data);
+            let img = new Image();
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+                console.log(img);
+            };
+            this.profileImage = url
         },
         // private double price;
         // private String currency;
