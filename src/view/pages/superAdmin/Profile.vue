@@ -88,6 +88,13 @@
 
                             <h3 class="mb-10 font-weight-bold text-dark">Address</h3>
                             <div class="row">
+                              <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Street</label><span style="color: red">*</span>
+                                        <input type="text" class="form-control form-control-solid form-control-lg" name="street" placeholder="Street" v-model="data.street"  />
+                                        <span class="form-text text-muted">Please enter your Street.</span>
+                                    </div>
+                                </div>
                                 <div class="col-xl-3">
                                     <div class="form-group">
                                         <label>Postal Code</label><span style="color: red">*</span>
@@ -103,33 +110,29 @@
                                         <span class="form-text text-muted">Please enter your Zipcode.</span>
                                     </div>
                                 </div>
+                              
+                            </div>
+                               <!-- <select name="country" class="form-control form-control-solid form-control-lg"  :items="country2"
+                                             v-model="country"
+                                             @change="changedCity($event)">
+                                            <option value="">Select</option>
+                                        </select> -->
+                            <div class="row"> 
                                 <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Country</label><span style="color: red">*</span>
+                                        <v-select :items="country2" v-model="data.country" outlined label="Select Country" @change="changedCity($event)" ></v-select>
+                                     
+                                    </div>
+                                </div>
+
+                                  <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>City</label><span style="color: red">*</span>
                                         <v-select label="Select City" outlined :items="cities" v-model="data.city" ></v-select>
                                         <!-- <input type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" :items="cities"
                                             v-model="city" /> -->
                                         <span class="form-text text-muted">Please enter your City.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <label>Street</label><span style="color: red">*</span>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="street" placeholder="Street" v-model="data.street"  />
-                                        <span class="form-text text-muted">Please enter your State.</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <label>Country</label><span style="color: red">*</span>
-                                        <v-select :items="country2" v-model="data.country" outlined label="Select Country" @change="changedCity($event)" ></v-select>
-                                        <!-- <select name="country" class="form-control form-control-solid form-control-lg"  :items="country2"
-                                             v-model="country"
-                                             @change="changedCity($event)">
-                                            <option value="">Select</option>
-                                        </select> -->
                                     </div>
                                 </div>
                             </div>
@@ -341,18 +344,18 @@ export default {
             const userID = id.substr(id.lastIndexOf("*") + 1);
             let profileDetails = {
                 accountId: userID,
-                firstname: this.firstname,
-                lastname: this.lastname,
-                age: this.age,
-                birthdate: this.birthdate,
-                email: this.email,
-                gender: this.gender,
-                phonenumber: this.phonenumber,
-                postalcode: this.postalcode,
-                zipcode: this.zipcode,
-                city: this.city,
-                country: this.country,
-                street: this.street
+                firstname: this.data.firstname,
+                lastname: this.data.lastname,
+                age: this.data.age,
+                birthdate: this.data.birthdate,
+                email: this.data.email,
+                gender: this.data.gender,
+                phonenumber: this.data.phonenumber,
+                postalcode: this.data.postalcode,
+                zipcode: this.data.zipcode,
+                city: this.data.city,
+                country: this.data.country,
+                street: this.data.street
             };
             e.preventDefault();
             let payload = new FormData();
