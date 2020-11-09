@@ -55,17 +55,11 @@
                   <div class="card-body p-4">
                     <div class="translatorInfo">
                       <div class="bookingavatar">
-                        <v-avatar size="36">
-                          <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"
-                            alt="John"
-                          />
-                        </v-avatar>
                       </div>
                       <div class="booking_info">
                         <div class="ml-2 translator">
                           <p class="mb-0">
-                            <b class="font-weight-normal">{{
+                            <b class="font-weight-normal" style="cursor:pointer;">{{
                               users.username
                             }}</b>
                           </p>
@@ -274,6 +268,7 @@ export default {
 }
 .card {
   border: 1px solid rgb(221, 221, 221);
+  margin-bottom: 5px;
 }
 .translators_container {
   overflow-y: scroll;

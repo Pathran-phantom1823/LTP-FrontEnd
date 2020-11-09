@@ -9,12 +9,9 @@
                     <div class="card-body p-4">
                         <div class="row">
                             <div class="col-sm-5 d-flex justify-content-start">
-                                <v-avatar>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                                </v-avatar>
                                 <div class="ml-2">
                                     <p class="mb-0">Posted by:<span v-if="jobs.firstName === null || jobs.lastname === null"> {{ jobs.username }}</span>
-                                    <span v-else>{{ jobs.firstName }} {{jobs.lastname}}</span> 
+                                        <span v-else>{{ jobs.firstName }} {{jobs.lastname}}</span>
                                     </p>
                                     <p class="mb-1">Location: {{jobs.city}},{{jobs.country}}</p>
                                 </div>
@@ -49,7 +46,7 @@
                                     <div class="card assign-card" @click="assignJob(member.id, jobs.id, jobs.postedById)" v-for="member in getMembers" :key="member.id">
                                         <div class="card-body pl-2 pr-2 pt-1 pb-1 members">
                                             <v-avatar size="36">
-                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                                                <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" /> -->
                                             </v-avatar>
                                             <b class="font-weight-normal ml-2">{{
                           member.username
@@ -70,12 +67,10 @@
                 <div class="card project_card" v-for="assigned in returnAssignedJobs" :key="assigned.id">
                     <div class="card-body p-4" v-if="assigned.workedByUsername !== null">
                         <div class="col-sm-12 p-0 d-flex justify-content-start">
-                            <v-avatar>
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                            </v-avatar>
+
                             <div class="ml-2">
-                                <p class="mb-0">{{ assigned.workedByUsername }}</p>
-                                <p class="mb-1">Location: {{assigned.workedByCity}},{{assigned.workedByCountry}}</p>
+                                <b class="mb-0">{{ assigned.workedByUsername }}</b>
+                                <!-- <p class="mb-1">Location: {{assigned.workedByCity}},{{assigned.workedByCountry}}</p> -->
                             </div>
                         </div>
                         <div class="col-sm-12 p-0 mt-2">
@@ -131,9 +126,7 @@
                     <div class="col-sm-4 card p-0 jobCard">
                         <div class="card-body p-3">
                             <div class="d-flex justify-content-start mt-2 mb-3">
-                                <v-avatar>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                                </v-avatar>
+
                                 <div class="ml-2">
                                     <p class="card-text mb-0 pt-1">
                                         <b v-if="data.firstName === null || data.lastName === null">{{ data.username }}</b>
@@ -254,7 +247,7 @@
                     <b class="mb-5 font-weight-normal">Posted by:</b>
                     <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
                         <v-avatar>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                            <img :src="profileImage" alt="Profile Image" />
                         </v-avatar>
                         <div class="ml-2">
                             <p class="card-text">
@@ -322,9 +315,6 @@
                 <div class="card-header ViewMoreHeader">
                     <b class="mb-5 font-weight-normal">Assigned To:</b>
                     <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
-                        <v-avatar>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
-                        </v-avatar>
                         <div class="ml-2">
                             <p class="card-text">
                                 <b>{{ assignedJobsDetails.workedByUsername }}</b>
@@ -336,7 +326,7 @@
                             <b class="mb-5 font-weight-normal">Posted by:</b>
                             <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
                                 <v-avatar>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                                    <img :src="profileImage" alt="Profile Image" />
                                 </v-avatar>
                                 <div class="ml-2">
                                     <p class="card-text">
@@ -372,6 +362,7 @@
 </template>
 
 <script>
+import JwtService from "@/core/services/jwt.service";
 import ApiService from "@/core/services/api.service";
 import Swal from "sweetalert2";
 export default {
@@ -385,6 +376,7 @@ export default {
             jobsDetails: [],
             navEvent: "",
             search: "",
+            profileImage: null,
             drop: true,
             members: [],
             assignedJobs: [],
@@ -411,11 +403,11 @@ export default {
                     text: "Fixed Price",
                     value: "fixedPrice",
                 },
-                 {
+                {
                     text: "From Price",
                     value: "fromPrice",
                 },
-                 {
+                {
                     text: "To Price",
                     value: "toPrice",
                 },
@@ -443,9 +435,9 @@ export default {
         ApiService.post("getacceptedjobs", {
             savedById: userID,
         }).then((res) => {
-            console.log("acceptedJObs",res.data);
+            console.log("acceptedJObs", res.data);
             res.data.map(el => {
-                if(el.username !== null){
+                if (el.username !== null) {
                     this.acceptedJobs = res.data;
                 }
             })
@@ -461,7 +453,7 @@ export default {
         ApiService.post("getJobHistory", {
             orgId: userID,
         }).then((res) => {
-        //   console.log("history", res.data);
+            //   console.log("history", res.data);
             this.project = res.data;
         });
     },
@@ -589,6 +581,7 @@ export default {
                 }).then((res) => {
                     // console.log(res);
                     this.jobsDetails = res.data[0];
+                    this.retreiveImage(res.data[0].postedById)
                     // console.log("feedDetails", this.feedDetails);
                 });
                 this.$refs["MoreInfoWrapper"].style = "left: 0 !important";
@@ -611,6 +604,7 @@ export default {
                 }).then((res) => {
                     // console.log(res);
                     this.assignedJobsDetails = res.data[0];
+                    this.retreiveImage(res.data[0].postedById)
                     console.log("feedDetails", this.feedDetails);
                 });
                 this.$refs["MoreInfoWrapper2"].style = "left: 0 !important";
@@ -625,6 +619,30 @@ export default {
                 this.$refs["moreInfo2"].style =
                     "transition: .5s !important; right: 100% !important";
             }
+        },
+        retreiveImage(postedById) {
+            this.$axios({
+                method: "post",
+                url: "http://localhost:8003/ltp/getProfile/",
+                header: {
+                    Authorization: `${JwtService.getToken()}`
+                },
+                responseType: "blob",
+                data: {
+                    accountId: postedById
+                },
+            }).then((res) => {
+                this.convertImage(res);
+            });
+        },
+        convertImage(data) {
+            const url = URL.createObjectURL(data.data);
+            let img = new Image();
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+                console.log(img);
+            };
+            this.profileImage = url
         },
         retrieveMembers() {
             const id = localStorage.getItem("value");
@@ -1014,9 +1032,9 @@ export default {
     color: white;
 }
 
-.project_info_details:hover{
-  background-color:#375fe2;
-  box-shadow: 2px 3px 4px gray;
+.project_info_details:hover {
+    background-color: #375fe2;
+    box-shadow: 2px 3px 4px gray;
 }
 
 .new_project_info {

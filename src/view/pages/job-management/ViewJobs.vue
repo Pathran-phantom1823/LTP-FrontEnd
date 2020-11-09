@@ -19,7 +19,7 @@
                         <p class="card-text descriptionText">Description: {{ data.description }}</p>
                         <div class="col-sm-12 skillsPadding"><br>
                             <div class="row">
-                                Current Language of document: 
+                                Current Language of document:
                                 <b class="skills" v-for="(language, index) in data.languageFrom" :key="index">
                                     {{language}}</b>
                             </div>
@@ -85,7 +85,7 @@
                     <b class="mb-5 font-weight-normal">Posted by:</b>
                     <div class="d-flex justify-content-start mt-5 mb-3 post_owner">
                         <v-avatar>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU" alt="John" />
+                            <img :src="profileImage" alt="Profile Image" />
                         </v-avatar>
                         <div class="ml-2">
                             <p class="card-text">
@@ -115,12 +115,14 @@
 </template>
 
 <script>
+import JwtService from "@/core/services/jwt.service";
 import Swal from "sweetalert2";
 import ApiService from "@/core/services/api.service";
 export default {
     data() {
         return {
             userID: null,
+            profileImage: null,
             feedDetails: [],
             feedData: [
 
@@ -175,7 +177,7 @@ export default {
         }).then(res => {
             // console.log(res.);
             res.data.map(el => {
-                let tempRes = el.languageFrom.replace(/,/g,' ')
+                let tempRes = el.languageFrom.replace(/,/g, ' ')
                 el.languageFrom = tempRes.trim().split(' ')
             })
             this.feedData = res.data
@@ -215,6 +217,30 @@ export default {
                 e.target.className = "mdi mdi-heart-outline";
             }
         },
+        retreiveImage(postedById) {
+            this.$axios({
+                method: "post",
+                url: "http://localhost:8003/ltp/getProfile/",
+                header: {
+                    Authorization: `${JwtService.getToken()}`
+                },
+                responseType: "blob",
+                data: {
+                    accountId: postedById
+                },
+            }).then((res) => {
+                this.convertImage(res);
+            });
+        },
+        convertImage(data) {
+            const url = URL.createObjectURL(data.data);
+            let img = new Image();
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+                console.log(img);
+            };
+            this.profileImage = url
+        },
         showViewMore(e) {
             e.target.children[1].children[5].children[1].style =
                 "transition: .5s; right: 0 !important;";
@@ -235,6 +261,7 @@ export default {
                 }).then(res => {
                     // console.log(res.data);
                     this.feedDetails = res.data[0]
+                    this.retreiveImage(res.data[0].postedById)
                     // console.log("feedDetails", this.feedDetails);
                 })
                 if (window.innerWidth < 750) {

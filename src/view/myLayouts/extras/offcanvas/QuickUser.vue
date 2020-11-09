@@ -235,9 +235,13 @@ export default {
     // const id = localStorage.getItem('value')
     this.userID = id.substr(id.lastIndexOf("*") + 1);
     console.log(this.userID);
+    let imageUrl = null
+    if(this.role === "super-admin"){
+      imageUrl = "http://localhost:8003/ltp/getAdminProfile/"
+    }
     this.$axios({
       method: "post",
-      url: "http://localhost:8003/ltp/getProfile/",
+      url: imageUrl,
       header: { Authorization: `${JwtService.getToken()}` },
       responseType: "blob",
       data: { accountId: this.userID },
