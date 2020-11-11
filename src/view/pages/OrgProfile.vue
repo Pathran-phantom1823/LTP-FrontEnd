@@ -858,9 +858,9 @@ export default {
       reader.readAsDataURL(input.files[0]);
     },
     submit: function () {
-      console.log("exist", this.exist);
+      // console.log("exist", this.exist);
       if (this.exist === true) {
-        console.log(this.profiles.image);
+        // console.log(this.profiles.image);
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         let payload = new FormData();
@@ -890,7 +890,7 @@ export default {
         // axios script
         ApiService.post("createAgencyProfile", payload)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire({
               title: "",
               text: `Profile is created`,
@@ -931,11 +931,11 @@ export default {
                 let tempres2 = el.category.replace(/,/g, " ");
                 el.category = tempres2.trim().split(" ");
               }
-              console.log(this.profiles.skillName);
+              // console.log(this.profiles.skillName);
             });
             this.exist = res.data[1];
             this.profiles = res.data[0][0];
-            console.log("agency", res.data);
+            // console.log("agency", res.data);
             this.tempImage = res.data[0][0].image;
             this.ctxFrom = res.data[0][0].fromTime;
             this.ctxTo = res.data[0][0].toTime;
@@ -976,7 +976,7 @@ export default {
       let img = new Image();
       img.onload = () => {
         URL.revokeObjectURL(url);
-        console.log(img);
+        // console.log(img);
       };
       this.file = url;
     },
@@ -1014,7 +1014,7 @@ export default {
         payload.append("img", this.profiles.image);
         ApiService.post("updateAgencyProfilewithImage", payload)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire({
               title: "",
               text: `Profile is updated`,
@@ -1034,7 +1034,7 @@ export default {
       } else {
         ApiService.post("updateAgencyProfile", payload)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire({
               title: "",
               text: `Profile is updated`,

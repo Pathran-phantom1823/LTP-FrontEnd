@@ -167,7 +167,7 @@ import ApiService from "@/core/services/api.service";
       },
       retrieveQuotation(){
         ApiService.get("getQuotation").then(res => {
-          console.log("data", res.data);
+          // console.log("data", res.data);
           this.quotes = res.data
         })
       }

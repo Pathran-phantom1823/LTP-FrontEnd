@@ -105,7 +105,7 @@ export default {
   mounted(){
     let vm = this;
 
-    console.log(vm.descriptions);
+    // console.log(vm.descriptions);
     this.file = vm.descriptions.file
     this.tempFile = vm.descriptions.file
   },
@@ -118,7 +118,7 @@ export default {
     },
     next() {
       let vm = this.descriptions
-      console.log(vm.file === this.tempFile);
+      // console.log(vm.file === this.tempFile);
       if (
         vm.description === "" ||
         vm.languageFrom.length === 0 ||

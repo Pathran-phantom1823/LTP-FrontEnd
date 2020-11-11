@@ -240,7 +240,7 @@ export default {
     },
     methods: {
         changedCity(data) {
-            console.log("data", data);
+            // console.log("data", data);
             Object.keys(this.listOfCountry).map((el) => {
                 if (el === data) {
                     Object.keys(this.listOfCountry).filter((el2) => {
@@ -329,7 +329,7 @@ export default {
                     });
                 })
                 .catch((e) => {
-                    console.log(e);
+                    // console.log(e);
                     Swal.fire({
                         title: "",
                         text: `${e.message}`,
@@ -373,7 +373,7 @@ export default {
                     });
                 })
                 .catch((e) => {
-                    console.log(e);
+                    // console.log(e);
                     this.retrieveProfile()
                     Swal.fire({
                         title: "",
@@ -402,7 +402,7 @@ export default {
             ApiService.post("retrieveProfile", {
                 accountId: this.userID
             }).then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 this.exist = res.data[1]
                 this.data = res.data[0][0]
                 this.profileImage = res.data[0][0].image
@@ -438,7 +438,7 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.image = url
         },

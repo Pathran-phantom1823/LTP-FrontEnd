@@ -160,7 +160,7 @@ export default {
         
         }).then((res) => {
         this.translators = res.data;
-          console.log(res.data);
+          // console.log(res.data);
       });
     },
     searchRetrieve(){
@@ -183,7 +183,7 @@ export default {
       });
     },
     post() {
-      console.log(this.from, this.to);
+      // console.log(this.from, this.to);
       let tempTopic =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).replace("0.", "");

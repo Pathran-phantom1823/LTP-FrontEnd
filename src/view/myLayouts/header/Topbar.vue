@@ -108,7 +108,7 @@ export default {
         const id = localStorage.getItem("value");
         const userID = id.substr(id.lastIndexOf("*") + 1);
         ApiService.post("getmyAssignedQuotations", {id: userID}).then((res) => {
-            console.log("quote", res.data);
+            // console.log("quote", res.data);
             this.data = res.data
         })
         }

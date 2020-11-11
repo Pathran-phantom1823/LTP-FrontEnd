@@ -198,7 +198,7 @@ export default {
     },
     methods: {
         saveJob(e, jobId, postedById) {
-            console.log("jobId: ", jobId, " postedBy:", postedById);
+            // console.log("jobId: ", jobId, " postedBy:", postedById);
             ApiService.post("save-job", {
                 jobId: jobId,
                 postedById: postedById,
@@ -237,7 +237,7 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },
@@ -312,7 +312,7 @@ export default {
             }
         },
         acceptJob(jobId) {
-            console.log(jobId, this.userID)
+            // console.log(jobId, this.userID)
             ApiService.post("apply-job", {
                 applicantId: this.userID,
                 jobId: jobId,

@@ -158,7 +158,7 @@ export default {
         to: email,
         subject: "Forgot Password",
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         submitButton.classList.remove(
           "spinner",
           "spinner-light",

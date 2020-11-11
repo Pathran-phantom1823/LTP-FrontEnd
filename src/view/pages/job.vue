@@ -269,7 +269,7 @@ export default {
             ApiService.post("editJob", {
                 id: data,
             }).then((res) => {
-                console.log(res.data[0]);
+                // console.log(res.data[0]);
                 res.data.map((el) => {
                     let tempres = el.languageFrom.replace(/,/g, " ");
                     el.languageFrom = tempres.trim().split(" ");
@@ -403,7 +403,7 @@ export default {
                 ApiService.post("get-my-jobs", {
                     id: userID,
                 }).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     if (res.data[0].id) {
                         res.data.map((el) => {
                             let tempres = el.languageFrom.replace(/,/g, " ");
@@ -423,7 +423,7 @@ export default {
                 ApiService.post("getsavejob", {
                     savedById: userID,
                 }).then((res) => {
-                    console.log("saved jobs ============ " + JSON.stringify(res.data));
+                    // console.log("saved jobs ============ " + JSON.stringify(res.data));
                     if (res.data.length > 0) {
                         res.data.map((el) => {
                             let tempres = el.languageFrom.replace(/,/g, " ");
@@ -440,7 +440,7 @@ export default {
                 ApiService.post("getMyJobHistory", {
                     id: userID,
                 }).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     if (res.data.length > 0) {
                         this.data = res.data;
                     } else {
@@ -472,7 +472,7 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },

@@ -187,7 +187,7 @@ export default {
         
     },
     retrieveRooms(){
-      console.log(this.userID)
+      // console.log(this.userID)
       ApiService.post("getMyRooms", {id: this.userID}).then((res) => {
         // console.log(res.data);
         this.rooms = res.data

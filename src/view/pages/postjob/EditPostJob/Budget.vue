@@ -149,7 +149,7 @@ export default {
             this.typeOfPayment.map((el) => {
                 if (el.id === id) {
                     el.click = true;
-                    console.log(id, el.name);
+                    // console.log(id, el.name);
                     this.hourly = true;
                     this.paymentType = el.name;
                     vm.budgets.priceType = el.name

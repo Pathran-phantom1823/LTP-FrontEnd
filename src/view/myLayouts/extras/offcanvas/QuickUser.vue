@@ -249,7 +249,7 @@ export default {
     });
     // const id = localStorage.getItem('value')
     this.userID = id.substr(id.lastIndexOf("*") + 1);
-    console.log(this.userID);
+    // console.log(this.userID);
     let imageUrl = null;
     if (this.role === "super-admin") {
       imageUrl = "http://localhost:8003/api/getAdminProfile/";
@@ -281,12 +281,12 @@ export default {
     },
 
     forceToDownload(data) {
-      console.log(data.data);
+      // console.log(data.data);
       const url = URL.createObjectURL(data.data);
       let img = new Image();
       img.onload = () => {
         URL.revokeObjectURL(url);
-        console.log(img);
+        // console.log(img);
       };
       this.profileImage = url;
     },

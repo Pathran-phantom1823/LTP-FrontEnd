@@ -865,10 +865,10 @@ export default {
           zipcode: this.schoolzipcode,
           country: this.schoolcountry,
         }).then((res) => {
-          console.log("Education Details:  ", res);
+          // console.log("Education Details:  ", res);
         });
-        console.log("response", res);
-        console.log(profileDetails);
+        // console.log("response", res);
+        // console.log(profileDetails);
       })
       .then(() => {
         e.preventDefault();
@@ -880,7 +880,7 @@ export default {
         });
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
         Swal.fire({
           title: "",
           text: `${e.message}`,

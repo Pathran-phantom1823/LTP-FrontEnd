@@ -435,7 +435,7 @@ export default {
         ApiService.post("getacceptedjobs", {
             savedById: userID,
         }).then((res) => {
-            console.log("acceptedJObs", res.data);
+            // console.log("acceptedJObs", res.data);
             res.data.map(el => {
                 if (el.username !== null) {
                     this.acceptedJobs = res.data;
@@ -571,8 +571,8 @@ export default {
             }
             this.navEvent = e.target;
         },
-        saveJob(index) {
-            console.log("removing from save jobs", index);
+        saveJob() {
+            // console.log("removing from save jobs", index);
         },
         viewMore(ViewEvent, data) {
             if (ViewEvent) {
@@ -605,7 +605,7 @@ export default {
                     // console.log(res);
                     this.assignedJobsDetails = res.data[0];
                     this.retreiveImage(res.data[0].postedById)
-                    console.log("feedDetails", this.feedDetails);
+                    // console.log("feedDetails", this.feedDetails);
                 });
                 this.$refs["MoreInfoWrapper2"].style = "left: 0 !important";
                 this.$refs["moreInfo2"].style =
@@ -640,7 +640,7 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },

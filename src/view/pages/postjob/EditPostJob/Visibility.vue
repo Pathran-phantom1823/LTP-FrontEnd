@@ -101,7 +101,7 @@ export default {
   },
   mounted(){
     let vm = this
-    console.log(vm.visibilities.visibility);
+    // console.log(vm.visibilities.visibility);
     this.canSee.map((el) => {
       if(el.name === vm.visibilities.visibility){
         this.tempCanSee = el.name
