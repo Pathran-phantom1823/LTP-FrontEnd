@@ -161,7 +161,7 @@ export default {
             ApiService.post("checUsername", {
                 username: e
             }).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data === "Username is Unavailable") {
                     this.isExist = true;
                 } else {
@@ -173,7 +173,7 @@ export default {
             ApiService.post("checkEmail", {
                 email: e
             }).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data === "Email is Unavailable") {
                     this.emailexist = true;
                 } else {
@@ -280,8 +280,8 @@ export default {
                             username: username,
                             roleType: "FREE",
                         })
-                        .then((res) => {
-                            console.log(res.data);
+                        .then(() => {
+                            // console.log(res.data);
                             this.$router.push({
                                 name: "login",
                             });

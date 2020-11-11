@@ -149,7 +149,7 @@ export default {
       ApiService.post("checkUsernameExistence", {
         username: e,
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data === "Username is Unavailable") {
           this.isExist = true;
         } else {
@@ -161,7 +161,7 @@ export default {
       ApiService.post("checkEmailExistence", {
         email: e,
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data === "Email is Unavailable") {
           this.emailexist = true;
         } else {
@@ -220,7 +220,7 @@ export default {
 
     save(id) {
       // console.log(this.itemId)
-      console.log("data", id);
+      // console.log("data", id);
       ApiService.put("updateMember", {
         id: id,
         username: this.editedItem.username,
@@ -248,7 +248,7 @@ export default {
       ApiService.post("getmembers", {
         id: userID,
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.members = res.data;
         // res.data.map(el => {
         //     this.members.push(el)

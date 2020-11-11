@@ -109,7 +109,7 @@ export default {
         if(id !== null){
             this.userID = id.substr(id.lastIndexOf("*") + 1);
         }
-        console.log(this.userID);
+        // console.log(this.userID);
         this.$axios({
             method: "post",
             url: "http://localhost:8003/api/getProfile/",
@@ -149,17 +149,17 @@ export default {
             ApiService.post("getmyAssignedQuotations", {
                 id: userID
             }).then((res) => {
-                console.log("quote", res.data);
+                // console.log("quote", res.data);
                 this.data = res.data
             })
         },
         forceToDownload(data) {
-            console.log(data.data);
+            // console.log(data.data);
             const url = URL.createObjectURL(data.data);
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },
@@ -169,7 +169,7 @@ export default {
         // private String intent;
         // private String description;
         pay() {
-            console.log('---paying----');
+            // console.log('---paying----');
             ApiService.post("/pay", {
                 total: 12.00,
                 currency: "USD",
@@ -178,7 +178,7 @@ export default {
                 description: "Payment"
             }).then(response => {
                 window.location.href = response.data.data[0].url
-                console.log(response.data)
+                // console.log(response.data)
             });
         }
     }

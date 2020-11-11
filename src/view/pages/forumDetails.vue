@@ -89,7 +89,7 @@ export default {
 
         if (!this.isAuthenticated) {
             let id = this.$route.params.id
-            console.log(id);
+            // console.log(id);
             ApiService.post("getForumDetails", {
                 postId: id
             }).then(res => {
@@ -101,7 +101,7 @@ export default {
             })
         } else {
             let id = this.$route.params.id
-            console.log(id);
+            // console.log(id);
             ApiService.post("getForumDetailswithAuth", {
                 postId: id
             }).then(res => {
@@ -154,7 +154,7 @@ export default {
                 ApiService.post("getComment", {
                     postId: id
                 }).then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.comments = res.data
                     // console.log("res", this.liked);
                 })
@@ -162,7 +162,7 @@ export default {
                 ApiService.post("getCommentwithAuth", {
                     postId: id
                 }).then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.comments = res.data
                     // console.log("res", this.liked);
                 })
@@ -173,7 +173,7 @@ export default {
                 ApiService.get("getLikes").then(res => {
                     res.data.map(el => {
                         this.comments.map(com => {
-                            console.log();
+                            // console.log();
                             if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
                                 this.liked = true
                             } else {
@@ -186,7 +186,7 @@ export default {
                 ApiService.get("getLikeswithAuth").then(res => {
                     res.data.map(el => {
                         this.comments.map(com => {
-                            console.log();
+                            // console.log();
                             if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
                                 this.liked = true
                             } else {

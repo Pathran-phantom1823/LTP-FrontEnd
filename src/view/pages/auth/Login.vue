@@ -164,8 +164,8 @@ export default {
                         "spinner-right"
                     );
                 })
-                .catch((e) => {
-                    console.log(e)
+                .catch(() => {
+                    // console.log(e)
                     Swal.fire({
                         title: "Network error",
                         text: "Please refresh the page or Contact the administrator",

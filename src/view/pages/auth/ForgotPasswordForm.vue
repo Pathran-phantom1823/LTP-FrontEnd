@@ -189,7 +189,7 @@ export default {
         email: this.$route.query.email,
         password: password
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         submitButton.classList.remove(
           "spinner",
           "spinner-light",
@@ -215,9 +215,9 @@ export default {
       });
     },
   },
-  created() {
-    console.log(this.$route.query.email);
-  },
+  // created() {
+  //   console.log(this.$route.query.email);
+  // },
   computed: {
     ...mapState({
       errors: (state) => state.auth.errors,

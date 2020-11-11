@@ -163,9 +163,9 @@ export default {
       //     this.index = index
       //   }
       // })
-      console.log("encrypted ", this.getRole)
+      // console.log("encrypted ", this.getRole)
       this.$store.commit('get_Role', localStorage.getItem("role"))
-      console.log("decrypted ", this.getRole)
+      // console.log("decrypted ", this.getRole)
       switch(this.getRole.toLowerCase()){
         case 'agency':
           this.index = 1;

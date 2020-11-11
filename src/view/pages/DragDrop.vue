@@ -68,7 +68,7 @@ export default {
       if (this.dragCount <= 0) this.isDragging = false;
     },
     onInputChange(e) {
-      console.log(e);
+      // console.log(e);
       this.tempFile = e.target;
     },
     getFile(event) {
@@ -85,7 +85,7 @@ export default {
       // console.log(this.filName);
     },
     upload(id) {
-      console.log(id);
+      // console.log(id);
       let formdata = new FormData();
       let formdateQuote = new FormData()
       let job = {

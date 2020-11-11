@@ -146,7 +146,7 @@ export default {
         },
     },
     mounted() {
-        console.log(this.$route.params.id);
+        // console.log(this.$route.params.id);
         let id = this.$route.params.id;
         ApiService.post("getJob", {
             id: id,
@@ -178,7 +178,7 @@ export default {
             ApiService.post("getBids", {
                 id: id
             }).then((res) => {
-                console.log(res);
+                // console.log(res);
                 this.bidders = res.data;
             });
         },
@@ -203,7 +203,7 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },

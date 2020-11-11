@@ -146,22 +146,22 @@ export default {
     Visibility,
     Budget,
   },
-  mounted() {
-    console.log("jobdatea", this.jobData);
-  },
+  // mounted() {
+  //   console.log("jobdatea", this.jobData);
+  // },
   methods: {
     hideModal() {
       let vm = this;
       this.$emit("hideModal", vm.dialog);
     },
     getTitle(data) {
-      console.log(data.title, data.category, data.subject);
+      // console.log(data.title, data.category, data.subject);
       this.projectTitle = data.title;
       this.service = data.category;
       this.subject = data.subject;
     },
     getDescription(data) {
-      console.log(data.file, data.languageFrom, data.languageTo);
+      // console.log(data.file, data.languageFrom, data.languageTo);
       this.description = data.description;
       if (data.file[0] !== undefined) {
         this.file = data.file[0];
@@ -174,12 +174,12 @@ export default {
       // console.log(this.languageTo.toString());
     },
     getVisibility(data) {
-      console.log(data.visibility, data.levelOfConfidentiality);
+      // console.log(data.visibility, data.levelOfConfidentiality);
       this.canSeeJob = data.visibility;
       this.confidentiality = data.levelOfConfidentiality;
     },
     getBudget(data) {
-      console.log("temp", data);
+      // console.log("temp", data);
       if (data.priceType === "Pay per hour") {
         this.paymentType = data.priceType;
         this.priceFrom = data.fromPrice;

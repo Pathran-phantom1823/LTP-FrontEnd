@@ -137,7 +137,7 @@ export default {
     next() {
       // console.log(this.category);
       let vm = this.titles
-      console.log(vm);
+      // console.log(vm);
       if (vm.title === "" || vm.category === "" || vm.subject === "") {
         this.snackbar = true;
       } else {

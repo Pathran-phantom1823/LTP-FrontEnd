@@ -73,12 +73,12 @@ const actions = {
             context.commit(SET_USERTYPE)
             resolve(data);
           }else{
-            console.log(data.message);
+            // console.log(data.message);
             context.commit(SET_ERROR, data.message);
           }
         })
         .catch(({ response }) => {
-          console.log("res", response);
+          // console.log("res", response);
           context.commit(SET_ERROR, response.data);
         });
     });
@@ -95,8 +95,9 @@ const actions = {
         localStorage.setItem('value', result)
         // context.commit(SET_AUTH, res);
         resolve(res)
-      }).catch(error => {
-        console.log(error)
+      }).catch(response => {
+        context.commit(SET_ERROR, response.data);
+        // console.log(error)
       })
         // .then(({ data }) => {
         //   console.log(data)
@@ -122,7 +123,7 @@ const actions = {
       // console.log(JSON.stringify(next))
       // console.log("current " + param.to.path)
       if(!param.to.path.split("/").includes(context.getters.getUserType) && param.to.path.replaceAll(" ", "") !== "/error"){
-        console.log("Unauthorized access")
+        // console.log("Unauthorized access")
         // console.log("not included ", param.from.path === param.to.path)
         // if(param.from.path !== router.currentRoute.path){
         //   console.log("redirecting to : /" + context.getters.getUserType)

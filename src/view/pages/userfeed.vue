@@ -246,7 +246,7 @@ export default {
                 }).then(res => {
                     // console.log(res);
                     this.feedDetails = res.data[0]
-                    console.log("feedDetails", this.feedDetails);
+                    // console.log("feedDetails", this.feedDetails);
 
                     this.$axios({
                         method: "post",
@@ -280,12 +280,12 @@ export default {
             }
         },
         forceToDownload(data) {
-            console.log(data.data);
+            // console.log(data.data);
             const url = URL.createObjectURL(data.data);
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                console.log(img);
+                // console.log(img);
             };
             this.profileImage = url
         },
@@ -327,7 +327,7 @@ export default {
             }
         },
         acceptJob(jobId) {
-            console.log(jobId, this.userID)
+            // console.log(jobId, this.userID)
             ApiService.post("apply-job", {
                 applicantId: this.userID,
                 jobId: jobId,

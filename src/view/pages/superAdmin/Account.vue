@@ -247,7 +247,7 @@ export default {
 
         save() {
             // console.log(this.itemId)
-            console.log("data", this.editedItem)
+            // console.log("data", this.editedItem)
             this.members.map(el => {
                 if (el.id === this.itemId) {
                     this.members.splice(this.itemId, 1);

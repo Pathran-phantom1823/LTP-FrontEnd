@@ -358,14 +358,14 @@ export default {
   },
   methods: {
     avail(data) {
-      console.log(this.plan);
+      // console.log(this.plan);
       this.$store.commit("setplan", data);
       localStorage.setItem("plan", data);
       if (data === "user_standard") {
         this.plan = "Standard User";
         this.tempPrice = 140;
         this.dialog = true;
-        console.log(this.plan);
+        // console.log(this.plan);
       } else {
         this.plan = "Standard Organization";
         this.tempPrice = 240;

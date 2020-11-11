@@ -13,8 +13,8 @@ export default {
         let param = this.$route.query
         const id = localStorage.getItem('value')
         const userID = id.substr(id.lastIndexOf('*') + 1)
-        ApiService.get("/success/" + userID + '/' + param.paymentId + '/' + param.PayerID).then(response => {
-            console.log(response);
+        ApiService.get("/success/" + userID + '/' + param.paymentId + '/' + param.PayerID).then(() => {
+            // console.log(response);
         })
     }
 }

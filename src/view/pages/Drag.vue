@@ -36,8 +36,8 @@ export default {
                 doc.style.top = event.clientY - 10 + "px"; 
             }
         },
-        drop(index){
-            console.log(index)
+        drop(){
+            // console.log(index)
             this.pickedUp = false;
         }
     }

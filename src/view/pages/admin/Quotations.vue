@@ -232,7 +232,7 @@ export default {
       ApiService.post("getJob", {
         id: id,
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         res.data.map((el) => {
           let tempRes = el.languageFrom.replace(/,/g, " ");
           el.languageFrom = tempRes.trim().split(" ");
@@ -254,7 +254,7 @@ export default {
       });
     },
     choosenAccount(account, quotationId, quotationTitle) {
-      console.log(quotationId, quotationTitle);
+      // console.log(quotationId, quotationTitle);
       if (account === "organization") {
         sessionStorage.setItem("account", "organization");
         sessionStorage.setItem("quotationId", quotationId);

@@ -40,7 +40,7 @@ export default {
          retrieveAccounts(){
             ApiService.post("getAccounts", {roleType: "FREE"}).then(res => {
                 this.accounts = res.data
-                console.log(res.data);
+                // console.log(res.data);
             })
         }
     }
