@@ -91,7 +91,7 @@ export default {
     if (!this.isAuthenticated) {
       this.$router.push({ name: "login" });
     }
-
+    
     // Simulate the delay page loading
     setTimeout(() => {
       // Remove page loader after some time

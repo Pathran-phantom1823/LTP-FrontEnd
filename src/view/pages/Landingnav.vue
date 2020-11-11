@@ -1,7 +1,7 @@
 <template>
 <div>
-    <b-navbar toggleable="lg" type="dark" class="navbar-horizontal" style="background-color:rgb(51, 188, 247)" fixed="top">
-        <b-navbar-brand href="#" style="color:white" @click="$router.push('/banner')">
+    <b-navbar toggleable="lg" type="dark" class="navbar-horizontal" style="background-color: rgb(51, 188, 247)" fixed="top">
+        <b-navbar-brand href="#" style="color: white" @click="$router.push('/banner')">
             <h1>LTP</h1>
         </b-navbar-brand>
 
@@ -12,19 +12,23 @@
 
             <b-navbar-nav class="ml-auto">
                 <v-btn-toggle v-model="toggle_exclusive">
-                    <v-btn icon @click.stop="dialog = true" style="color:#1a75ff;background-color:#1a75ff">
-                        <v-icon color="white">mdi-magnify</v-icon>
-                    </v-btn>
-                    <v-btn color="white" style="color:#1a75ff" @click="quotation">
+                    <!-- <v-btn
+              icon
+              @click.stop="dialog = true"
+              style="color: #1a75ff; background-color: #1a75ff"
+            >
+              <v-icon color="white">mdi-magnify</v-icon>
+            </v-btn> -->
+                    <v-btn color="white" style="color: #1a75ff" @click="quotation">
                         <strong>Instant Quote</strong>
                     </v-btn>
-                    <v-btn color="white" style="color:#1a75ff" @click="goToForum">
+                    <v-btn color="white" style="color: #1a75ff" @click="goToForum">
                         <strong>Forum</strong>
                     </v-btn>
-                    <v-btn color="white" style="color:#1a75ff" @click="$router.push('login')">
+                    <v-btn color="white" style="color: #1a75ff" @click="$router.push('login')">
                         <strong>Login</strong>
                     </v-btn>
-                    <v-btn color="white" style="color:#1a75ff" @click="$router.push('register')">
+                    <v-btn color="white" style="color: #1a75ff" @click="$router.push('register')">
                         <strong>Register</strong>
                     </v-btn>
                 </v-btn-toggle>
@@ -59,6 +63,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
     data() {
         return {
@@ -78,13 +83,27 @@ export default {
     },
     methods: {
         quotation() {
-            this.$router.push('/instant-quote')
-            localStorage.setItem('method', 'quotation')
+            if (localStorage.getItem("id_token") !== null) {
+                // this.$router.push("/forums");
+                this.$router.push("/instant-quote");
+                sessionStorage.setItem("method", "quotation");
+            } else {
+                Swal.fire({
+                    title: "",
+                    text: "Please Login to view the forums",
+                    icon: "info",
+                    confirmButtonClass: "btn btn-secondary",
+                }).then(res => {
+                    if (res.isConfirmed) {
+                        this.$router.push("/login");
+                    }
+                });
+            }
         },
         goToForum() {
-            this.$router.push('/forums')
-        }
-    }
+            this.$router.push("/forums");
+        },
+    },
 };
 </script>
 

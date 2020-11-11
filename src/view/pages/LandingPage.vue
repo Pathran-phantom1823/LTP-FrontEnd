@@ -8,8 +8,8 @@
                 <b-col sm="5">
                     <h1 class="pt-10 bannerTitle">Language Translation Portal</h1>
                     <p class="bannerDesc">
-                        An online web application portal for tanslation different
-                        documents worlwide.
+                        An online web application portal for tanslation of different
+                           languages.
                     </p>
                     <div>
                         <b-button block size="lg" variant="primary" @click="postJob">POST JOB NOW</b-button>
@@ -71,7 +71,7 @@
             </b-col>
             <b-col sm="6" data-aos="fade-right" data-aos-duration="3000">
                 <div>
-                    <v-img src="../../../public/media/bg/service3.png"></v-img>
+                    <v-img src="../../../public/media/bg/Service3.png"></v-img>
                 </div>
             </b-col>
         </b-row>
@@ -162,6 +162,11 @@ export default {
             ],
         };
     },
+    mounted(){
+        // const string = Math.random().toString(36).substring(2,5)
+        // const insert = string + ':' + 12
+        // alert(insert.substr(insert.lastIndexOf(':') + 1))  
+    },
     computed:{
       backgroundImage() {
         return process.env.BASE_URL + "media/bg/service4.png";
@@ -173,8 +178,7 @@ export default {
                 behavior: "smooth"
             });
         },
-        getData(data) {
-            console.log(data);
+        getData() {
         },
         selectService(service) {
             localStorage.setItem('service', service)
@@ -182,8 +186,10 @@ export default {
         },
         postJob() {
             localStorage.setItem('service', null)
-            localStorage.setItem('method', 'postjob')
-            this.$router.push('/postjob')
+            sessionStorage.setItem('method', 'postjob')
+            if(localStorage.getItem('id_token') === null){
+                this.$router.push('/login')
+            }
         },
     },
 };
