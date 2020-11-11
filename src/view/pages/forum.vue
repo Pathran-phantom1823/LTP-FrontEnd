@@ -24,7 +24,7 @@
         </b-col>
         <b-col>
           <v-img
-            src="../../../public/media/bg/service3.png"
+            src="../../../public/media/bg/Service3.png"
             width="500"
           ></v-img>
         </b-col>
