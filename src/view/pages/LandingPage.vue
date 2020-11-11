@@ -178,8 +178,7 @@ export default {
                 behavior: "smooth"
             });
         },
-        getData(data) {
-            console.log(data);
+        getData() {
         },
         selectService(service) {
             localStorage.setItem('service', service)
