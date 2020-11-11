@@ -157,9 +157,6 @@ import ApiService from "@/core/services/api.service";
         to: email,
         subject: "Your report has been resolved",
         })
-      // .then((res) => {
-      //   console.log(res)
-      // })
     },
   }
 }
