@@ -71,7 +71,7 @@
             </b-col>
             <b-col sm="6" data-aos="fade-right" data-aos-duration="3000">
                 <div>
-                    <v-img src="../../../public/media/bg/service3.png"></v-img>
+                    <v-img src="../../../public/media/bg/Service3.png"></v-img>
                 </div>
             </b-col>
         </b-row>
