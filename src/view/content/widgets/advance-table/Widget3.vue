@@ -75,7 +75,7 @@ export default {
     },
     methods: {
        accept(jobId, applicantId) {
-      console.log("jobId: ", jobId, "applicantId", applicantId);
+    //   console.log("jobId: ", jobId, "applicantId", applicantId);
       ApiService.post("accept-bidder", {
         jobId: jobId,
         id: applicantId,
@@ -91,7 +91,7 @@ export default {
       });
     },
     decline(jobId, applicantId) {
-      console.log("jobId: ", jobId, "applicantId", applicantId);
+    //   console.log("jobId: ", jobId, "applicantId", applicantId);
       ApiService.post("decline-bidder", {
         jobId: jobId,
         id: applicantId,
