@@ -1,7 +1,7 @@
 <template>
   <!-- begin::Page loader -->
   <div class="page-loader page-loader-logo">
-    <img alt="Logo" :src="logo" width="100" />
+    <h1>LTP</h1>
     <div class="spinner" v-bind:class="spinnerClass || 'spinner-primary'"></div>
   </div>
   <!-- end::Page Loader -->
