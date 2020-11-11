@@ -70,7 +70,7 @@ import {
 } from "@/core/services/store/htmlclass.module.js";
 import KTDropdownNotification from "@/view/myLayouts/extras/dropdown/DropdownNotification.vue";
 
-import JwtService from "@/core/services/jwt.service";
+// import JwtService from "@/core/services/jwt.service";
 export default {
     data() {
         return {
@@ -112,10 +112,10 @@ export default {
         console.log(this.userID);
         this.$axios({
             method: "post",
-            url: "http://localhost:8003/ltp/getProfile/",
-            header: {
-                Authorization: `${JwtService.getToken()}`
-            },
+            url: "http://localhost:8003/api/getProfile/",
+            // header: {
+            //     Authorization: `${JwtService.getToken()}`
+            // },
             responseType: "blob",
             data: {
                 accountId: this.userID

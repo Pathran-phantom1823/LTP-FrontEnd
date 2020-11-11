@@ -23,6 +23,21 @@
     </div>
 
     <div
+      v-if="!showMenu"
+      id="kt_quick_user"
+      ref="kt_quick_user"
+      class="offcanvas offcanvas-right p-10"
+    >
+      <div
+        class="offcanvas-header d-flex align-items-center justify-content-between pb-5"
+      ></div>
+      <button class="btn btn-block btn-light-primary btn-bold" @click="onLogout">
+        Sign out
+      </button>
+    </div>
+
+    <div
+      v-if="showMenu"
       id="kt_quick_user"
       ref="kt_quick_user"
       class="offcanvas offcanvas-right p-10"
@@ -97,39 +112,40 @@
             @click.native="closeOffcanvas"
             class="navi-item"
           > -->
-            <div class="navi-link" v-if="role !== 'super-admin' || role !== 'agency'">
-              <div class="symbol symbol-40 bg-light mr-3">
-                <div class="symbol-label">
-                  <span class="svg-icon svg-icon-md svg-icon-success">
-                    <!--begin::Svg Icon-->
-                    <inline-svg
-                      src="media/svg/icons/General/Notification2.svg"
-                    />
-                    <!--end::Svg Icon-->
-                  </span>
-                </div>
-              </div>
-              <div class="navi-text">
-                <div class="font-weight-bold" @click.prevent="goToProfile">
-                  My Profile
-                </div>
-                <div class="text-muted">
-                  Account settings and more
-                  <span
-                    class="label label-light-danger label-inline font-weight-bold"
-                  >
-                    update
-                  </span>
-                </div>
+          <div
+            class="navi-link"
+            v-if="role !== 'super-admin' || role !== 'agency'"
+            @click.prevent="goToProfile"
+          >
+            <div class="symbol symbol-40 bg-light mr-3">
+              <div class="symbol-label">
+                <span class="svg-icon svg-icon-md svg-icon-success">
+                  <!--begin::Svg Icon-->
+                  <inline-svg src="media/svg/icons/General/Notification2.svg" />
+                  <!--end::Svg Icon-->
+                </span>
               </div>
             </div>
+            <div class="navi-text">
+              <div class="font-weight-bold">My Profile</div>
+              <div class="text-muted">
+                Account settings and more
+                <span
+                  class="label label-light-danger label-inline font-weight-bold"
+                >
+                  update
+                </span>
+              </div>
+            </div>
+          </div>
           <!-- </router-link> -->
           <!--end:Item-->
           <!--begin::Item-->
           <router-link
             to="/organization/messenger"
             @click.native="closeOffcanvas"
-            class="navi-item" v-if="role === 'agency'"
+            class="navi-item"
+            v-if="role === 'agency'"
           >
             <div class="navi-link">
               <div class="symbol symbol-40 bg-light mr-3">
@@ -142,11 +158,7 @@
                 </div>
               </div>
               <div class="navi-text">
-                <div
-                  class="font-weight-bold"
-                >
-                  My Messages
-                </div>
+                <div class="font-weight-bold">My Messages</div>
                 <div class="text-muted">Rooms and conversations</div>
               </div>
             </div>
@@ -184,35 +196,38 @@ import { LOGOUT } from "@/core/services/store/auth.module";
 import KTLayoutQuickUser from "@/assets/js/layout/extended/quick-user.js";
 import KTOffcanvas from "@/assets/js/components/offcanvas.js";
 import ApiService from "@/core/services/api.service";
-import JwtService from "@/core/services/jwt.service";
-import {
-    mapGetters
-} from "vuex";
+// import JwtService from "@/core/services/jwt.service";
+import { mapGetters } from "vuex";
 export default {
   name: "KTQuickUser",
   data() {
     return {
       dates: ["2018-09-15", "2018-09-20"],
-      menu: false,
+      showMenu: false,
       userID: null,
       currentUser: null,
       user: null,
       email: null,
       name: null,
       profileImage: null,
-      role: null
+      role: null,
     };
   },
   mounted() {
     // Init Quick User Panel
-    this.$store.commit('get_Role', localStorage.getItem("role"))
-    this.role = this.getRole.toLowerCase()
+    this.$store.commit("get_Role", localStorage.getItem("role"));
+    this.role = this.getRole.toLowerCase();
+
+    if(this.role === 'super-admin' || this.role === 'agency'){
+      this.showMenu = true
+    }else{
+      this.showMenu = false
+    }
 
     KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
 
     const id = localStorage.getItem("value");
     this.userID = id.substr(id.lastIndexOf("*") + 1);
-
 
     ApiService.post("getCurrentUser", {
       id: this.userID,
@@ -235,16 +250,22 @@ export default {
     // const id = localStorage.getItem('value')
     this.userID = id.substr(id.lastIndexOf("*") + 1);
     console.log(this.userID);
-    let imageUrl = null
-    if(this.role === "super-admin"){
-      imageUrl = "http://localhost:8003/ltp/getAdminProfile/"
+    let imageUrl = null;
+    if (this.role === "super-admin") {
+      imageUrl = "http://localhost:8003/api/getAdminProfile/";
+    }else if(this.role === "agency"){
+      imageUrl = "http://localhost:8003/api/getAgencyImage/"
     }
     this.$axios({
       method: "post",
       url: imageUrl,
-      header: { Authorization: `${JwtService.getToken()}` },
+      // header: {
+      //   Authorization: `${JwtService.getToken()}`,
+      // },
       responseType: "blob",
-      data: { accountId: this.userID },
+      data: {
+        accountId: this.userID,
+      },
     }).then((res) => {
       this.forceToDownload(res);
     });
@@ -267,7 +288,7 @@ export default {
         URL.revokeObjectURL(url);
         console.log(img);
       };
-      this.profileImage = url
+      this.profileImage = url;
     },
 
     closeOffcanvas() {
@@ -277,10 +298,10 @@ export default {
       const id = localStorage.getItem("value");
       this.userID = id.substr(id.lastIndexOf("*") + 1);
       this.$router.push(`/organization/profile/${this.userID}`);
-      if(this.role === "agency"){
-        this.$router.push(`/organization/profile/${this.userID}`)
-      }else if(this.role === "super-admin"){
-        this.$router.push("/superAdmin/profile")
+      if (this.role === "agency") {
+        this.$router.push(`/organization/profile/${this.userID}`);
+      } else if (this.role === "super-admin") {
+        this.$router.push("/superAdmin/profile");
       }
     },
   },
@@ -288,9 +309,7 @@ export default {
     picture() {
       return process.env.BASE_URL + "media/users/300_21.jpg";
     },
-     ...mapGetters([
-      "getRole"
-    ]),
+    ...mapGetters(["getRole"]),
   },
 };
 </script>

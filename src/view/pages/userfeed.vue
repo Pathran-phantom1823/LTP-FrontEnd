@@ -142,7 +142,7 @@
 <script>
 import ApiService from "@/core/services/api.service";
 import Swal from "sweetalert2";
-import JwtService from "@/core/services/jwt.service";
+// import JwtService from "@/core/services/jwt.service";
 
 export default {
     data() {
@@ -250,10 +250,10 @@ export default {
 
                     this.$axios({
                         method: "post",
-                        url: "http://localhost:8003/ltp/getProfile/",
-                        header: {
-                            Authorization: `${JwtService.getToken()}`
-                        },
+                        url: "http://localhost:8003/api/getProfile/",
+                        // header: {
+                        //     Authorization: `${JwtService.getToken()}`
+                        // },
                         responseType: "blob",
                         data: {
                             accountId: res.data[0].postedById

@@ -112,16 +112,11 @@
                                 </div>
                               
                             </div>
-                               <!-- <select name="country" class="form-control form-control-solid form-control-lg"  :items="country2"
-                                             v-model="country"
-                                             @change="changedCity($event)">
-                                            <option value="">Select</option>
-                                        </select> -->
                             <div class="row"> 
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Country</label><span style="color: red">*</span>
-                                        <v-select :items="country2" v-model="data.country" outlined label="Select Country" @change="changedCity($event)" ></v-select>
+                                        <v-select :items="countryList" v-model="data.country" outlined label="Select Country" @change="changedCity(data.country)" ></v-select>
                                      
                                     </div>
                                 </div>
@@ -129,10 +124,7 @@
                                   <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>City</label><span style="color: red">*</span>
-                                        <v-select label="Select City" outlined :items="cities" v-model="data.city" ></v-select>
-                                        <!-- <input type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" :items="cities"
-                                            v-model="city" /> -->
-                                        <span class="form-text text-muted">Please enter your City.</span>
+                                        <v-select label="Select City" outlined :items="cityList" v-model="data.city" ></v-select>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +165,7 @@ import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
 import ApiService from "@/core/services/api.service";
 import countries from "@/view/pages/countries.json";
-import JwtService from "@/core/services/jwt.service";
+// import JwtService from "@/core/services/jwt.service";
 
 export default {
     name: "Wizard-1",
@@ -238,9 +230,17 @@ export default {
         data: [],
         update: true,
     }),
+    computed: {
+        countryList(){
+            return this.country2
+        },
+        cityList(){
+            return this.cities
+        }
+    },
     methods: {
         changedCity(data) {
-            // console.log("data", this.country);
+            console.log("data", data);
             Object.keys(this.listOfCountry).map((el) => {
                 if (el === data) {
                     Object.keys(this.listOfCountry).filter((el2) => {
@@ -385,11 +385,11 @@ export default {
 
             }else{
               if(this.file2 === this.profileImage){
-                console.log("test")
+                // console.log("test")
                 this.updated()
                 this.retrieveProfile()
               }else{
-                console.log("tested")
+                // console.log("tested")
                  this.updateSecond()
                  this.retrieveProfile()
               }
@@ -406,16 +406,25 @@ export default {
                 this.exist = res.data[1]
                 this.data = res.data[0][0]
                 this.profileImage = res.data[0][0].image
+                Object.keys(this.listOfCountry).map((el) => {
+                if (el === res.data[0][0].country) {
+                    Object.keys(this.listOfCountry).filter((el2) => {
+                        if (el2 === el) {
+                            this.cities = this.listOfCountry[el2];
+                        }
+                    });
+                }
+            });
             })
         },
 
         retreiveImage(accounId) {
             this.$axios({
                 method: "post",
-                url: "http://localhost:8003/ltp/getAdminProfile/",
-                header: {
-                    Authorization: `${JwtService.getToken()}`
-                },
+                url: "http://localhost:8003/api/getAdminProfile/",
+                // header: {
+                //     Authorization: `${JwtService.getToken()}`
+                // },
                 responseType: "blob",
                 data: {
                     accountId: accounId

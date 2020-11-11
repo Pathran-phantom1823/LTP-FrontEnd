@@ -98,11 +98,6 @@ export default {
             name: "Dashboard",
             link: "/agencyMember/dashboard"
           },
-          {
-            icon: "fas fa-user",
-            name: "Profile",
-            link: "/agencyMember/UserProfile" 
-          },
           'Task Management',
           {
             icon: "fas fa-tasks",
@@ -118,11 +113,6 @@ export default {
             icon: "flaticon2-architecture-and-city",
             name: "Dashboard",
             link: "/superAdmin/dashboard"
-          },
-          {
-            icon: "fas fa-user",
-            name: "Profile",
-            link: "/superAdmin/Profile"
           },
           'Account Management',
           {

@@ -84,7 +84,7 @@
 
 <script>
 // import Swal from "sweetalert2";
-import JwtService from "@/core/services/jwt.service";
+// import JwtService from "@/core/services/jwt.service";
 import ApiService from "@/core/services/api.service";
 import Widget3 from "@/view/content/widgets/advance-table/Widget3.vue";
 export default {
@@ -186,10 +186,10 @@ export default {
         retreiveImage(postedById) {
             this.$axios({
                 method: "post",
-                url: "http://localhost:8003/ltp/getProfile/",
-                header: {
-                    Authorization: `${JwtService.getToken()}`
-                },
+                url: "http://localhost:8003/api/getProfile/",
+                // header: {
+                //     Authorization: `${JwtService.getToken()}`
+                // },
                 responseType: "blob",
                 data: {
                     accountId: postedById
