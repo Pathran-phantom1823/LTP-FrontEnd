@@ -140,14 +140,14 @@ import ApiService from "@/core/services/api.service";
        },
 
       viewItem (item) {
-        console.log(item)
+        // console.log(item)
         this.item = item
         this.dialog = true
       },
   
      retrieveReport() {
       ApiService.get("getReports").then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.topics = res.data;
       });
     },
@@ -157,9 +157,9 @@ import ApiService from "@/core/services/api.service";
         to: email,
         subject: "Your report has been resolved",
         })
-      .then((res) => {
-        console.log(res)
-      })
+      // .then((res) => {
+      //   console.log(res)
+      // })
     },
   }
 }
