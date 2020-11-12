@@ -292,7 +292,7 @@ export default {
           el.languageTo = tempRes2.trim().split(" ");
         });
         this.details = res.data[0];
-        console.log(this.details);
+        // console.log(this.details);
         this.dialog = true;
       });
     },
