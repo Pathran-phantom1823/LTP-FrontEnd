@@ -63,10 +63,6 @@
             improving my translations; hence, I am constantly studying. I use
             different softwares to carry out my translations. One of them Trados
             SDL. I also have Nuance power PDF editing and OCR tool for different
-            documents. Furthermore, I have experience with Adobe InDesign. I
-            always put my best effort to keep all my translations professional.
-            I will always show commitment in my jobs and will always be
-            responsible to deliver high quality jobs.
           </p>
           <br />
           <h5 class="mt-0 font-weight-bold">Skils & Expertise</h5>
