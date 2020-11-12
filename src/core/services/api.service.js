@@ -24,7 +24,7 @@ const config2 = {
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http// ec2-54-164-235-83.compute-1.amazonaws.com/ltp" : "http// ec2-54-164-235-83.compute-1.amazonaws.com/api/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/ltp" : "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/api/";
   },
 
   /**
@@ -57,7 +57,7 @@ const ApiService = {
    * @returns {*}
    */
   get(resource, slug= "") {
-    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http// ec2-54-164-235-83.compute-1.amazonaws.com/ltp" : "http// ec2-54-164-235-83.compute-1.amazonaws.com/api/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/ltp" : "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/api/";
     // console.log(resource, slug)
     let header = config.headers.Authorization === "null" ? config2 : config
     return Vue.axios.get(`${resource}/${slug}`, header)
@@ -83,7 +83,7 @@ const ApiService = {
    * @returns {*}
    */
   post(resource, params) {
-    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http// ec2-54-164-235-83.compute-1.amazonaws.com/ltp" : "http// ec2-54-164-235-83.compute-1.amazonaws.com/api/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/ltp" : "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/api/";
     let header = config.headers.Authorization === "null" ? config2 : config
     return Vue.axios.post(`${resource}`, params, header);
   },
@@ -106,7 +106,7 @@ const ApiService = {
    * @returns {IDBRequest<IDBValidKey> | Promise<void>}
    */
   put(resource, params) {
-    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http// ec2-54-164-235-83.compute-1.amazonaws.com/ltp" : "http// ec2-54-164-235-83.compute-1.amazonaws.com/api/";
+    Vue.axios.defaults.baseURL = JwtService.getToken() !== null ? "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/ltp" : "http://ec2-54-164-235-83.compute-1.amazonaws.com:8003/api/";
     let header = config.headers.Authorization === "null" ? config2 : config
     return Vue.axios.put(`${resource}`, params, header);
   },
