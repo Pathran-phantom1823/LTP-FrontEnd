@@ -188,7 +188,7 @@ export default {
       ApiService.post("reset-password", {
         email: this.$route.query.email,
         password: password
-      }).then((res) => {
+      }).then(() => {
         // console.log(res);
         submitButton.classList.remove(
           "spinner",
