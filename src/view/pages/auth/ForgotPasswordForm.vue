@@ -189,7 +189,6 @@ export default {
         email: this.$route.query.email,
         password: password
       }).then(() => {
-        // console.log(res);
         submitButton.classList.remove(
           "spinner",
           "spinner-light",

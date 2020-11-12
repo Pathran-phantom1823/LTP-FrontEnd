@@ -26,10 +26,6 @@ export default {
                     text: 'Email',
                     value: 'email'
                 },
-                // {
-                //     text: 'Status',
-                //     value: 'statu'
-                // },
             ],
         }
     },
@@ -40,7 +36,6 @@ export default {
          retrieveAccounts(){
             ApiService.post("getAccounts", {roleType: "FREE"}).then(res => {
                 this.accounts = res.data
-                // console.log(res.data);
             })
         }
     }

@@ -161,7 +161,6 @@ export default {
     retrieveAccounts() {
       ApiService.post("getAccounts", { roleType: "AGENCY" }).then((res) => {
         this.accounts = res.data;
-        // console.log("org", res.data);
       });
     },
     assignJob(id) {

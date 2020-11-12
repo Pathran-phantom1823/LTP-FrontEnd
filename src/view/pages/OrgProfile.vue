@@ -824,7 +824,6 @@ export default {
   }),
   methods: {
     changedCity(data) {
-      console.log("data", data);
       Object.keys(this.listOfCountry).map((el) => {
         if (el === data) {
           Object.keys(this.listOfCountry).filter((el2) => {
@@ -889,7 +888,7 @@ export default {
         payload.append("data", JSON.stringify(parameter));
         // axios script
         ApiService.post("createAgencyProfile", payload)
-          .then((res) => {
+          .then(() => {
             // console.log(res);
             Swal.fire({
               title: "",
@@ -1013,7 +1012,7 @@ export default {
       if (this.profiles.image !== this.tempImage) {
         payload.append("img", this.profiles.image);
         ApiService.post("updateAgencyProfilewithImage", payload)
-          .then((res) => {
+          .then(() => {
             // console.log(res);
             Swal.fire({
               title: "",
@@ -1033,7 +1032,7 @@ export default {
           });
       } else {
         ApiService.post("updateAgencyProfile", payload)
-          .then((res) => {
+          .then(() => {
             // console.log(res);
             Swal.fire({
               title: "",
