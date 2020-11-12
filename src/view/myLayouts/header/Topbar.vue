@@ -6,10 +6,11 @@
     <!-- <KTSearchDefault></KTSearchDefault> -->
     <!--end: Search -->
 
+
     <!-- Begin:Forums -->
     <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-            <v-btn text class="mt-1" title="Forums" v-bind="attrs" v-on="on" @click="$router.push('forum')">
+            <v-btn text class="mt-1" title="Forums" v-bind="attrs" v-on="on" @click="$router.push('/organization/forum')">
                 <span class=" svg-icon svg-icon-xl svg-icon-primary">
                 <inline-svg src="media/svg/icons/Communication/Group-chat.svg" />
                 </span>
@@ -31,7 +32,7 @@
         </template>
         <b-dropdown-text tag="div" class="min-w-md-350px">
             <form>
-                <KTDropdownNotification></KTDropdownNotification>
+                <KTDropdownNotification :quotations="data"></KTDropdownNotification>
             </form>
         </b-dropdown-text>
     </b-dropdown>
@@ -77,13 +78,15 @@
 import KTDropdownNotification from "@/view/myLayouts/extras/dropdown/DropdownNotification.vue";
 import KTQuickUser from "@/view/myLayouts/extras/offcanvas/QuickUser.vue";
 import i18nService from "@/core/services/i18n.service.js";
+import ApiService from "@/core/services/api.service";
 
 export default {
     name: "KTTopbar",
     data() {
         return {
             languageFlag: "",
-            languages: i18nService.languages
+            languages: i18nService.languages,
+            data: []
         };
     },
     components: {
@@ -91,11 +94,23 @@ export default {
         KTDropdownNotification,
         KTQuickUser,
     },
+    mounted(){
+        this.retrieveQuotation()
+    },
     methods: {
         onLanguageChanged() {
             this.languageFlag = this.languages.find(val => {
                 return val.lang === i18nService.getActiveLanguage();
             }).flag;
+        },
+
+        retrieveQuotation(){
+        const id = localStorage.getItem("value");
+        const userID = id.substr(id.lastIndexOf("*") + 1);
+        ApiService.post("getmyAssignedQuotations", {id: userID}).then((res) => {
+            // console.log("quote", res.data);
+            this.data = res.data
+        })
         }
     },
     computed: {

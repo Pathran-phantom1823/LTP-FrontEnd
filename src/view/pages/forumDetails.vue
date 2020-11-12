@@ -1,128 +1,237 @@
 <template>
-  <div class="forumDetails">
+<div class="forumDetails">
     <v-card max-width="1200" class="mx-auto">
-      <v-card-text>
-        <v-card-title class="headline font-weight-bold"
-          >Topic: {{ forumDetails.title }}
-        </v-card-title>
-        <v-card-subtitle class="text--primary text-justify "
-          >Posted by: {{ forumDetails.postedBy }} <br />Posted Date:
-          {{ forumDetails.datePosted }}</v-card-subtitle
-        >
-        <v-card-subtitle>
-          <span class=" mx-12  text-center text-justify">{{
+        <v-card-text>
+            <b-card border-variant="primary">
+                <v-card-title class="headline font-weight-bold">Topic: {{ forumDetails.topic }}
+                </v-card-title>
+                <v-card-subtitle class="text--primary text-justify ">Posted by: {{ forumDetails.username }} <br />Posted Date:
+                    {{ forumDetails.datePosted}}</v-card-subtitle>
+                <v-card-subtitle>
+                    <span class=" mx-12  text-center text-justify">{{
             forumDetails.description
           }}</span>
-          <hr />
-        </v-card-subtitle>
-        <div v-for="a in forumDetails.comments" :key="a.id" max-width="200">
-          <v-card-sutitle class="mx-12 text--primary font-weight-bold">
-            {{ a.commentedBy }} </v-card-sutitle
-          ><br />
-          <v-card-sutitle class="mx-12 text--primary font-weight-light">
-            {{ a.commentDetails }}
-          </v-card-sutitle>
-          <div class="btnLike">
-            <i class="mdi mdi-thumb-up-outline" @click="changeLikeColor"></i>
-            <p class="likeNumber">{{ a.like }}</p>
-          </div>
-          <br />
-        </div>
-        <center>
-          <v-text-field
-            outlined
-            label="Reply"
-            class="searchBox"
-            append-icon="mdi-message-text"
-            dense
-            clearable
-            rounded
-            color="blue lighten-1"
-          ></v-text-field>
-        </center>
-      </v-card-text>
+                </v-card-subtitle>
+            </b-card>
+            <hr />
+            <v-list two-line>
+                <v-list-item-group multiple>
+                    <div v-for="comment in getComments" :key="comment.id">
+                        <v-card>
+                            <v-list-item>
+                                <template>
+                                    <v-list-item-avatar>
+                                        <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKHEZ8jN4MlDEwzxSXGnYU7shtaCjbeMf6Ow&usqp=CAU"></v-img>
+                                    </v-list-item-avatar>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            <h5>{{comment.username}}</h5>
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle class="text--primary" v-text="comment.comment"></v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <v-list-item-action-text>{{comment.likes }}</v-list-item-action-text>
+
+                                        <v-icon color="yellow darken-3" @click="changeLikeColor($event,comment.id)">
+                                            {{comment.status !== 'like' || comment.username !== currentUser ? 'mdi-thumb-up-outline' : 'mdi-thumb-up'}}
+                                        </v-icon>
+                                    </v-list-item-action>
+                                </template>
+                            </v-list-item>
+                        </v-card><br>
+                    </div>
+                </v-list-item-group>
+            </v-list>
+            <br>
+            <center>
+                <span style="color:red">{{error}}</span>
+                <v-text-field v-model="comment" append-outer-icon="mdi-send" filled clear-icon="mdi-close-circle" clearable rounded label="Message" type="text" @click:append-outer="sendComment(forumDetails.transactionId)" :disabled="!isAuthenticated"></v-text-field>
+                <!-- <v-text-field outlined label="Reply" class="searchBox" append-icon="mdi-message-text" dense clearable rounded color="blue lighten-1" v-model="comment"></v-text-field>
+                <v-btn @click="sendComment(forumDetails.transactionId)">Send</v-btn> -->
+            </center>
+        </v-card-text>
     </v-card>
     <br />
-  </div>
+</div>
 </template>
+
 <script>
+import {
+    mapGetters
+} from "vuex";
+import ApiService from "@/core/services/api.service";
 export default {
-  data() {
-    return {
-      dialog: false,
-      forumDetails: {
-        postedBy: "Hannah Chuchu",
-        title: "Tips in localizing in a certain country",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius blandit nibh. Suspendisse eu congue lorem. Suspendisse pellentesque ac tortor eget efficitur. Fusce feugiat vestibulum nisi at dignissim. Vivamus auctor purus in turpis facilisis mattis. Fusce posuere ante ante, in bibendum ante dignissim vestibulum. Quisque nibh turpis, tincidunt non bibendum non, mattis bibendum lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pharetra tristique hendrerit. Sed ac libero vel ante lobortis sagittis. Nulla mollis velit in tellus ullamcorper, id euismod sapien laoreet. Donec convallis urna quis nulla viverra faucibus. Nunc sed risus quis mauris pellentesque egestas a ac est. Cras ac enim vitae libero placerat dignissim. Quisque tempus vel augue non vehicula. Cras egestas neque nisi, a semper libero vehicula sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius blandit nibh. Suspendisse eu congue lorem. Suspendisse pellentesque ac tortor eget efficitur. Fusce feugiat vestibulum nisi at dignissim. Vivamus auctor purus in turpis facilisis mattis. Fusce posuere ante ante, in bibendum ante dignissim vestibulum. Quisque nibh turpis, tincidunt non bibendum non, mattis bibendum lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pharetra tristique hendrerit. Sed ac libero vel ante lobortis sagittis. Nulla mollis velit in tellus ullamcorper, id euismod sapien laoreet. Donec convallis urna quis nulla viverra faucibus. Nunc sed risus quis mauris pellentesque egestas a ac est. Cras ac enim vitae libero placerat dignissim. Quisque tempus vel augue non vehicula. Cras egestas neque nisi, a semper libero vehicula sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius blandit nibh. Suspendisse eu congue lorem. Suspendisse pellentesque ac tortor eget efficitur. Fusce feugiat vestibulum nisi at dignissim. Vivamus auctor purus in turpis facilisis mattis. Fusce posuere ante ante, in bibendum ante dignissim vestibulum. Quisque nibh turpis, tincidunt non bibendum non, mattis bibendum lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pharetra tristique hendrerit. Sed ac libero vel ante lobortis sagittis. Nulla mollis velit in tellus ullamcorper, id euismod sapien laoreet. Donec convallis urna quis nulla viverra faucibus. Nunc sed risus quis mauris pellentesque egestas a ac est. Cras ac enim vitae libero placerat dignissim. Quisque tempus vel augue non vehicula. Cras egestas neque nisi, a semper libero vehicula sit amet.",
-        datePosted: "September 1, 2020",
-        comments: [
-          {
-            id: 1,
-            commentedBy: "Commentator 1",
-            commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
-            commentDate: "October 1, 2020",
-            like: 100,
-          },
-          {
-            id: 2,
-            commentedBy: "Commentator 2",
-            commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
-            commentDate: "October 1, 2020",
-            like: 300,
-          },
-          {
-            id: 3,
-            commentedBy: "Commentator 3",
-            commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
-            commentDate: "October 1, 2020",
-            like: 200,
-          },
-          {
-            id: 4,
-            commentedBy: "Commentator 4",
-            commentDetails:
-              "The French language is the only language besides English to be present on five continents.The French language is the only language besides English to be present on five continents.",
-            commentDate: "October 32, 2020",
-            like: 100,
-          },
-        ],
-      },
-    };
-  },
-  methods: {
-    changeLikeColor(e) {
-      if (e.target.className === "mdi mdi-thumb-up-outline") {
-        e.target.className = "mdi mdi-thumb-up";
-      } else {
-        e.target.className = "mdi mdi-thumb-up-outline";
-      }
+    data() {
+        return {
+            comment: null,
+            dialog: false,
+            forumDetails: [],
+            comments: [],
+            liked: false,
+            userID: null,
+            error: null,
+            currentUser: null
+        };
     },
-  },
+    computed: {
+        getComments() {
+            return this.comments
+        },
+        isLike() {
+            return this.liked
+        },
+        ...mapGetters([
+            "isAuthenticated"
+        ])
+    },
+    mounted() {
+
+        if (!this.isAuthenticated) {
+            let id = this.$route.params.id
+            // console.log(id);
+            ApiService.post("getForumDetails", {
+                postId: id
+            }).then(res => {
+                // console.log("data", res.data)
+                this.forumDetails = res.data[0]
+                this.retrieveComment()
+                this.retrieveLikes(),
+                    this.retrieveCurrentUser()
+            })
+        } else {
+            let id = this.$route.params.id
+            // console.log(id);
+            ApiService.post("getForumDetailswithAuth", {
+                postId: id
+            }).then(res => {
+                // console.log("data", res.data)
+                this.forumDetails = res.data[0]
+                this.retrieveComment()
+                this.retrieveLikes(),
+                    this.retrieveCurrentUser()
+            })
+        }
+
+    },
+    methods: {
+        changeLikeColor(e, commentId) {
+            const id = localStorage.getItem('value')
+            this.userID = id.substr(id.lastIndexOf('*') + 1)
+            // let status = null;
+            ApiService.post("like", {
+                commentId: commentId,
+                likeById: this.userID,
+                status: "like"
+            }).then(() => {
+                this.liked = !this.liked
+                this.retrieveComment()
+            })
+        },
+        sendComment(transactionId) {
+            // console.log(transactionId)
+            if (this.comment !== null) {
+                const id = localStorage.getItem('value')
+                const userID = id.substr(id.lastIndexOf('*') + 1)
+                ApiService.post("saveComment", {
+                    postId: transactionId,
+                    commentedById: userID,
+                    comment: this.comment
+                }).then(() => {
+                    this.error = null
+                    this.retrieveComment();
+                    this.retrieveLikes();
+                })
+            } else {
+                this.error = "Field is empty"
+            }
+        },
+        retrieveComment() {
+            let id = this.$route.params.id
+            const uId = localStorage.getItem('value')
+            this.userID = uId.substr(uId.lastIndexOf('*') + 1)
+            if (!this.isAuthenticated) {
+                ApiService.post("getComment", {
+                    postId: id
+                }).then(res => {
+                    // console.log(res.data)
+                    this.comments = res.data
+                    // console.log("res", this.liked);
+                })
+            } else {
+                ApiService.post("getCommentwithAuth", {
+                    postId: id
+                }).then(res => {
+                    // console.log(res.data)
+                    this.comments = res.data
+                    // console.log("res", this.liked);
+                })
+            }
+        },
+        retrieveLikes() {
+            if (!this.isAuthenticated) {
+                ApiService.get("getLikes").then(res => {
+                    res.data.map(el => {
+                        this.comments.map(com => {
+                            // console.log();
+                            if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
+                                this.liked = true
+                            } else {
+                                this.false
+                            }
+                        })
+                    })
+                })
+            } else {
+                ApiService.get("getLikeswithAuth").then(res => {
+                    res.data.map(el => {
+                        this.comments.map(com => {
+                            // console.log();
+                            if (el.likeById.toString() === this.userID.toString() && com.id.toString() === el.commentId.toString()) {
+                                this.liked = true
+                            } else {
+                                this.false
+                            }
+                        })
+                    })
+                })
+            }
+        },
+        retrieveCurrentUser() {
+            const id = localStorage.getItem('value')
+            this.userID = id.substr(id.lastIndexOf('*') + 1)
+            ApiService.post("getCurrentUser", {
+                id: this.userID
+            }).then(res => {
+                this.currentUser = res.data[0]
+            })
+        }
+    }
 };
 </script>
+
 <style scoped>
 .forumDetails {
-  margin-top: 130px;
+    margin-top: 130px;
 }
+
 #description {
-  width: 20px !important;
+    width: 20px !important;
 }
-.btnLike i {
-  color: #f2470f;
-  margin-bottom: 20px;
-  margin-left: 50px;
-  font-size: 15px;
+
+#btnLike {
+    color: #f2470f;
+    font-size: 30px;
 }
+
+/* 
 .likeNumber {
-  margin-top: -20px;
-  margin-left: 70px !important;
-  font-size: 10px;
-}
+    margin-top: -20px;
+    margin-left: 70px !important;
+    font-size: 10px;
+} */
+
 .searchBox {
-  width: 950px;
+    width: 950px;
 }
 </style>

@@ -31,7 +31,6 @@
             v-bind:title="pageTitle"
           />
           <!-- end:: Content Head -->
-
           <!-- begin:: Content Body -->
           <div class="d-flex flex-column-fluid">
             <div
