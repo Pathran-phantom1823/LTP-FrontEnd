@@ -175,13 +175,11 @@ export default {
         ApiService.post("getAllJobs", {
             id: this.userID
         }).then(res => {
-            // console.log(res.);
             res.data.map(el => {
                 let tempRes = el.languageFrom.replace(/,/g, ' ')
                 el.languageFrom = tempRes.trim().split(' ')
             })
             this.feedData = res.data
-            // console.log(res.data);
         })
 
         if (window.innerWidth < 750) {
@@ -221,9 +219,6 @@ export default {
             this.$axios({
                 method: "post",
                 url: "http://localhost:8003/api/getProfile/",
-                // header: {
-                //     Authorization: `${JwtService.getToken()}`
-                // },
                 responseType: "blob",
                 data: {
                     accountId: postedById
@@ -237,7 +232,6 @@ export default {
             let img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(url);
-                // console.log(img);
             };
             this.profileImage = url
         },
@@ -259,10 +253,8 @@ export default {
                 ApiService.post("getJob", {
                     id: data
                 }).then(res => {
-                    // console.log(res.data);
                     this.feedDetails = res.data[0]
                     this.retreiveImage(res.data[0].postedById)
-                    // console.log("feedDetails", this.feedDetails);
                 })
                 if (window.innerWidth < 750) {
                     this.$refs["moreInfo"].style =
@@ -312,12 +304,10 @@ export default {
             }
         },
         acceptJob(jobId) {
-            // console.log(jobId, this.userID)
             ApiService.post("apply-job", {
                 applicantId: this.userID,
                 jobId: jobId,
             }).then(() => {
-                // console.log(res)
                 Swal.fire({
                     title: "",
                     text: "Application Done, Please wait until the owner accepts your application",

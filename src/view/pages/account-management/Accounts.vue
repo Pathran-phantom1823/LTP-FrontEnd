@@ -149,7 +149,6 @@ export default {
       ApiService.post("checkUsernameExistence", {
         username: e,
       }).then((res) => {
-        // console.log(res.data);
         if (res.data === "Username is Unavailable") {
           this.isExist = true;
         } else {
@@ -161,7 +160,6 @@ export default {
       ApiService.post("checkEmailExistence", {
         email: e,
       }).then((res) => {
-        // console.log(res.data);
         if (res.data === "Email is Unavailable") {
           this.emailexist = true;
         } else {
@@ -170,7 +168,6 @@ export default {
       });
     },
     editItem(item) {
-      // console.log(item.id);
       this.itemId = item.id;
       this.editedIndex = this.members.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -219,8 +216,6 @@ export default {
     },
 
     save(id) {
-      // console.log(this.itemId)
-      // console.log("data", id);
       ApiService.put("updateMember", {
         id: id,
         username: this.editedItem.username,
@@ -230,7 +225,6 @@ export default {
         password: this.editedItem.password,
         isMember: false,
       }).then(() => {
-        // this.$router.push('/organization/add_account')
         this.retrieve();
         Swal.fire({
           title: "",
@@ -248,11 +242,7 @@ export default {
       ApiService.post("getmembers", {
         id: userID,
       }).then((res) => {
-        // console.log(res.data);
         this.members = res.data;
-        // res.data.map(el => {
-        //     this.members.push(el)
-        // })
       });
     },
   },

@@ -180,16 +180,9 @@ export default {
         }
         webSocketService.sendMessage(message)
         this.data.message = ''; 
-        // this.retrieveMessages() 
-        // this.messages.messages.map(el => {
-        //   console.log(el)
-        // })
-        
     },
     retrieveRooms(){
-      // console.log(this.userID)
       ApiService.post("getMyRooms", {id: this.userID}).then((res) => {
-        // console.log(res.data);
         this.rooms = res.data
       })
     },
@@ -225,23 +218,6 @@ export default {
     });
 
     this.retrieveRooms()
-    
-    
-    // this.websocket = new WebSocket("ws://localhost:8003/api/chat");
-
-    // this.websocket.onopen = (event) => {
-    //   console.log("connecting", event);
-    // };
-
-    // this.websocket.onmessage = (event) => {
-    //   console.log("message", event);
-    //   let message = JSON.parse(event)
-    //   this.messages = message
-    // };
-
-    // this.websocket.onclose = (event) => {
-    //   console.log("connection is close", event);
-    // };
   },
 };
 </script>

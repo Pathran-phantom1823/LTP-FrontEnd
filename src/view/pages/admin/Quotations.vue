@@ -232,7 +232,6 @@ export default {
       ApiService.post("getJob", {
         id: id,
       }).then((res) => {
-        // console.log(res.data);
         res.data.map((el) => {
           let tempRes = el.languageFrom.replace(/,/g, " ");
           el.languageFrom = tempRes.trim().split(" ");
@@ -247,10 +246,7 @@ export default {
     },
     retrieveQuote() {
       ApiService.get("getQuote").then((res) => {
-        // if(res.id[] !== null){
         this.quotation = res.data;
-        // console.log(res.data);
-        // }
       });
     },
     choosenAccount(account, quotationId, quotationTitle) {

@@ -54,7 +54,6 @@ export default {
             ApiService.post("checkUsernameExistence", {
                 username: e
             }).then((res) => {
-                // console.log(res.data);
                 if (res.data === "Username is Unavailable") {
                     this.isExist = true;
                 } else {
@@ -66,7 +65,6 @@ export default {
             ApiService.post("checkEmailExistence", {
                 email: e
             }).then((res) => {
-                // console.log(res.data);
                 if (res.data === "Email is Unavailable") {
                     this.emailexist = true;
                 } else {

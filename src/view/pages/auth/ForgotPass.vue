@@ -157,8 +157,7 @@ export default {
       ApiService.post("send-email", {
         to: email,
         subject: "Forgot Password",
-      }).then((res) => {
-        // console.log(res);
+      }).then(() => {
         submitButton.classList.remove(
           "spinner",
           "spinner-light",

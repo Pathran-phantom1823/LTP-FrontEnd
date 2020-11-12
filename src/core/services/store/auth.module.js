@@ -93,21 +93,10 @@ const actions = {
       ApiService.post("register", credentials).then(res => {
         const result = string + '*' +  res.data[0].id
         localStorage.setItem('value', result)
-        // context.commit(SET_AUTH, res);
         resolve(res)
       }).catch(response => {
         context.commit(SET_ERROR, response.data);
-        // console.log(error)
       })
-        // .then(({ data }) => {
-        //   console.log(data)
-        //   context.commit(SET_AUTH, data);
-        //   resolve(data);
-        // })
-        // .catch(({ response }) => {
-        //   // context.commit(SET_ERROR, response.data.errors);
-        //   reject(response);
-        // });
     });
   },
   [VERIFY_AUTH](context, param) {
@@ -116,38 +105,16 @@ const actions = {
       let role = localStorage.getItem("role")
       context.commit(GET_ROLE, role)
       // console.log("state ------------- " + context.state.role)
-      // console.log("this " + router)
       
       context.commit(SET_USERTYPE)
       // console.log("user type ", context.getters.getUserType)
       // console.log(JSON.stringify(next))
       // console.log("current " + param.to.path)
       if(!param.to.path.split("/").includes(context.getters.getUserType) && param.to.path.replaceAll(" ", "") !== "/error"){
-        // console.log("Unauthorized access")
-        // console.log("not included ", param.from.path === param.to.path)
-        // if(param.from.path !== router.currentRoute.path){
-        //   console.log("redirecting to : /" + context.getters.getUserType)
-        //   router.push("/" + context.getters.getUserType)
-        //   context.commit(SET_INVALID, false)
-        // }
-        // router.push("/error")
-        // else{
-        //   // console.log("not equal ")
-        //   router.push("/error")
         context.commit(SET_INVALID, true)
-        // }
       }else{
         context.commit(SET_INVALID, false)
       }
-      // const id = localStorage.getItem('value')
-      // const userID = id.substr(id.lastIndexOf('*') + 1)
-      // ApiService.post("verify", {id: userID})
-      //   .then(({ data }) => {
-      //     console.log(data)
-      //   })
-      //   .catch(({ response }) => {
-      //     console.log(response)
-      //   }); 
     } else {
       context.commit(SET_INVALID, false)
       context.commit(PURGE_AUTH);

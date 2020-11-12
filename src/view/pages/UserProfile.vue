@@ -855,7 +855,7 @@ export default {
     payload.append("img", this.file2);
     payload.append("data", JSON.stringify(profileDetails));
     ApiService.post("createprofile", payload)
-      .then((res) => {
+      .then(() => {
         ApiService.post("create_education_address", {
           schoolname: this.schoolname,
           schoolyear: this.schoolyear,
@@ -864,11 +864,7 @@ export default {
           city: this.schoolcity,
           zipcode: this.schoolzipcode,
           country: this.schoolcountry,
-        }).then((res) => {
-          // console.log("Education Details:  ", res);
-        });
-        // console.log("response", res);
-        // console.log(profileDetails);
+        })
       })
       .then(() => {
         e.preventDefault();

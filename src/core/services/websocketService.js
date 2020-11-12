@@ -10,8 +10,7 @@ const webSocketService  = {
     onConnect(endpoints){
         this.websocket = new WebSocket("ws://localhost:8003/api/" + endpoints)
 
-        this.websocket.onopen = (event) => {
-        console.log("connection", event.type);
+        this.websocket.onopen = () => {
         };
     
         this.websocket.onmessage = (event) => {
@@ -24,8 +23,7 @@ const webSocketService  = {
             })
         };
     
-        this.websocket.onclose = (event) => {
-            console.log("connection", event.type);
+        this.websocket.onclose = () => {
         };
     },
 
